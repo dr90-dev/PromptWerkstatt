@@ -1,0 +1,2107 @@
+/* =========================================================
+   FARBEN
+========================================================= */
+
+:root {
+    --hintergrund: #f3f5f9;
+    --karte: #ffffff;
+    --karte-zwei: #f8fafc;
+    --text: #1f2937;
+    --text-hell: #64748b;
+    --rand: #dbe2ea;
+    --primaer: #4f46e5;
+    --primaer-hover: #4338ca;
+    --chip: #eef2ff;
+    --chip-text: #3730a3;
+    --erfolg: #15803d;
+    --warnung: #b45309;
+    --rot: #dc2626;
+    --kontext-hintergrund: #f5f3ff;
+    --kontext-rand: #c4b5fd;
+    --kontext-text: #5b21b6;
+    --shadow:
+        0 10px 35px
+        rgba(15, 23, 42, 0.08);
+}
+
+
+
+/* =========================================================
+   DUNKELMODUS
+========================================================= */
+
+body.dark {
+    --hintergrund: #0f172a;
+    --karte: #172033;
+    --karte-zwei: #111827;
+    --text: #f1f5f9;
+    --text-hell: #94a3b8;
+    --rand: #334155;
+    --primaer: #6366f1;
+    --primaer-hover: #818cf8;
+    --chip: #312e81;
+    --chip-text: #e0e7ff;
+    --erfolg: #4ade80;
+    --warnung: #fbbf24;
+    --rot: #f87171;
+    --kontext-hintergrund: #272447;
+    --kontext-rand: #4f46e5;
+    --kontext-text: #c7d2fe;
+    --shadow:
+        0 10px 35px
+        rgba(0, 0, 0, 0.25);
+}
+
+
+
+/* =========================================================
+   GRUNDAUFBAU
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background-color:
+        var(--hintergrund);
+
+    color:
+        var(--text);
+
+    transition:
+        background-color 0.25s,
+        color 0.25s;
+}
+
+
+h1,
+h2,
+h3 {
+    color:
+        var(--text);
+}
+
+
+button,
+input,
+select,
+textarea {
+    font-family:
+        inherit;
+}
+
+
+.versteckt {
+    display:
+        none !important;
+}
+
+
+
+/* =========================================================
+   KOPFBEREICH
+========================================================= */
+
+.kopfbereich {
+    max-width:
+        1400px;
+
+    margin:
+        0 auto;
+
+    padding:
+        32px
+        30px
+        10px;
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap:
+        20px;
+}
+
+
+.logo-bereich {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        18px;
+}
+
+
+.logo {
+    width:
+        58px;
+
+    height:
+        58px;
+
+    border-radius:
+        16px;
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    font-size:
+        22px;
+
+    font-weight:
+        bold;
+
+    color:
+        white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #7c3aed
+        );
+
+    box-shadow:
+        var(--shadow);
+}
+
+
+h1 {
+    margin:
+        0;
+
+    font-size:
+        30px;
+}
+
+
+.kopfbereich p {
+    margin:
+        6px
+        0
+        0;
+
+    color:
+        var(--text-hell);
+}
+
+
+.theme-button {
+    width:
+        48px;
+
+    height:
+        48px;
+
+    padding:
+        0;
+
+    font-size:
+        22px;
+
+    border-radius:
+        12px;
+}
+
+
+
+/* =========================================================
+   BUILDER
+========================================================= */
+
+.app-container {
+    max-width:
+        1400px;
+
+    margin:
+        20px
+        auto;
+
+    padding:
+        0
+        30px
+        35px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    gap:
+        24px;
+
+    align-items:
+        start;
+}
+
+
+.builder,
+.vorschau,
+.bibliothek-bereich {
+    background-color:
+        var(--karte);
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        20px;
+
+    box-shadow:
+        var(--shadow);
+}
+
+
+.builder,
+.vorschau {
+    padding:
+        28px;
+}
+
+
+.vorschau {
+    position:
+        sticky;
+
+    top:
+        20px;
+}
+
+
+
+/* =========================================================
+   BEREICHSÜBERSCHRIFT
+========================================================= */
+
+.bereich-titel {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        14px;
+
+    margin-bottom:
+        28px;
+}
+
+
+.bereich-titel > span {
+    width:
+        38px;
+
+    height:
+        38px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    border-radius:
+        50%;
+
+    background-color:
+        var(--primaer);
+
+    color:
+        white;
+
+    font-weight:
+        bold;
+}
+
+
+.bereich-titel h2 {
+    margin:
+        0;
+
+    font-size:
+        22px;
+}
+
+
+.bereich-titel p {
+    margin:
+        4px
+        0
+        0;
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        14px;
+}
+
+
+
+/* =========================================================
+   FORMULARE
+========================================================= */
+
+.feld {
+    margin-bottom:
+        25px;
+}
+
+
+label {
+    display:
+        block;
+
+    margin-bottom:
+        8px;
+
+    font-weight:
+        bold;
+}
+
+
+.hinweis {
+    margin:
+        -3px
+        0
+        10px;
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        13px;
+}
+
+
+input,
+select,
+textarea {
+    width:
+        100%;
+
+    padding:
+        12px
+        14px;
+
+    margin-bottom:
+        10px;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        10px;
+
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text);
+
+    font-size:
+        15px;
+
+    outline:
+        none;
+}
+
+
+textarea {
+    min-height:
+        90px;
+
+    resize:
+        vertical;
+}
+
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color:
+        var(--primaer);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(79, 70, 229, 0.12);
+}
+
+
+
+/* =========================================================
+   KATEGORIE-AUSWAHL
+========================================================= */
+
+.kategorie-auswahl-zeile {
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        46px;
+
+    gap:
+        10px;
+
+    align-items:
+        start;
+}
+
+
+.kategorie-auswahl-zeile select {
+    margin-bottom:
+        0;
+
+    min-width:
+        0;
+}
+
+
+.kategorie-favorit-button {
+    width:
+        46px;
+
+    height:
+        44px;
+
+    padding:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        10px;
+
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        23px;
+
+    line-height:
+        1;
+}
+
+
+.kategorie-favorit-button:hover {
+    background-color:
+        var(--chip);
+
+    border-color:
+        var(--primaer);
+
+    color:
+        var(--warnung);
+}
+
+
+.kategorie-favorit-button.aktiv {
+    background-color:
+        var(--chip);
+
+    border-color:
+        #f59e0b;
+
+    color:
+        #f59e0b;
+}
+
+
+
+/* =========================================================
+   AUFKLAPPBARE SORTIERUNG
+========================================================= */
+
+.sortierung-toggle {
+    width:
+        100%;
+
+    margin-top:
+        9px;
+
+    padding:
+        9px
+        12px;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        10px;
+
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text-hell);
+
+    text-align:
+        left;
+
+    font-size:
+        13px;
+}
+
+
+.sortierung-toggle:hover {
+    background-color:
+        var(--chip);
+
+    border-color:
+        var(--primaer);
+
+    color:
+        var(--text);
+}
+
+
+.sortierung-panel {
+    margin-top:
+        10px;
+
+    padding:
+        12px;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        12px;
+
+    background-color:
+        var(--karte-zwei);
+}
+
+
+.sortierung-kopf {
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        3px;
+
+    margin-bottom:
+        10px;
+}
+
+
+.sortierung-kopf strong {
+    font-size:
+        14px;
+}
+
+
+.sortierung-kopf span {
+    color:
+        var(--text-hell);
+
+    font-size:
+        12px;
+}
+
+
+.sortierung-liste {
+    display:
+        grid;
+
+    gap:
+        7px;
+
+    max-height:
+        360px;
+
+    overflow-y:
+        auto;
+
+    padding-right:
+        3px;
+}
+
+
+.sortierung-gruppen-titel {
+    position:
+        sticky;
+
+    top:
+        0;
+
+    z-index:
+        1;
+
+    margin-top:
+        4px;
+
+    padding:
+        7px
+        8px;
+
+    border-radius:
+        8px;
+
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        11px;
+
+    font-weight:
+        bold;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        0.04em;
+}
+
+
+.sortierung-zeile {
+    display:
+        grid;
+
+    grid-template-columns:
+        38px
+        minmax(0, 1fr)
+        38px
+        38px;
+
+    gap:
+        6px;
+
+    align-items:
+        center;
+
+    padding:
+        6px;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        10px;
+
+    background-color:
+        var(--karte);
+}
+
+
+.sortierung-zeile.favorit {
+    border-color:
+        #f59e0b;
+}
+
+
+.sortierung-zeile.ausgewaehlt {
+    box-shadow:
+        inset 3px 0 0
+        var(--primaer);
+}
+
+
+.sortierung-stern-button,
+.sortierung-pfeil-button {
+    width:
+        38px;
+
+    height:
+        36px;
+
+    padding:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        8px;
+
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text);
+}
+
+
+.sortierung-stern-button {
+    font-size:
+        19px;
+}
+
+
+.sortierung-stern-button.aktiv {
+    color:
+        #f59e0b;
+}
+
+
+.sortierung-pfeil-button {
+    font-size:
+        17px;
+
+    font-weight:
+        bold;
+}
+
+
+.sortierung-stern-button:hover,
+.sortierung-pfeil-button:hover {
+    background-color:
+        var(--chip);
+
+    color:
+        var(--primaer);
+}
+
+
+.sortierung-stern-button.aktiv:hover {
+    color:
+        #f59e0b;
+}
+
+
+.sortierung-pfeil-button:disabled {
+    opacity:
+        0.3;
+
+    cursor:
+        not-allowed;
+}
+
+
+.sortierung-pfeil-button:disabled:hover {
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text);
+}
+
+
+.sortierung-name-button {
+    width:
+        100%;
+
+    min-width:
+        0;
+
+    height:
+        36px;
+
+    padding:
+        0
+        10px;
+
+    overflow:
+        hidden;
+
+    border:
+        1px
+        solid
+        transparent;
+
+    border-radius:
+        8px;
+
+    background-color:
+        transparent;
+
+    color:
+        var(--text);
+
+    text-align:
+        left;
+
+    white-space:
+        nowrap;
+
+    text-overflow:
+        ellipsis;
+}
+
+
+.sortierung-name-button:hover {
+    background-color:
+        var(--chip);
+
+    color:
+        var(--text);
+}
+
+
+
+/* =========================================================
+   KONTEXT-HILFE
+========================================================= */
+
+.kontext-hilfe {
+    margin-bottom:
+        12px;
+
+    padding:
+        12px
+        14px;
+
+    border:
+        1px
+        solid
+        var(--kontext-rand);
+
+    border-left:
+        4px
+        solid
+        var(--primaer);
+
+    border-radius:
+        10px;
+
+    background-color:
+        var(--kontext-hintergrund);
+
+    color:
+        var(--kontext-text);
+
+    font-size:
+        13px;
+
+    line-height:
+        1.5;
+}
+
+
+
+/* =========================================================
+   ANFORDERUNGEN
+========================================================= */
+
+.chip-container {
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        9px;
+}
+
+
+.chip {
+    border:
+        1px
+        solid
+        var(--rand);
+
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text);
+
+    padding:
+        9px
+        12px;
+
+    border-radius:
+        999px;
+
+    font-size:
+        14px;
+
+    cursor:
+        pointer;
+}
+
+
+.chip:hover {
+    border-color:
+        var(--primaer);
+}
+
+
+.chip.aktiv {
+    background-color:
+        var(--chip);
+
+    color:
+        var(--chip-text);
+
+    border-color:
+        var(--primaer);
+
+    font-weight:
+        bold;
+}
+
+
+
+/* =========================================================
+   REGEL-PAKETE
+========================================================= */
+
+.regel-container {
+    display:
+        grid;
+
+    gap:
+        10px;
+}
+
+
+.regel-paket {
+    border:
+        1px
+        solid
+        var(--rand);
+
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text);
+
+    border-radius:
+        12px;
+
+    padding:
+        13px
+        15px;
+
+    cursor:
+        pointer;
+
+    text-align:
+        left;
+}
+
+
+.regel-paket:hover {
+    border-color:
+        var(--primaer);
+}
+
+
+.regel-paket.aktiv {
+    border-color:
+        var(--primaer);
+
+    background-color:
+        var(--chip);
+}
+
+
+.regel-paket strong {
+    display:
+        block;
+
+    margin-bottom:
+        4px;
+}
+
+
+.regel-paket small {
+    color:
+        var(--text-hell);
+
+    line-height:
+        1.4;
+}
+
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+button {
+    border:
+        none;
+
+    padding:
+        12px
+        18px;
+
+    border-radius:
+        10px;
+
+    font-size:
+        15px;
+
+    cursor:
+        pointer;
+
+    background-color:
+        var(--primaer);
+
+    color:
+        white;
+
+    transition:
+        transform 0.15s,
+        background-color 0.15s;
+}
+
+
+button:hover {
+    background-color:
+        var(--primaer-hover);
+}
+
+
+button:active {
+    transform:
+        scale(0.98);
+}
+
+
+.sekundaer-button {
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text);
+
+    border:
+        1px
+        solid
+        var(--rand);
+}
+
+
+.builder-buttons,
+.vorschau-buttons {
+    display:
+        flex;
+
+    gap:
+        10px;
+}
+
+
+
+/* =========================================================
+   PROMPT VORSCHAU
+========================================================= */
+
+.prompt-box {
+    min-height:
+        420px;
+
+    background-color:
+        var(--karte-zwei);
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        14px;
+
+    padding:
+        22px;
+
+    white-space:
+        pre-wrap;
+
+    line-height:
+        1.65;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-size:
+        14px;
+
+    overflow-wrap:
+        break-word;
+}
+
+
+.vorschau-buttons {
+    margin-top:
+        18px;
+}
+
+
+#kopieren {
+    width:
+        100%;
+}
+
+
+.meldung {
+    min-height:
+        24px;
+
+    margin-top:
+        12px;
+
+    text-align:
+        center;
+
+    color:
+        var(--erfolg);
+
+    font-weight:
+        bold;
+}
+
+
+
+/* =========================================================
+   SPEICHERN
+========================================================= */
+
+.speicher-bereich {
+    margin-top:
+        25px;
+
+    padding-top:
+        22px;
+
+    border-top:
+        1px
+        solid
+        var(--rand);
+}
+
+
+.speicher-bereich h3 {
+    margin:
+        0
+        0
+        18px;
+}
+
+
+.speichern-button {
+    width:
+        100%;
+
+    margin-top:
+        4px;
+}
+
+
+#bearbeitungAbbrechen {
+    width:
+        100%;
+
+    margin-top:
+        10px;
+}
+
+
+
+/* =========================================================
+   BIBLIOTHEK
+========================================================= */
+
+.bibliothek-bereich {
+    max-width:
+        1340px;
+
+    margin:
+        0
+        auto
+        40px;
+
+    padding:
+        28px;
+}
+
+
+.bibliothek-titel {
+    margin-bottom:
+        20px;
+}
+
+
+.bibliothek-toolbar {
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(220px, 1fr)
+        240px
+        auto;
+
+    gap:
+        12px;
+
+    margin-bottom:
+        25px;
+}
+
+
+.bibliothek-toolbar input,
+.bibliothek-toolbar select {
+    margin-bottom:
+        0;
+}
+
+
+.bibliothek-layout {
+    display:
+        grid;
+
+    grid-template-columns:
+        280px
+        minmax(0, 1fr);
+
+    gap:
+        24px;
+
+    align-items:
+        start;
+}
+
+
+
+/* =========================================================
+   ORDNER
+========================================================= */
+
+.ordner-bereich {
+    background-color:
+        var(--karte-zwei);
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        16px;
+
+    padding:
+        18px;
+}
+
+
+.ordner-bereich h3 {
+    margin-top:
+        0;
+}
+
+
+.ordner-formular {
+    padding-bottom:
+        18px;
+
+    border-bottom:
+        1px
+        solid
+        var(--rand);
+}
+
+
+.farbe-zeile {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+    margin-bottom:
+        12px;
+}
+
+
+#ordnerFarbe {
+    width:
+        58px;
+
+    height:
+        42px;
+
+    padding:
+        3px;
+
+    margin:
+        0;
+
+    cursor:
+        pointer;
+}
+
+
+#farbeWert {
+    color:
+        var(--text-hell);
+
+    font-family:
+        Consolas,
+        monospace;
+}
+
+
+#ordnerSpeichern,
+#ordnerAbbrechen {
+    width:
+        100%;
+
+    margin-top:
+        6px;
+}
+
+
+.ordner-liste {
+    display:
+        grid;
+
+    gap:
+        8px;
+
+    margin-top:
+        18px;
+}
+
+
+.ordner-eintrag {
+    display:
+        grid;
+
+    grid-template-columns:
+        38px
+        minmax(0, 1fr)
+        auto;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+    padding:
+        9px;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        11px;
+
+    background-color:
+        var(--karte);
+}
+
+
+.ordner-symbol {
+    width:
+        36px;
+
+    height:
+        36px;
+
+    border-radius:
+        9px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        19px;
+
+    color:
+        white;
+}
+
+
+.ordner-name {
+    min-width:
+        0;
+
+    font-size:
+        14px;
+
+    font-weight:
+        bold;
+
+    overflow:
+        hidden;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+}
+
+
+.ordner-aktionen {
+    display:
+        flex;
+
+    gap:
+        4px;
+}
+
+
+.mini-button {
+    width:
+        30px;
+
+    height:
+        30px;
+
+    padding:
+        0;
+
+    border-radius:
+        8px;
+
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text);
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    font-size:
+        13px;
+}
+
+
+.mini-button:hover {
+    background-color:
+        var(--chip);
+
+    color:
+        var(--text);
+}
+
+
+
+/* =========================================================
+   PROMPT-BIBLIOTHEK
+========================================================= */
+
+.prompt-bibliothek {
+    min-width:
+        0;
+}
+
+
+.bibliothek-info {
+    margin-bottom:
+        14px;
+
+    color:
+        var(--text-hell);
+}
+
+
+.prompt-grid {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap:
+        16px;
+}
+
+
+.prompt-karte {
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    background-color:
+        var(--karte-zwei);
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        15px;
+
+    padding:
+        18px;
+
+    transition:
+        transform 0.15s,
+        box-shadow 0.15s;
+}
+
+
+.prompt-karte:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 22px
+        rgba(15, 23, 42, 0.08);
+}
+
+
+.prompt-farbbalken {
+    position:
+        absolute;
+
+    top:
+        0;
+
+    left:
+        0;
+
+    width:
+        5px;
+
+    height:
+        100%;
+}
+
+
+.prompt-kopf {
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    gap:
+        12px;
+}
+
+
+.prompt-icon {
+    width:
+        42px;
+
+    height:
+        42px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        11px;
+
+    font-size:
+        21px;
+
+    color:
+        white;
+}
+
+
+.prompt-titel-bereich {
+    flex:
+        1;
+
+    min-width:
+        0;
+}
+
+
+.prompt-titel {
+    margin:
+        0
+        0
+        4px;
+
+    font-size:
+        17px;
+
+    overflow-wrap:
+        break-word;
+}
+
+
+.prompt-untertitel {
+    color:
+        var(--text-hell);
+
+    font-size:
+        13px;
+}
+
+
+.favorit-button {
+    width:
+        36px;
+
+    height:
+        36px;
+
+    padding:
+        0;
+
+    flex-shrink:
+        0;
+
+    background:
+        transparent;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        20px;
+}
+
+
+.favorit-button:hover {
+    background-color:
+        var(--chip);
+
+    color:
+        var(--warnung);
+}
+
+
+.favorit-button.aktiv {
+    color:
+        #f59e0b;
+}
+
+
+.prompt-vorschautext {
+    margin:
+        16px
+        0;
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        13px;
+
+    line-height:
+        1.5;
+
+    display:
+        -webkit-box;
+
+    line-clamp:
+        4;
+
+    -webkit-line-clamp:
+        4;
+
+    -webkit-box-orient:
+        vertical;
+
+    overflow:
+        hidden;
+}
+
+
+.prompt-meta {
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        7px;
+
+    margin-bottom:
+        15px;
+}
+
+
+.meta-chip {
+    padding:
+        5px
+        8px;
+
+    border-radius:
+        999px;
+
+    background-color:
+        var(--karte);
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        11px;
+}
+
+
+.prompt-aktionen {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap:
+        7px;
+}
+
+
+.prompt-aktionen button {
+    padding:
+        9px
+        8px;
+
+    font-size:
+        12px;
+}
+
+
+.loeschen-button {
+    background-color:
+        transparent;
+
+    color:
+        var(--rot);
+
+    border:
+        1px
+        solid
+        var(--rand);
+}
+
+
+.loeschen-button:hover {
+    background-color:
+        var(--rot);
+
+    color:
+        white;
+}
+
+
+.leer-zustand {
+    grid-column:
+        1 / -1;
+
+    padding:
+        50px
+        20px;
+
+    text-align:
+        center;
+
+    border:
+        2px
+        dashed
+        var(--rand);
+
+    border-radius:
+        15px;
+
+    color:
+        var(--text-hell);
+}
+
+
+.leer-zustand strong {
+    display:
+        block;
+
+    margin-bottom:
+        8px;
+
+    color:
+        var(--text);
+}
+
+
+
+/* =========================================================
+   FAVORITEN FILTER
+========================================================= */
+
+#favoritenFilter.aktiv {
+    background-color:
+        #f59e0b;
+
+    color:
+        white;
+
+    border-color:
+        #f59e0b;
+}
+
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    text-align:
+        center;
+
+    padding:
+        0
+        20px
+        30px;
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        13px;
+}
+
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .prompt-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .app-container {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .vorschau {
+        position:
+            static;
+    }
+
+
+    .bibliothek-layout {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .bibliothek-toolbar {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+
+
+/* =========================================================
+   SMARTPHONE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .kopfbereich {
+        padding:
+            22px
+            18px
+            5px;
+    }
+
+
+    .app-container {
+        padding:
+            0
+            15px
+            25px;
+    }
+
+
+    .builder,
+    .vorschau {
+        padding:
+            20px;
+    }
+
+
+    .bibliothek-bereich {
+        margin:
+            0
+            15px
+            30px;
+
+        padding:
+            20px;
+    }
+
+
+    .logo {
+        width:
+            48px;
+
+        height:
+            48px;
+    }
+
+
+    h1 {
+        font-size:
+            24px;
+    }
+
+
+    .kopfbereich p {
+        font-size:
+            13px;
+    }
+
+
+    .prompt-aktionen {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .sortierung-zeile {
+        grid-template-columns:
+            36px
+            minmax(0, 1fr)
+            36px
+            36px;
+
+        gap:
+            5px;
+    }
+
+
+    .sortierung-stern-button,
+    .sortierung-pfeil-button {
+        width:
+            36px;
+
+        height:
+            36px;
+    }
+
+
+    .sortierung-liste {
+        max-height:
+            300px;
+    }
+
+}

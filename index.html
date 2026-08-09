@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <link rel="manifest" href="manifest.webmanifest">
+
+<meta name="theme-color" content="#7c3aed">
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PromptWerkstatt</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+
+<body>
+
+    <!-- ==================================================
+         KOPFBEREICH
+    =================================================== -->
+
+    <header class="kopfbereich">
+
+        <div class="logo-bereich">
+
+            <div class="logo">
+                PW
+            </div>
+
+            <div>
+
+                <h1>PromptWerkstatt</h1>
+
+                <p>
+                    Baue, speichere und organisiere bessere Prompts.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <button
+            id="themeToggle"
+            class="theme-button"
+            title="Hell-/Dunkelmodus wechseln"
+        >
+            🌙
+        </button>
+
+    </header>
+
+
+
+    <!-- ==================================================
+         PROMPT BUILDER
+    =================================================== -->
+
+    <main class="app-container">
+
+
+        <!-- ==================================================
+             LINKE SEITE
+        =================================================== -->
+
+        <section class="builder">
+
+
+            <div class="bereich-titel">
+
+                <span>1</span>
+
+                <div>
+
+                    <h2>Prompt bauen</h2>
+
+                    <p>
+                        Wähle passende Bausteine aus.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 HAUPTKATEGORIE
+            =================================================== -->
+
+            <div class="feld">
+
+                <label for="hauptkategorie">
+                    Hauptkategorie
+                </label>
+
+
+                <div class="kategorie-auswahl-zeile">
+
+                    <select id="hauptkategorie">
+
+                        <option value="bild">
+                            🖼️ Bild & visuelle Medien
+                        </option>
+
+                    </select>
+
+
+                    <button
+                        type="button"
+                        id="hauptFavoritButton"
+                        class="kategorie-favorit-button"
+                        title="Hauptkategorie als Favorit markieren"
+                        aria-label="Hauptkategorie als Favorit markieren"
+                    >
+                        ☆
+                    </button>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="hauptSortierungToggle"
+                    class="sortierung-toggle"
+                    aria-expanded="false"
+                >
+                    ⚙ Reihenfolge anpassen
+                </button>
+
+
+                <div
+                    id="hauptSortierungPanel"
+                    class="sortierung-panel versteckt"
+                >
+
+                    <div class="sortierung-kopf">
+
+                        <strong>
+                            Hauptkategorien anordnen
+                        </strong>
+
+                        <span>
+                            Favoriten bleiben immer oben.
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="hauptSortierungListe"
+                        class="sortierung-liste"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 UNTERKATEGORIE
+            =================================================== -->
+
+            <div class="feld">
+
+                <label for="unterkategorie">
+                    Unterkategorie
+                </label>
+
+
+                <div class="kategorie-auswahl-zeile">
+
+                    <select id="unterkategorie"></select>
+
+
+                    <button
+                        type="button"
+                        id="unterFavoritButton"
+                        class="kategorie-favorit-button"
+                        title="Unterkategorie als Favorit markieren"
+                        aria-label="Unterkategorie als Favorit markieren"
+                    >
+                        ☆
+                    </button>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="unterSortierungToggle"
+                    class="sortierung-toggle"
+                    aria-expanded="false"
+                >
+                    ⚙ Reihenfolge anpassen
+                </button>
+
+
+                <div
+                    id="unterSortierungPanel"
+                    class="sortierung-panel versteckt"
+                >
+
+                    <div class="sortierung-kopf">
+
+                        <strong>
+                            Unterkategorien anordnen
+                        </strong>
+
+                        <span>
+                            Gilt nur für die aktuell gewählte Hauptkategorie.
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="unterSortierungListe"
+                        class="sortierung-liste"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 ROLLE
+            =================================================== -->
+
+            <div class="feld">
+
+                <label for="rolle">
+                    Rolle der KI
+                </label>
+
+
+                <select id="rolle"></select>
+
+
+                <input
+                    type="text"
+                    id="eigeneRolle"
+                    placeholder="Oder eigene Rolle eingeben ..."
+                >
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 AUFGABE / ZIEL
+            =================================================== -->
+
+            <div class="feld">
+
+                <label for="ziel">
+                    Aufgabe / Ziel
+                </label>
+
+
+                <select id="ziel"></select>
+
+
+                <textarea
+                    id="eigenesZiel"
+                    placeholder="Optional: Aufgabe genauer beschreiben ..."
+                ></textarea>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 KONTEXT
+            =================================================== -->
+
+            <div class="feld">
+
+                <label for="kontext">
+                    Kontext
+                </label>
+
+
+                <div
+                    id="kontextHinweis"
+                    class="kontext-hilfe"
+                >
+                    💡 Hier erscheinen passende Hinweise für die gewählte Aufgabe.
+                </div>
+
+
+                <textarea
+                    id="kontext"
+                    placeholder="Welche Informationen soll die KI zusätzlich kennen?"
+                ></textarea>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 ANFORDERUNGEN
+            =================================================== -->
+
+            <div class="feld">
+
+                <label>
+                    Anforderungen
+                </label>
+
+
+                <p class="hinweis">
+                    Du kannst mehrere auswählen.
+                </p>
+
+
+                <div
+                    id="anforderungenContainer"
+                    class="chip-container"
+                ></div>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 REGELN & AUSSCHLÜSSE
+            =================================================== -->
+
+            <div class="feld">
+
+                <label>
+                    Regeln & Ausschlüsse
+                </label>
+
+
+                <p class="hinweis">
+                    Aktiviere ein oder mehrere Regel-Pakete.
+                </p>
+
+
+                <div
+                    id="regelPaketeContainer"
+                    class="regel-container"
+                ></div>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 EIGENE REGELN
+            =================================================== -->
+
+            <div class="feld">
+
+                <label for="eigeneRegeln">
+                    Eigene Regeln
+                </label>
+
+
+                <textarea
+                    id="eigeneRegeln"
+                    placeholder="Zum Beispiel: Verwende ausschließlich die Informationen, die ich dir bereitstelle."
+                ></textarea>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 AUSGABEFORMAT
+            =================================================== -->
+
+            <div class="feld">
+
+                <label for="ausgabeformat">
+                    Ausgabeformat
+                </label>
+
+
+                <select id="ausgabeformat"></select>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 BUILDER BUTTONS
+            =================================================== -->
+
+            <div class="builder-buttons">
+
+                <button
+                    id="zuruecksetzen"
+                    class="sekundaer-button"
+                >
+                    Zurücksetzen
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             RECHTE SEITE
+        =================================================== -->
+
+        <section class="vorschau">
+
+
+            <div class="bereich-titel">
+
+                <span>2</span>
+
+                <div>
+
+                    <h2>Dein fertiger Prompt</h2>
+
+                    <p>
+                        Die Vorschau wird automatisch aktualisiert.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div
+                id="promptVorschau"
+                class="prompt-box"
+            ></div>
+
+
+
+            <div class="vorschau-buttons">
+
+                <button id="kopieren">
+                    Prompt kopieren
+                </button>
+
+            </div>
+
+
+            <div
+                id="meldung"
+                class="meldung"
+            ></div>
+
+
+
+            <!-- ==================================================
+                 PROMPT SPEICHERN
+            =================================================== -->
+
+            <div class="speicher-bereich">
+
+                <h3>
+                    Prompt speichern
+                </h3>
+
+
+                <label for="promptName">
+                    Name des Prompts
+                </label>
+
+
+                <input
+                    type="text"
+                    id="promptName"
+                    placeholder="z. B. Landschaftsfoto analysieren"
+                >
+
+
+                <label for="speicherOrdner">
+                    Ordner
+                </label>
+
+
+                <select id="speicherOrdner"></select>
+
+
+                <button
+                    id="promptSpeichern"
+                    class="speichern-button"
+                >
+                    Prompt speichern
+                </button>
+
+
+                <button
+                    id="bearbeitungAbbrechen"
+                    class="sekundaer-button versteckt"
+                >
+                    Bearbeitung abbrechen
+                </button>
+
+
+                <div
+                    id="speicherMeldung"
+                    class="meldung"
+                ></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ==================================================
+         PROMPT-BIBLIOTHEK
+    =================================================== -->
+
+    <section class="bibliothek-bereich">
+
+
+        <div class="bereich-titel bibliothek-titel">
+
+            <span>3</span>
+
+            <div>
+
+                <h2>Prompt-Bibliothek</h2>
+
+                <p>
+                    Organisiere deine Prompts in eigenen Ordnern.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="bibliothek-toolbar">
+
+
+            <input
+                type="search"
+                id="suche"
+                placeholder="🔍 Prompts durchsuchen ..."
+            >
+
+
+            <select id="ordnerFilter"></select>
+
+
+            <button
+                id="favoritenFilter"
+                class="sekundaer-button"
+            >
+                ☆ Nur Favoriten
+            </button>
+
+        </div>
+
+
+
+        <div class="bibliothek-layout">
+
+
+            <!-- ==================================================
+                 ORDNER
+            =================================================== -->
+
+            <aside class="ordner-bereich">
+
+
+                <h3>
+                    📁 Ordner
+                </h3>
+
+
+                <div class="ordner-formular">
+
+
+                    <label for="ordnerName">
+                        Ordnername
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="ordnerName"
+                        placeholder="Neuen Ordner benennen ..."
+                    >
+
+
+                    <label for="ordnerIcon">
+                        Icon
+                    </label>
+
+
+                    <select id="ordnerIcon"></select>
+
+
+                    <label for="ordnerFarbe">
+                        Farbe
+                    </label>
+
+
+                    <div class="farbe-zeile">
+
+                        <input
+                            type="color"
+                            id="ordnerFarbe"
+                            value="#7c3aed"
+                        >
+
+
+                        <span id="farbeWert">
+                            #7c3aed
+                        </span>
+
+                    </div>
+
+
+                    <button id="ordnerSpeichern">
+                        Ordner erstellen
+                    </button>
+
+
+                    <button
+                        id="ordnerAbbrechen"
+                        class="sekundaer-button versteckt"
+                    >
+                        Bearbeitung abbrechen
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="ordnerListe"
+                    class="ordner-liste"
+                ></div>
+
+            </aside>
+
+
+
+            <!-- ==================================================
+                 PROMPT-KARTEN
+            =================================================== -->
+
+            <div class="prompt-bibliothek">
+
+
+                <div class="bibliothek-info">
+
+                    <strong id="anzahlPrompts">
+                        0 Prompts
+                    </strong>
+
+                </div>
+
+
+                <div
+                    id="bibliothekListe"
+                    class="prompt-grid"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+<!-- ==================================================
+     BACKUP & WIEDERHERSTELLUNG
+=================================================== -->
+
+<section class="backup-bereich">
+
+    <div class="bereich-titel">
+
+        <span>4</span>
+
+        <div>
+
+            <h2>Backup & Wiederherstellung</h2>
+
+            <p>
+                Sichere deine Prompts, Ordner und Einstellungen
+                oder stelle ein vorhandenes Backup wieder her.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="backup-aktionen">
+
+        <button
+            id="backupExport"
+        >
+            ⬇ Daten exportieren
+        </button>
+
+
+        <button
+            id="backupImport"
+            class="sekundaer-button"
+        >
+            ⬆ Daten importieren
+        </button>
+
+        <button
+    id="appZuruecksetzen"
+    class="loeschen-button"
+>
+    🗑 App vollständig zurücksetzen
+</button>
+
+        <input
+            type="file"
+            id="backupDatei"
+            accept=".json,application/json"
+            class="versteckt"
+        >
+
+    </div>
+
+
+    <div
+        id="backupMeldung"
+        class="meldung"
+    ></div>
+
+</section>
+
+    <!-- ==================================================
+         FOOTER
+    =================================================== -->
+
+    <footer>
+
+        <p>
+            PromptWerkstatt – lokale Testversion
+        </p>
+
+    </footer>
+
+
+
+    <!-- ==================================================
+         JAVASCRIPT
+
+         Reihenfolge wichtig:
+         1. daten.js
+         2. storage.js
+         3. script.js
+    =================================================== -->
+
+    <script src="daten.js"></script>
+
+    <script src="storage.js"></script>
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>
