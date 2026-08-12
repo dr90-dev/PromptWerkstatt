@@ -1224,7 +1224,129 @@ button:active {
         bold;
 }
 
+/* =========================================================
+   PROMPT-QUALITÄT
+========================================================= */
 
+.qualitaets-check {
+    margin-top: 18px;
+
+    padding: 16px;
+
+    border: 1px
+        solid
+        var(--rand);
+
+    border-radius: 14px;
+
+    background-color:
+        var(--karte-zwei);
+}
+
+
+.qualitaets-kopf {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap: 16px;
+
+    margin-bottom: 12px;
+}
+
+
+.qualitaets-kopf strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    font-size: 15px;
+}
+
+
+#qualitaetsText {
+    display: block;
+
+    color:
+        var(--text-hell);
+
+    font-size: 13px;
+}
+
+
+.qualitaets-punkte {
+    min-width: 54px;
+
+    height: 54px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 2px
+        solid
+        var(--primaer);
+
+    border-radius: 50%;
+
+    color:
+        var(--primaer);
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+
+.qualitaets-balken {
+    width: 100%;
+
+    height: 10px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background-color:
+        var(--rand);
+}
+
+
+.qualitaets-balken-fuellung {
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: 999px;
+
+    background-color:
+        var(--primaer);
+
+    transition:
+        width 0.3s ease;
+}
+
+
+.qualitaets-hinweise {
+    display: grid;
+
+    gap: 7px;
+
+    margin-top: 12px;
+
+    color:
+        var(--text-hell);
+
+    font-size: 13px;
+
+    line-height: 1.45;
+}
 
 /* =========================================================
    SPEICHERN

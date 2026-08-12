@@ -136,6 +136,35 @@ const meldung =
         "meldung"
     );
 
+// ======================================================
+// PROMPT-QUALITÄT
+// ======================================================
+
+const qualitaetsCheck =
+    document.getElementById(
+        "qualitaetsCheck"
+    );
+
+const qualitaetsText =
+    document.getElementById(
+        "qualitaetsText"
+    );
+
+const qualitaetsPunkte =
+    document.getElementById(
+        "qualitaetsPunkte"
+    );
+
+const qualitaetsBalken =
+    document.getElementById(
+        "qualitaetsBalken"
+    );
+
+const qualitaetsHinweise =
+    document.getElementById(
+        "qualitaetsHinweise"
+    );
+
     // ======================================================
 // BACKUP & WIEDERHERSTELLUNG
 // ======================================================
@@ -3073,6 +3102,367 @@ function unterkategorieGeaendert() {
     );
 }
 
+// ======================================================
+// PROMPT-QUALITÄT BEWERTEN
+// ======================================================
+
+function promptQualitaetBewerten() {
+
+    let punkte =
+        0;
+
+    const hinweise =
+        [];
+
+
+    // --------------------------------------------------
+    // ROLLE
+    // maximal 15 Punkte
+    // --------------------------------------------------
+
+    const rollenText =
+        eigeneRolle.value.trim() ||
+        rolle.value.trim();
+
+
+    if (
+        rollenText !==
+        ""
+    ) {
+
+        punkte +=
+            15;
+
+    } else {
+
+        hinweise.push(
+            "💡 Lege eine klare Rolle für die KI fest."
+        );
+    }
+
+
+    // --------------------------------------------------
+    // AUFGABE / ZIEL
+    // maximal 20 Punkte
+    // --------------------------------------------------
+
+    const eigenesZielText =
+        eigenesZiel.value.trim();
+
+
+    if (
+        eigenesZielText.length >=
+        40
+    ) {
+
+        punkte +=
+            20;
+
+    } else if (
+        eigenesZielText.length >=
+        15
+    ) {
+
+        punkte +=
+            16;
+
+        hinweise.push(
+            "💡 Das Ziel ist schon konkret. Ein paar zusätzliche Details könnten es noch präziser machen."
+        );
+
+    } else if (
+        ziel.value.trim() !==
+        ""
+    ) {
+
+        punkte +=
+            10;
+
+        hinweise.push(
+            "💡 Beschreibe die Aufgabe im freien Zielfeld noch etwas genauer."
+        );
+
+    } else {
+
+        hinweise.push(
+            "⚠️ Die Aufgabe bzw. das Ziel fehlt."
+        );
+    }
+
+
+    // --------------------------------------------------
+    // KONTEXT
+    // maximal 25 Punkte
+    // --------------------------------------------------
+
+    const kontextText =
+        kontext.value.trim();
+
+
+    if (
+        kontextText.length >=
+        120
+    ) {
+
+        punkte +=
+            25;
+
+    } else if (
+        kontextText.length >=
+        60
+    ) {
+
+        punkte +=
+            18;
+
+        hinweise.push(
+            "💡 Der Kontext ist gut. Weitere konkrete Rahmenbedingungen könnten die Antwort verbessern."
+        );
+
+    } else if (
+        kontextText.length >
+        0
+    ) {
+
+        punkte +=
+            9;
+
+        hinweise.push(
+            "💡 Ergänze mehr Kontext, zum Beispiel Ausgangssituation, Zielgruppe, vorhandene Daten oder Einschränkungen."
+        );
+
+    } else {
+
+        hinweise.push(
+            "⚠️ Kontext fehlt. Zusätzliche Hintergrundinformationen verbessern die Qualität meist deutlich."
+        );
+    }
+
+
+    // --------------------------------------------------
+    // ANFORDERUNGEN
+    // maximal 15 Punkte
+    // --------------------------------------------------
+
+    if (
+        aktiveAnforderungen.length >=
+        3
+    ) {
+
+        punkte +=
+            15;
+
+    } else if (
+        aktiveAnforderungen.length ===
+        2
+    ) {
+
+        punkte +=
+            11;
+
+        hinweise.push(
+            "💡 Eine weitere passende Anforderung könnte den Prompt noch genauer machen."
+        );
+
+    } else if (
+        aktiveAnforderungen.length ===
+        1
+    ) {
+
+        punkte +=
+            6;
+
+        hinweise.push(
+            "💡 Wähle nach Möglichkeit mehrere konkrete Anforderungen."
+        );
+
+    } else {
+
+        hinweise.push(
+            "⚠️ Es wurden noch keine Anforderungen festgelegt."
+        );
+    }
+
+
+    // --------------------------------------------------
+    // REGELN & AUSSCHLÜSSE
+    // maximal 15 Punkte
+    // --------------------------------------------------
+
+    const hatRegelPaket =
+        aktiveRegelPakete.length >
+        0;
+
+    const hatEigeneRegeln =
+        eigeneRegeln.value.trim() !==
+        "";
+
+
+    if (
+        hatRegelPaket &&
+        hatEigeneRegeln
+    ) {
+
+        punkte +=
+            15;
+
+    } else if (
+        hatRegelPaket
+    ) {
+
+        punkte +=
+            11;
+
+    } else if (
+        hatEigeneRegeln
+    ) {
+
+        punkte +=
+            8;
+
+        hinweise.push(
+            "💡 Ein passendes Regel-Paket kann zusätzliche Sicherheit und Präzision bringen."
+        );
+
+    } else {
+
+        hinweise.push(
+            "💡 Regeln oder Ausschlüsse helfen dabei, unerwünschte Antworten zu vermeiden."
+        );
+    }
+
+
+    // --------------------------------------------------
+    // AUSGABEFORMAT
+    // maximal 10 Punkte
+    // --------------------------------------------------
+
+    if (
+        ausgabeformat.value.trim() !==
+        ""
+    ) {
+
+        punkte +=
+            10;
+
+    } else {
+
+        hinweise.push(
+            "⚠️ Lege ein gewünschtes Ausgabeformat fest."
+        );
+    }
+
+
+    // --------------------------------------------------
+    // MAXIMAL 100 PUNKTE
+    // --------------------------------------------------
+
+    punkte =
+        Math.min(
+            100,
+            punkte
+        );
+
+
+    // --------------------------------------------------
+    // BEWERTUNGSTEXT
+    // --------------------------------------------------
+
+    let bewertung =
+        "Ausbaufähig";
+
+
+    if (
+        punkte >=
+        90
+    ) {
+
+        bewertung =
+            "Sehr stark";
+
+    } else if (
+        punkte >=
+        75
+    ) {
+
+        bewertung =
+            "Gut";
+
+    } else if (
+        punkte >=
+        55
+    ) {
+
+        bewertung =
+            "Solide";
+    }
+
+
+    qualitaetsPunkte.textContent =
+        punkte;
+
+
+    qualitaetsText.textContent =
+        `${bewertung} · ${punkte} von 100 Punkten`;
+
+
+    qualitaetsBalken.style.width =
+        `${punkte}%`;
+
+
+    qualitaetsHinweise.innerHTML =
+        "";
+
+
+    if (
+        hinweise.length ===
+        0
+    ) {
+
+        const eintrag =
+            document.createElement(
+                "div"
+            );
+
+
+        eintrag.textContent =
+            "✅ Der Prompt enthält alle wichtigen Grundbausteine.";
+
+
+        qualitaetsHinweise.appendChild(
+            eintrag
+        );
+
+        return;
+    }
+
+
+    hinweise
+        .slice(
+            0,
+            3
+        )
+        .forEach(
+
+            function (hinweis) {
+
+                const eintrag =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                eintrag.textContent =
+                    hinweis;
+
+
+                qualitaetsHinweise.appendChild(
+                    eintrag
+                );
+            }
+
+        );
+}
 
 // ======================================================
 // PROMPT ERSTELLEN
@@ -3249,7 +3639,10 @@ function promptErstellen() {
 
 
     promptVorschau.textContent =
-        prompt;
+    prompt;
+
+
+promptQualitaetBewerten();
 }
 
 
