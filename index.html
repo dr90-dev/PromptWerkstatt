@@ -91,6 +91,117 @@
             </div>
 
 
+            <!-- ==================================================
+                 BEREICH – V2-NAVIGATION (PHASE 2)
+            =================================================== -->
+
+            <div class="feld">
+
+                <label for="bereichAuswahl">
+                    Bereich
+                </label>
+
+
+                <select id="bereichAuswahl"></select>
+
+
+                <button
+                    type="button"
+                    id="bereicheVerwalten"
+                    class="sekundaer-button bereiche-verwalten-button"
+                >
+                    Bereiche verwalten
+                </button>
+
+            </div>
+
+
+            <div
+                id="bereicheModal"
+                class="bereich-modal versteckt"
+                hidden
+                aria-hidden="true"
+            >
+
+                <div
+                    class="bereich-modal-dialog"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="bereicheModalTitel"
+                >
+
+                    <div class="bereich-modal-kopf">
+
+                        <h3 id="bereicheModalTitel">
+                            Bereiche verwalten
+                        </h3>
+
+                        <button
+                            type="button"
+                            id="bereicheModalSchliessen"
+                            class="bereich-modal-schliessen"
+                            aria-label="Bereichsverwaltung schließen"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="bereicheModalListe"
+                        class="bereich-modal-liste"
+                    ></div>
+
+
+                    <div
+                        id="bereicheModalStatus"
+                        class="bereich-modal-status"
+                        role="status"
+                        aria-live="polite"
+                    ></div>
+
+
+                    <div class="bereich-modal-fuss">
+
+                        <button
+                            type="button"
+                            id="bereicheAlleAuswaehlen"
+                            class="sekundaer-button"
+                        >
+                            Alle auswählen
+                        </button>
+
+                        <button
+                            type="button"
+                            id="bereicheStandard"
+                            class="sekundaer-button"
+                        >
+                            Standard wiederherstellen
+                        </button>
+
+                        <button
+                            type="button"
+                            id="bereicheAbbrechen"
+                            class="sekundaer-button"
+                        >
+                            Abbrechen
+                        </button>
+
+                        <button
+                            type="button"
+                            id="bereicheSpeichern"
+                        >
+                            Auswahl speichern
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
 
             <!-- ==================================================
                  HAUPTKATEGORIE
@@ -1124,14 +1235,48 @@
 
          Reihenfolge wichtig:
          1. daten.js
-         2. storage.js
-         3. api.js
-         4. script.js
+         2. V2-Registry und V2-Bereiche
+         3. storage.js
+         4. bereiche-ui.js
+         5. api.js
+         6. script.js
     =================================================== -->
 
     <script src="daten.js"></script>
 
+    <script src="daten/gemeinsam.js"></script>
+
+    <script src="daten/bereiche.js"></script>
+
+    <script src="daten/bereiche/allgemein.js"></script>
+
+    <script src="daten/bereiche/schreiben.js"></script>
+
+    <script src="daten/bereiche/familie.js"></script>
+
+    <script src="daten/bereiche/kreativ.js"></script>
+
+    <script src="daten/bereiche/kochen.js"></script>
+
+    <script src="daten/bereiche/freizeit.js"></script>
+
+    <script src="daten/bereiche/social-media.js"></script>
+
+    <script src="daten/bereiche/gesundheit.js"></script>
+
+    <script src="daten/bereiche/lernen.js"></script>
+
+    <script src="daten/bereiche/business.js"></script>
+
+    <script src="daten/bereiche/it.js"></script>
+
+    <script src="daten/bereiche/technik.js"></script>
+
+    <script src="daten/bereiche/recht.js"></script>
+
     <script src="storage.js"></script>
+
+    <script src="bereiche-ui.js"></script>
 
     <script src="api.js"></script>
 

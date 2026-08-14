@@ -29,7 +29,13 @@ const StorageService = {
             "promptWerkstattTheme",
 
         navigation:
-            "promptWerkstattNavigation"
+            "promptWerkstattNavigation",
+
+        aktiveBereicheV2:
+            "promptwerkstatt-aktive-bereiche-v2",
+
+        aktiverBereichV2:
+            "promptwerkstatt-aktiver-bereich-v2"
 
     },
 
@@ -395,6 +401,131 @@ navigationLaden() {
 
 
     // ==================================================
+    // V2-BEREICHSAUSWAHL
+    // ==================================================
+
+    aktiveBereicheV2Laden() {
+
+        try {
+            const daten =
+                localStorage.getItem(
+                    this.keys.aktiveBereicheV2
+                );
+
+
+            if (!daten) {
+                return null;
+            }
+
+
+            const bereiche =
+                JSON.parse(daten);
+
+
+            return Array.isArray(bereiche)
+                ? bereiche
+                : null;
+
+        } catch (fehler) {
+            console.error(
+                "Aktive V2-Bereiche konnten nicht geladen werden:",
+                fehler
+            );
+
+
+            return null;
+        }
+    },
+
+
+    aktiveBereicheV2Speichern(bereichIds) {
+
+        if (!Array.isArray(bereichIds)) {
+            return false;
+        }
+
+
+        try {
+            localStorage.setItem(
+                this.keys.aktiveBereicheV2,
+                JSON.stringify(bereichIds)
+            );
+
+
+            return true;
+
+        } catch (fehler) {
+            console.error(
+                "Aktive V2-Bereiche konnten nicht gespeichert werden:",
+                fehler
+            );
+
+
+            return false;
+        }
+    },
+
+
+    aktiverBereichV2Laden() {
+
+        try {
+            const bereichId =
+                localStorage.getItem(
+                    this.keys.aktiverBereichV2
+                );
+
+
+            return typeof bereichId === "string" &&
+                bereichId !== ""
+
+                ? bereichId
+
+                : null;
+
+        } catch (fehler) {
+            console.error(
+                "Der ausgewählte V2-Bereich konnte nicht geladen werden:",
+                fehler
+            );
+
+
+            return null;
+        }
+    },
+
+
+    aktiverBereichV2Speichern(bereichId) {
+
+        if (
+            typeof bereichId !== "string" ||
+            bereichId === ""
+        ) {
+            return false;
+        }
+
+
+        try {
+            localStorage.setItem(
+                this.keys.aktiverBereichV2,
+                bereichId
+            );
+
+
+            return true;
+
+        } catch (fehler) {
+            console.error(
+                "Der ausgewählte V2-Bereich konnte nicht gespeichert werden:",
+                fehler
+            );
+
+
+            return false;
+        }
+    },
+
+
+    // ==================================================
     // KOMPLETTE DATEN SICHERN
     // ==================================================
     //
@@ -607,6 +738,19 @@ alleDatenSpeichern(importDaten) {
         localStorage.removeItem(
             this.keys.navigation
         );
+
+
+        localStorage.removeItem(
+            this.keys.aktiveBereicheV2
+        );
+
+
+        localStorage.removeItem(
+            this.keys.aktiverBereichV2
+        );
     }
 
 };
+
+
+globalThis.StorageService = StorageService;

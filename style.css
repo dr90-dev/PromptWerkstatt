@@ -466,6 +466,321 @@ textarea:focus {
 
 
 /* =========================================================
+   BEREICHSAUSWAHL UND -VERWALTUNG (V2)
+========================================================= */
+
+.bereiche-verwalten-button {
+    width:
+        100%;
+
+    margin-top:
+        2px;
+}
+
+
+body.bereich-modal-offen {
+    overflow:
+        hidden;
+}
+
+
+.bereich-modal {
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    z-index:
+        2100;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        24px;
+
+    background-color:
+        rgba(15, 23, 42, 0.78);
+}
+
+
+.bereich-modal-dialog {
+    width:
+        min(760px, 100%);
+
+    max-height:
+        calc(100vh - 48px);
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    overflow:
+        hidden;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        16px;
+
+    background-color:
+        var(--karte);
+
+    box-shadow:
+        0 24px 70px
+        rgba(0, 0, 0, 0.35);
+}
+
+
+.bereich-modal-kopf {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    padding:
+        18px
+        20px;
+
+    border-bottom:
+        1px
+        solid
+        var(--rand);
+}
+
+
+.bereich-modal-kopf h3 {
+    margin:
+        0;
+
+    font-size:
+        clamp(18px, 2vw, 24px);
+}
+
+
+.bereich-modal-schliessen {
+    flex:
+        0 0 auto;
+
+    width:
+        44px;
+
+    height:
+        44px;
+
+    padding:
+        0;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        10px;
+
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text);
+
+    font-size:
+        30px;
+
+    line-height:
+        1;
+}
+
+
+.bereich-modal-schliessen:hover {
+    background-color:
+        var(--chip);
+
+    color:
+        var(--primaer);
+}
+
+
+.bereich-modal-liste {
+    min-height:
+        0;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        10px;
+
+    padding:
+        18px
+        20px;
+
+    overflow-y:
+        auto;
+}
+
+
+.bereich-option {
+    min-width:
+        0;
+
+    margin:
+        0;
+
+    padding:
+        12px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        10px;
+
+    background-color:
+        var(--karte-zwei);
+
+    cursor:
+        pointer;
+
+    font-weight:
+        normal;
+
+    line-height:
+        1.35;
+}
+
+
+.bereich-option:hover {
+    border-color:
+        var(--primaer);
+}
+
+
+.bereich-option input {
+    flex:
+        0 0 auto;
+
+    width:
+        18px;
+
+    height:
+        18px;
+
+    margin:
+        0;
+
+    accent-color:
+        var(--primaer);
+}
+
+
+.bereich-option span {
+    min-width:
+        0;
+
+    overflow-wrap:
+        anywhere;
+}
+
+
+.bereich-modal-status {
+    min-height:
+        22px;
+
+    padding:
+        0
+        20px;
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        14px;
+
+    font-weight:
+        bold;
+
+    line-height:
+        1.45;
+}
+
+
+.bereich-modal-status.ist-fehler {
+    color:
+        var(--rot);
+}
+
+
+.bereich-modal-fuss {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        10px;
+
+    padding:
+        14px
+        20px
+        18px;
+
+    border-top:
+        1px
+        solid
+        var(--rand);
+}
+
+
+.bereich-modal-fuss button {
+    width:
+        100%;
+}
+
+
+
+/* =========================================================
    KATEGORIE-AUSWAHL
 ========================================================= */
 
@@ -2884,6 +3199,52 @@ footer {
     .ki-vergleich-fuss button {
         width:
             100%;
+    }
+
+
+    .bereich-modal {
+        align-items:
+            stretch;
+
+        padding:
+            10px;
+    }
+
+
+    .bereich-modal-dialog {
+        max-height:
+            calc(100vh - 20px);
+    }
+
+
+    .bereich-modal-kopf {
+        padding:
+            12px;
+    }
+
+
+    .bereich-modal-liste {
+        grid-template-columns:
+            1fr;
+
+        padding:
+            12px;
+    }
+
+
+    .bereich-modal-status {
+        padding:
+            0
+            12px;
+    }
+
+
+    .bereich-modal-fuss {
+        grid-template-columns:
+            1fr;
+
+        padding:
+            12px;
     }
 
 }

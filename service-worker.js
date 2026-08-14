@@ -3,7 +3,7 @@
 // ======================================================
 
 const CACHE_NAME =
-    "promptwerkstatt-v5";
+    "promptwerkstatt-v9";
 
 
 const APP_DATEIEN = [
@@ -12,7 +12,23 @@ const APP_DATEIEN = [
     "./style.css",
     "./script.js",
     "./api.js",
+    "./bereiche-ui.js",
     "./daten.js",
+    "./daten/gemeinsam.js",
+    "./daten/bereiche.js",
+    "./daten/bereiche/allgemein.js",
+    "./daten/bereiche/schreiben.js",
+    "./daten/bereiche/familie.js",
+    "./daten/bereiche/kreativ.js",
+    "./daten/bereiche/kochen.js",
+    "./daten/bereiche/freizeit.js",
+    "./daten/bereiche/social-media.js",
+    "./daten/bereiche/gesundheit.js",
+    "./daten/bereiche/lernen.js",
+    "./daten/bereiche/business.js",
+    "./daten/bereiche/it.js",
+    "./daten/bereiche/technik.js",
+    "./daten/bereiche/recht.js",
     "./storage.js",
     "./manifest.webmanifest",
     "./icons/icon-192.png",
