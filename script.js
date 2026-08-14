@@ -111,6 +111,11 @@ const ausgabeformat =
         "ausgabeformat"
     );
 
+const ausgabeAls =
+    document.getElementById(
+        "ausgabeAls"
+    );
+
 const promptVorschau =
     document.getElementById(
         "promptVorschau"
@@ -3638,6 +3643,15 @@ function promptErstellen() {
         `Erstelle die Antwort als ${ausgabeformat.value || "strukturierte Antwort"}.`;
 
 
+    if (
+        ausgabeAls.value !==
+        ""
+    ) {
+        prompt +=
+            `\n\nAusgabe als: ${ausgabeAls.value}`;
+    }
+
+
     promptVorschau.textContent =
     prompt;
 
@@ -3662,6 +3676,9 @@ function builderZuruecksetzen() {
         "";
 
     eigeneRegeln.value =
+        "";
+
+    ausgabeAls.value =
         "";
 
     promptName.value =
@@ -4440,6 +4457,9 @@ function builderDatenHolen() {
         ausgabeformat:
             ausgabeformat.value,
 
+        ausgabeAls:
+            ausgabeAls.value,
+
         promptText:
             promptVorschau.textContent
 
@@ -4775,6 +4795,26 @@ function promptBearbeiten(
         ausgabeformat.value =
             eintrag.ausgabeformat;
     }
+
+
+    ausgabeAls.value =
+        [
+            ...ausgabeAls.options
+        ].some(
+
+            function (option) {
+
+                return (
+                    option.value ===
+                    eintrag.ausgabeAls
+                );
+            }
+
+        )
+
+            ? eintrag.ausgabeAls
+
+            : "";
 
 
     speicherOrdner.value =
@@ -6175,6 +6215,12 @@ eigeneRegeln.addEventListener(
 
 
 ausgabeformat.addEventListener(
+    "change",
+    promptErstellen
+);
+
+
+ausgabeAls.addEventListener(
     "change",
     promptErstellen
 );

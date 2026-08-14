@@ -13,7 +13,9 @@
 
     let testToken = "";
     let aktiveAnfrage = null;
+    let letzterOriginalPrompt = "";
     let letzterVerbesserterPrompt = "";
+    let fokusVorVergleich = null;
 
 
     const entwicklungsBereich =
@@ -93,18 +95,54 @@
             "kiErgebnisKopieren"
         );
 
+    const vergleichOeffnenButton =
+        document.getElementById(
+            "kiVergleichOeffnen"
+        );
+
+    const vergleichModal =
+        document.getElementById(
+            "kiVergleichModal"
+        );
+
+    const vergleichSchliessenButton =
+        document.getElementById(
+            "kiVergleichSchliessen"
+        );
+
+    const vergleichOriginal =
+        document.getElementById(
+            "kiVergleichOriginal"
+        );
+
+    const vergleichVerbessert =
+        document.getElementById(
+            "kiVergleichVerbessert"
+        );
+
+    const vergleichStatus =
+        document.getElementById(
+            "kiVergleichStatus"
+        );
+
+    const vergleichKopierenButton =
+        document.getElementById(
+            "kiVergleichKopieren"
+        );
+
     const promptVorschau =
         document.getElementById(
             "promptVorschau"
         );
 
 
-    function statusAnzeigen(
+    function statusInBereichAnzeigen(
+        bereich,
         text,
         typ = ""
     ) {
-        statusBereich.textContent = text;
-        statusBereich.classList.remove(
+        bereich.textContent = text;
+        bereich.classList.remove(
             "ist-fehler",
             "ist-erfolg",
             "ist-laden"
@@ -112,10 +150,22 @@
 
 
         if (typ) {
-            statusBereich.classList.add(
+            bereich.classList.add(
                 `ist-${typ}`
             );
         }
+    }
+
+
+    function statusAnzeigen(
+        text,
+        typ = ""
+    ) {
+        statusInBereichAnzeigen(
+            statusBereich,
+            text,
+            typ
+        );
     }
 
 
@@ -139,12 +189,160 @@
 
 
     function ergebnisZuruecksetzen() {
+        letzterOriginalPrompt = "";
         letzterVerbesserterPrompt = "";
         ergebnisText.textContent = "";
         ergebnisBereich.classList.add(
             "versteckt"
         );
         kopierenButton.disabled = true;
+        vergleichOeffnenButton.disabled = true;
+        vergleichOeffnenButton.classList.add(
+            "versteckt"
+        );
+    }
+
+
+    async function verbessertenPromptKopieren() {
+
+        if (!letzterVerbesserterPrompt) {
+            return false;
+        }
+
+
+        await navigator.clipboard.writeText(
+            letzterVerbesserterPrompt
+        );
+
+
+        return true;
+    }
+
+
+    function vergleichOeffnen() {
+
+        if (
+            !letzterOriginalPrompt ||
+            !letzterVerbesserterPrompt
+        ) {
+            return;
+        }
+
+
+        vergleichOriginal.textContent =
+            letzterOriginalPrompt;
+
+        vergleichVerbessert.textContent =
+            letzterVerbesserterPrompt;
+
+        statusInBereichAnzeigen(
+            vergleichStatus,
+            ""
+        );
+
+        fokusVorVergleich =
+            document.activeElement;
+
+        vergleichModal.hidden = false;
+        vergleichModal.classList.remove(
+            "versteckt"
+        );
+        vergleichModal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+        document.body.classList.add(
+            "ki-modal-offen"
+        );
+
+        vergleichSchliessenButton.focus();
+    }
+
+
+    function vergleichSchliessen() {
+
+        if (vergleichModal.hidden) {
+            return;
+        }
+
+
+        vergleichModal.hidden = true;
+        vergleichModal.classList.add(
+            "versteckt"
+        );
+        vergleichModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+        document.body.classList.remove(
+            "ki-modal-offen"
+        );
+
+
+        if (
+            fokusVorVergleich &&
+            typeof fokusVorVergleich.focus === "function"
+        ) {
+            fokusVorVergleich.focus();
+        }
+
+
+        fokusVorVergleich = null;
+    }
+
+
+    function vergleichTastaturSteuern(event) {
+
+        if (vergleichModal.hidden) {
+            return;
+        }
+
+
+        if (event.key === "Escape") {
+            event.preventDefault();
+            vergleichSchliessen();
+            return;
+        }
+
+
+        if (event.key !== "Tab") {
+            return;
+        }
+
+
+        const fokusElemente =
+            vergleichModal.querySelectorAll(
+                "button:not([disabled]), [tabindex]:not([tabindex='-1'])"
+            );
+
+
+        if (!fokusElemente.length) {
+            return;
+        }
+
+
+        const erstesElement =
+            fokusElemente[0];
+
+        const letztesElement =
+            fokusElemente[
+                fokusElemente.length - 1
+            ];
+
+
+        if (
+            event.shiftKey &&
+            document.activeElement === erstesElement
+        ) {
+            event.preventDefault();
+            letztesElement.focus();
+        } else if (
+            !event.shiftKey &&
+            document.activeElement === letztesElement
+        ) {
+            event.preventDefault();
+            erstesElement.focus();
+        }
     }
 
 
@@ -380,11 +578,17 @@
 
 
             try {
-                letzterVerbesserterPrompt =
+                const verbesserterPrompt =
                     await promptMitKiVerbessern(
                         prompt
                     );
 
+
+                letzterOriginalPrompt =
+                    prompt;
+
+                letzterVerbesserterPrompt =
+                    verbesserterPrompt;
 
                 ergebnisText.textContent =
                     letzterVerbesserterPrompt;
@@ -394,6 +598,10 @@
                 );
 
                 kopierenButton.disabled = false;
+                vergleichOeffnenButton.disabled = false;
+                vergleichOeffnenButton.classList.remove(
+                    "versteckt"
+                );
 
                 statusAnzeigen(
                     "Verbesserung abgeschlossen. Der ursprüngliche Prompt wurde nicht verändert.",
@@ -425,9 +633,7 @@
 
 
             try {
-                await navigator.clipboard.writeText(
-                    letzterVerbesserterPrompt
-                );
+                await verbessertenPromptKopieren();
 
                 statusAnzeigen(
                     "Verbesserter Prompt wurde kopiert ✓",
@@ -436,6 +642,59 @@
             }
             catch {
                 statusAnzeigen(
+                    "Der verbesserte Prompt konnte nicht kopiert werden.",
+                    "fehler"
+                );
+            }
+        }
+    );
+
+
+    vergleichOeffnenButton.addEventListener(
+        "click",
+        vergleichOeffnen
+    );
+
+
+    vergleichSchliessenButton.addEventListener(
+        "click",
+        vergleichSchliessen
+    );
+
+
+    vergleichModal.addEventListener(
+        "click",
+        function (event) {
+
+            if (event.target === vergleichModal) {
+                vergleichSchliessen();
+            }
+        }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        vergleichTastaturSteuern
+    );
+
+
+    vergleichKopierenButton.addEventListener(
+        "click",
+        async function () {
+
+            try {
+                await verbessertenPromptKopieren();
+
+                statusInBereichAnzeigen(
+                    vergleichStatus,
+                    "Verbesserter Prompt wurde kopiert ✓",
+                    "erfolg"
+                );
+            }
+            catch {
+                statusInBereichAnzeigen(
+                    vergleichStatus,
                     "Der verbesserte Prompt konnte nicht kopiert werden.",
                     "fehler"
                 );

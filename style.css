@@ -1480,6 +1480,15 @@ button:active {
 }
 
 
+.ki-vergleich-oeffnen {
+    width:
+        100%;
+
+    margin-top:
+        10px;
+}
+
+
 .ki-uebernehmen-hinweis {
     margin-top:
         10px;
@@ -1507,6 +1516,301 @@ button:active {
 .ki-entwicklung .sekundaer-button:disabled:hover {
     background-color:
         var(--karte-zwei);
+}
+
+
+body.ki-modal-offen {
+    overflow:
+        hidden;
+}
+
+
+.ki-vergleich-modal {
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    z-index:
+        2000;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        24px;
+
+    background-color:
+        rgba(15, 23, 42, 0.78);
+}
+
+
+.ki-vergleich-dialog {
+    width:
+        min(1400px, 100%);
+
+    max-height:
+        calc(100vh - 48px);
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    overflow:
+        hidden;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        16px;
+
+    background-color:
+        var(--karte);
+
+    box-shadow:
+        0 24px 70px
+        rgba(0, 0, 0, 0.35);
+}
+
+
+.ki-vergleich-kopf {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    padding:
+        18px
+        20px;
+
+    border-bottom:
+        1px
+        solid
+        var(--rand);
+}
+
+
+.ki-vergleich-kopf h3 {
+    margin:
+        0;
+
+    font-size:
+        clamp(18px, 2vw, 24px);
+}
+
+
+.ki-vergleich-schliessen {
+    flex:
+        0 0 auto;
+
+    width:
+        44px;
+
+    height:
+        44px;
+
+    padding:
+        0;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        10px;
+
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text);
+
+    font-size:
+        30px;
+
+    line-height:
+        1;
+}
+
+
+.ki-vergleich-schliessen:hover {
+    background-color:
+        var(--chip);
+
+    color:
+        var(--primaer);
+}
+
+
+.ki-vergleich-inhalt {
+    min-height:
+        0;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        16px;
+
+    padding:
+        18px
+        20px;
+
+    overflow:
+        hidden;
+}
+
+
+.ki-vergleich-spalte {
+    min-width:
+        0;
+
+    min-height:
+        0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+}
+
+
+.ki-vergleich-spalte h4 {
+    margin:
+        0
+        0
+        9px;
+
+    color:
+        var(--text);
+}
+
+
+.ki-vergleich-text {
+    min-height:
+        280px;
+
+    max-height:
+        62vh;
+
+    overflow:
+        auto;
+
+    padding:
+        18px;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        12px;
+
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text);
+
+    white-space:
+        pre-wrap;
+
+    overflow-wrap:
+        anywhere;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.6;
+}
+
+
+.ki-vergleich-text:focus {
+    outline:
+        3px
+        solid
+        color-mix(
+            in srgb,
+            var(--primaer) 35%,
+            transparent
+        );
+
+    outline-offset:
+        2px;
+}
+
+
+.ki-vergleich-fuss {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        flex-end;
+
+    gap:
+        16px;
+
+    padding:
+        14px
+        20px
+        18px;
+
+    border-top:
+        1px
+        solid
+        var(--rand);
+}
+
+
+.ki-vergleich-status {
+    flex:
+        1;
+
+    min-height:
+        0;
+
+    margin-top:
+        0;
 }
 
 /* =========================================================
@@ -2517,6 +2821,69 @@ footer {
     .ki-ergebnis-aktionen {
         grid-template-columns:
             1fr;
+    }
+
+
+    .ki-vergleich-modal {
+        align-items:
+            stretch;
+
+        padding:
+            10px;
+    }
+
+
+    .ki-vergleich-dialog {
+        max-height:
+            calc(100vh - 20px);
+    }
+
+
+    .ki-vergleich-kopf {
+        padding:
+            12px;
+    }
+
+
+    .ki-vergleich-inhalt {
+        grid-template-columns:
+            1fr;
+
+        padding:
+            12px;
+
+        overflow-y:
+            auto;
+    }
+
+
+    .ki-vergleich-text {
+        min-height:
+            190px;
+
+        max-height:
+            34vh;
+    }
+
+
+    .ki-vergleich-fuss {
+        align-items:
+            stretch;
+
+        flex-direction:
+            column;
+
+        gap:
+            8px;
+
+        padding:
+            12px;
+    }
+
+
+    .ki-vergleich-fuss button {
+        width:
+            100%;
     }
 
 }

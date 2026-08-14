@@ -3,7 +3,7 @@
 // ======================================================
 
 const CACHE_NAME =
-    "promptwerkstatt-v3";
+    "promptwerkstatt-v5";
 
 
 const APP_DATEIEN = [
