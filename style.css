@@ -1224,6 +1224,291 @@ button:active {
         bold;
 }
 
+
+
+/* =========================================================
+   KI-VERBESSERUNG – LOKALER ENTWICKLUNGSMODUS
+========================================================= */
+
+.ki-entwicklung {
+    margin-top:
+        22px;
+
+    padding:
+        18px;
+
+    border:
+        2px
+        dashed
+        var(--warnung);
+
+    border-radius:
+        14px;
+
+    background-color:
+        color-mix(
+            in srgb,
+            var(--warnung) 8%,
+            var(--karte)
+        );
+}
+
+
+.ki-entwicklung-kopf h3 {
+    margin:
+        10px
+        0
+        6px;
+}
+
+
+.ki-entwicklung-kopf p {
+    margin:
+        0;
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        14px;
+
+    line-height:
+        1.5;
+}
+
+
+.ki-entwicklung-badge {
+    display:
+        inline-block;
+
+    padding:
+        5px
+        9px;
+
+    border-radius:
+        999px;
+
+    background-color:
+        var(--warnung);
+
+    color:
+        white;
+
+    font-size:
+        12px;
+
+    font-weight:
+        bold;
+
+    letter-spacing:
+        0.04em;
+
+    text-transform:
+        uppercase;
+}
+
+
+.ki-entwicklung-aktionen,
+.ki-token-aktionen,
+.ki-ergebnis-aktionen {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        10px;
+}
+
+
+.ki-entwicklung-aktionen {
+    margin-top:
+        16px;
+}
+
+
+.ki-token-formular {
+    margin-top:
+        16px;
+
+    padding:
+        14px;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        12px;
+
+    background-color:
+        var(--karte);
+}
+
+
+.ki-token-formular label {
+    display:
+        block;
+
+    margin-bottom:
+        7px;
+
+    font-weight:
+        bold;
+}
+
+
+.ki-token-hinweis,
+.ki-uebernehmen-hinweis {
+    margin:
+        0
+        0
+        12px;
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        12px;
+
+    line-height:
+        1.45;
+}
+
+
+.ki-status {
+    min-height:
+        22px;
+
+    margin-top:
+        14px;
+
+    font-size:
+        14px;
+
+    font-weight:
+        bold;
+
+    line-height:
+        1.45;
+}
+
+
+.ki-status.ist-laden {
+    color:
+        var(--warnung);
+}
+
+
+.ki-status.ist-erfolg {
+    color:
+        var(--erfolg);
+}
+
+
+.ki-status.ist-fehler {
+    color:
+        var(--rot);
+}
+
+
+.ki-ergebnis {
+    margin-top:
+        14px;
+}
+
+
+.ki-ergebnis h4 {
+    margin:
+        0
+        0
+        9px;
+
+    color:
+        var(--text);
+}
+
+
+.ki-ergebnis-text {
+    max-height:
+        420px;
+
+    overflow:
+        auto;
+
+    padding:
+        16px;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        12px;
+
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text);
+
+    white-space:
+        pre-wrap;
+
+    overflow-wrap:
+        break-word;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.6;
+}
+
+
+.ki-ergebnis-aktionen {
+    margin-top:
+        12px;
+}
+
+
+.ki-uebernehmen-hinweis {
+    margin-top:
+        10px;
+
+    margin-bottom:
+        0;
+}
+
+
+.ki-entwicklung button:disabled {
+    cursor:
+        not-allowed;
+
+    opacity:
+        0.55;
+}
+
+
+.ki-entwicklung button:disabled:hover {
+    background-color:
+        var(--primaer);
+}
+
+
+.ki-entwicklung .sekundaer-button:disabled:hover {
+    background-color:
+        var(--karte-zwei);
+}
+
 /* =========================================================
    PROMPT-QUALITÄT
 ========================================================= */
@@ -2224,6 +2509,14 @@ footer {
     .sortierung-liste {
         max-height:
             300px;
+    }
+
+
+    .ki-entwicklung-aktionen,
+    .ki-token-aktionen,
+    .ki-ergebnis-aktionen {
+        grid-template-columns:
+            1fr;
     }
 
 }

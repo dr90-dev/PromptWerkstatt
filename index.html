@@ -509,6 +509,155 @@
 
 
             <!-- ==================================================
+                 KI-VERBESSERUNG – NUR LOKALE ENTWICKLUNG
+            =================================================== -->
+
+            <section
+                id="kiEntwicklungsBereich"
+                class="ki-entwicklung versteckt"
+                hidden
+                aria-labelledby="kiEntwicklungTitel"
+            >
+
+                <div class="ki-entwicklung-kopf">
+
+                    <span class="ki-entwicklung-badge">
+                        Nur localhost
+                    </span>
+
+                    <h3 id="kiEntwicklungTitel">
+                        KI-Verbesserung – Entwicklungsmodus
+                    </h3>
+
+                    <p>
+                        Verwendet ausschließlich den geschützten Staging-Worker.
+                        Der ursprüngliche Prompt bleibt unverändert.
+                    </p>
+
+                </div>
+
+
+                <div class="ki-entwicklung-aktionen">
+
+                    <button
+                        type="button"
+                        id="kiTokenButton"
+                        class="sekundaer-button"
+                    >
+                        Staging-Token eingeben
+                    </button>
+
+                    <button
+                        type="button"
+                        id="kiVerbessernButton"
+                    >
+                        Prompt mit KI verbessern
+                    </button>
+
+                </div>
+
+
+                <form
+                    id="kiTokenFormular"
+                    class="ki-token-formular versteckt"
+                    autocomplete="off"
+                >
+
+                    <label for="kiTokenEingabe">
+                        Staging-Token
+                    </label>
+
+                    <input
+                        type="password"
+                        id="kiTokenEingabe"
+                        name="staging-token"
+                        autocomplete="new-password"
+                        spellcheck="false"
+                        required
+                    >
+
+                    <p class="ki-token-hinweis">
+                        Das Token bleibt nur im Arbeitsspeicher und ist nach dem Neuladen wieder weg.
+                    </p>
+
+                    <div class="ki-token-aktionen">
+
+                        <button type="submit">
+                            Token für Sitzung setzen
+                        </button>
+
+                        <button
+                            type="button"
+                            id="kiTokenAbbrechen"
+                            class="sekundaer-button"
+                        >
+                            Abbrechen
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <div
+                    id="kiStatus"
+                    class="ki-status"
+                    role="status"
+                    aria-live="polite"
+                ></div>
+
+
+                <div
+                    id="kiErgebnis"
+                    class="ki-ergebnis versteckt"
+                >
+
+                    <h4>Verbesserter Prompt</h4>
+
+                    <div
+                        id="kiErgebnisText"
+                        class="ki-ergebnis-text"
+                    ></div>
+
+
+                    <div class="ki-ergebnis-aktionen">
+
+                        <button
+                            type="button"
+                            id="kiUebernehmenButton"
+                            disabled
+                            aria-describedby="kiUebernehmenHinweis"
+                        >
+                            Verbesserten Prompt übernehmen
+                        </button>
+
+                        <button
+                            type="button"
+                            id="kiErgebnisKopieren"
+                            class="sekundaer-button"
+                            disabled
+                        >
+                            Verbesserten Prompt kopieren
+                        </button>
+
+                    </div>
+
+
+                    <p
+                        id="kiUebernehmenHinweis"
+                        class="ki-uebernehmen-hinweis"
+                    >
+                        Eine sichere Rückübertragung in die einzelnen Builder-Felder ist
+                        fachlich nicht eindeutig. Die Übernahme bleibt deshalb vorerst deaktiviert.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==================================================
                  PROMPT SPEICHERN
             =================================================== -->
 
@@ -811,12 +960,15 @@
          Reihenfolge wichtig:
          1. daten.js
          2. storage.js
-         3. script.js
+         3. api.js
+         4. script.js
     =================================================== -->
 
     <script src="daten.js"></script>
 
     <script src="storage.js"></script>
+
+    <script src="api.js"></script>
 
     <script src="script.js"></script>
 
