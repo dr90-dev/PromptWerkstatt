@@ -144,6 +144,7 @@
                             ],
                             anforderungen: [
                                 "Alter der Kinder und nötige Aufsicht berücksichtigen.",
+                                "Die Arbeitsschritte in einer verständlichen Reihenfolge erklären.",
                                 "Einfache Alternativen für schwierige Arbeitsschritte nennen.",
                                 "Zeit für Vorbereitung und Aufräumen angeben."
                             ],
