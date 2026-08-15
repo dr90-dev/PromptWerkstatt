@@ -312,4 +312,260 @@
             ]
         }
     });
+
+
+    registry.profilRegistrieren({
+        id: "schreiben-kommunizieren",
+        name: "Schreiben & Kommunizieren",
+        empfehlungen: {
+            rollen: [
+                "Schreibhelfer",
+                "Kommunikationshelfer"
+            ],
+            ziele: [
+                "Eine passende Nachricht klar und verständlich formulieren.",
+                "Eine Nachricht höflich und passend zum Anlass schreiben."
+            ],
+            kontextHinweise: [
+                "Wer soll die Nachricht bekommen?",
+                "Was möchtest du mit der Nachricht erreichen?",
+                "Welche Informationen müssen enthalten sein?",
+                "Wie förmlich soll der Text sein?",
+                "Gibt es einen Anlass oder wichtigen Hintergrund?",
+                "Wie lang soll die Nachricht ungefähr sein?"
+            ],
+            anforderungen: [
+                "Das Anliegen früh und verständlich nennen.",
+                "Alle wichtigen Informationen vollständig aufnehmen.",
+                "Eine passende Anrede und einen passenden Abschluss verwenden.",
+                "Kurze und verständliche Sätze schreiben.",
+                "Den Ton an Empfänger und Anlass anpassen.",
+                "Unnötige Wiederholungen vermeiden."
+            ],
+            besondersEmpfohleneAnforderungen: [
+                "Das Anliegen früh und verständlich nennen.",
+                "Alle wichtigen Informationen vollständig aufnehmen.",
+                "Den Ton an Empfänger und Anlass anpassen."
+            ],
+            regeln: [
+                "Keine Informationen erfinden.",
+                "Keine Zusagen oder Behauptungen ergänzen, die nicht genannt wurden.",
+                "Unsicherheiten nicht als Fakten darstellen."
+            ],
+            ausgabeformate: [
+                "Fertiger Text"
+            ],
+            ausgabeAls: [
+                "Text",
+                "Word (.docx)"
+            ]
+        }
+    });
+
+
+    registry.profilRegistrieren({
+        id: "text-ueberarbeiten",
+        name: "Text überarbeiten",
+        empfehlungen: {
+            rollen: [
+                "Textüberarbeiter",
+                "Korrekturhelfer"
+            ],
+            ziele: [
+                "Einen vorhandenen Text verständlicher und flüssiger formulieren.",
+                "Fehler korrigieren, ohne die Aussage unbeabsichtigt zu verändern."
+            ],
+            kontextHinweise: [
+                "Welcher Text soll überarbeitet werden?",
+                "Was soll verbessert werden?",
+                "Wie soll der Text klingen?",
+                "Wie lang soll der Text ungefähr sein?",
+                "Für wen ist der Text gedacht?",
+                "Sollen Inhalt und Aussage unverändert bleiben?"
+            ],
+            anforderungen: [
+                "Die Bedeutung nicht unbeabsichtigt verändern.",
+                "Rechtschreibung und Grammatik korrigieren.",
+                "Unnötige Wiederholungen entfernen.",
+                "Klare und verständliche Sätze verwenden.",
+                "Den bisherigen Ton beibehalten oder wie gewünscht anpassen.",
+                "Nur dort ändern, wo es den Text wirklich verbessert."
+            ],
+            besondersEmpfohleneAnforderungen: [
+                "Die Bedeutung nicht unbeabsichtigt verändern.",
+                "Rechtschreibung und Grammatik korrigieren.",
+                "Klare und verständliche Sätze verwenden."
+            ],
+            regeln: [
+                "Keine neuen Fakten hinzufügen.",
+                "Aussagen nicht stärker oder verbindlicher machen, wenn das nicht gewünscht ist.",
+                "Eigennamen, Zahlen und wichtige Daten nicht ungeprüft verändern."
+            ],
+            ausgabeformate: [
+                "Überarbeiteter Text",
+                "Korrigierter Text",
+                "Vorher-Nachher-Vergleich",
+                "Änderungsvorschläge"
+            ],
+            ausgabeAls: [
+                "Text",
+                "Word (.docx)"
+            ]
+        }
+    });
+
+
+    registry.profilRegistrieren({
+        id: "zusammenfassen-umformulieren",
+        name: "Zusammenfassen & Umformulieren",
+        empfehlungen: {
+            rollen: [
+                "Zusammenfassungshelfer",
+                "Umformulierungshelfer"
+            ],
+            ziele: [
+                "Einen langen Text kurz und verständlich zusammenfassen.",
+                "Einen Text einfacher erklären.",
+                "Denselben Inhalt passend anders formulieren."
+            ],
+            kontextHinweise: [
+                "Welcher Text soll bearbeitet werden?",
+                "Wie kurz oder ausführlich soll das Ergebnis sein?",
+                "Für wen ist der neue Text gedacht?",
+                "Wie viele Details sollen erhalten bleiben?",
+                "Welche Form soll das Ergebnis haben?",
+                "Welche Informationen müssen unbedingt erhalten bleiben?"
+            ],
+            anforderungen: [
+                "Die wichtigsten Aussagen erhalten.",
+                "Keine neuen Fakten hinzufügen.",
+                "Wichtige Einschränkungen nicht weglassen.",
+                "Klar und verständlich formulieren.",
+                "Die gewünschte Länge einhalten.",
+                "Beim Umformulieren die Bedeutung beibehalten."
+            ],
+            besondersEmpfohleneAnforderungen: [
+                "Die wichtigsten Aussagen erhalten.",
+                "Wichtige Einschränkungen nicht weglassen.",
+                "Beim Umformulieren die Bedeutung beibehalten."
+            ],
+            regeln: [
+                "Nichts erfinden.",
+                "Keine wichtige Aussage durch die Kürzung verfälschen.",
+                "Unsicherheiten im Original nicht als Gewissheiten darstellen."
+            ],
+            ausgabeformate: [
+                "Kurzfassung",
+                "Stichpunkte",
+                "Verständliche Zusammenfassung",
+                "Umformulierter Text"
+            ],
+            ausgabeAls: [
+                "Text",
+                "Word (.docx)"
+            ]
+        }
+    });
+
+
+    registry.profilRegistrieren({
+        id: "persoenliche-texte-anlaesse",
+        name: "Persönliche Texte & Anlässe",
+        empfehlungen: {
+            rollen: [
+                "Schreibhelfer für persönliche Texte",
+                "Ideenhelfer für Anlässe"
+            ],
+            ziele: [
+                "Einen persönlichen Text schreiben, der zum Anlass und zur Person passt.",
+                "Eine Botschaft herzlich und glaubwürdig formulieren."
+            ],
+            kontextHinweise: [
+                "Was ist der Anlass?",
+                "Für wen ist der Text gedacht?",
+                "Wie ist dein Verhältnis zu der Person?",
+                "Welche persönlichen Erlebnisse oder Informationen sollen hinein?",
+                "Welche Stimmung soll der Text vermitteln?",
+                "Wie lang soll der Text ungefähr sein?"
+            ],
+            anforderungen: [
+                "Persönlich und glaubwürdig formulieren.",
+                "Den Text passend zum Anlass schreiben.",
+                "Nicht unnötig kitschig formulieren.",
+                "Vorhandene persönliche Details sinnvoll verwenden.",
+                "Natürlich und nicht wie eine Vorlage klingen.",
+                "Keine gemeinsamen Erlebnisse oder persönlichen Fakten erfinden."
+            ],
+            besondersEmpfohleneAnforderungen: [
+                "Persönlich und glaubwürdig formulieren.",
+                "Den Text passend zum Anlass schreiben.",
+                "Keine gemeinsamen Erlebnisse oder persönlichen Fakten erfinden."
+            ],
+            regeln: [
+                "Keine persönlichen Fakten erfinden.",
+                "Keine unangemessenen Aussagen hinzufügen.",
+                "Die gewünschte Stimmung respektieren."
+            ],
+            ausgabeformate: [
+                "Persönlicher Text"
+            ],
+            ausgabeAls: [
+                "Text",
+                "Word (.docx)"
+            ]
+        }
+    });
+
+
+    registry.profilRegistrieren({
+        id: "beschweren-reklamieren",
+        name: "Beschweren & Reklamieren",
+        empfehlungen: {
+            rollen: [
+                "Beschwerdehelfer",
+                "Reklamationshelfer"
+            ],
+            ziele: [
+                "Eine klare und sachliche Beschwerde formulieren.",
+                "Erklären, was passiert ist, und die gewünschte Lösung verständlich nennen."
+            ],
+            kontextHinweise: [
+                "Was ist passiert?",
+                "Wann ist es passiert?",
+                "Um welches Produkt oder welche Dienstleistung geht es?",
+                "Was wurde bisher dazu besprochen oder geschrieben?",
+                "Welche Lösung wünschst du dir?",
+                "Welche Belege oder Bestell- und Vorgangsnummern gibt es?"
+            ],
+            anforderungen: [
+                "Klar und in zeitlicher Reihenfolge erklären, was passiert ist.",
+                "Die gewünschte Lösung deutlich nennen.",
+                "Höflich, aber bestimmt formulieren.",
+                "Wichtige Daten und Belege nennen.",
+                "Die Situation nicht unnötig verschärfen.",
+                "Fakten und Vermutungen klar trennen."
+            ],
+            besondersEmpfohleneAnforderungen: [
+                "Klar und in zeitlicher Reihenfolge erklären, was passiert ist.",
+                "Die gewünschte Lösung deutlich nennen.",
+                "Höflich, aber bestimmt formulieren."
+            ],
+            regeln: [
+                "Keine Rechtsansprüche erfinden.",
+                "Keine unbekannten Fristen ergänzen.",
+                "Keine Drohungen oder Behauptungen hinzufügen, die nicht genannt wurden.",
+                "Rechtliche Aussagen nur bei ausreichender Grundlage machen."
+            ],
+            ausgabeformate: [
+                "Beschwerde-E-Mail",
+                "Reklamationsschreiben",
+                "Sachliche Nachricht",
+                "Kurze Zusammenfassung des Falls"
+            ],
+            ausgabeAls: [
+                "Text",
+                "Word (.docx)"
+            ]
+        }
+    });
 })(globalThis);
