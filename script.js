@@ -53,6 +53,16 @@ const eigeneTonalitaet =
         "eigeneTonalitaet"
     );
 
+const bereichsparameterAbschnitt =
+    document.getElementById(
+        "bereichsparameterAbschnitt"
+    );
+
+const bereichsparameterContainer =
+    document.getElementById(
+        "bereichsparameterContainer"
+    );
+
 const bereichAuswahl =
     document.getElementById(
         "bereichAuswahl"
@@ -374,6 +384,20 @@ let aktiveZielgruppenIds =
 let aktiveTonalitaetenIds =
     [];
 
+let bereichsparameterSitzung =
+    {};
+
+const BEREICHSPARAMETER_AUSWAHLTYPEN =
+    Object.freeze({
+        plattform: "mehrfach",
+        ernaehrungsweise: "mehrfach",
+        kochzeit: "einfach",
+        trainingsniveau: "einfach",
+        trainingsziel: "mehrfach",
+        technologie: "mehrfach",
+        entwicklungsphase: "einfach"
+    });
+
 let nurFavoriten =
     false;
 
@@ -455,6 +479,221 @@ function aktuelleUnterkategorieHolen() {
             hauptkategorie.value,
             unterkategorie.value
         )
+
+        : null;
+}
+
+
+function aktuellerBereichHolen() {
+    return v2Daten &&
+        typeof v2Daten.bereichHolen ===
+            "function"
+
+        ? v2Daten.bereichHolen(
+            bereichAuswahl.value
+        )
+
+        : null;
+}
+
+
+function aktuelleBereichsparameterHolen() {
+    const bereich =
+        aktuellerBereichHolen();
+
+
+    return bereich &&
+        Array.isArray(
+            bereich.parameter
+        )
+
+        ? bereich.parameter.filter(
+            function (parameter) {
+                return parameter &&
+                    parameter.typ ===
+                        "select" &&
+                    typeof parameter.id ===
+                        "string" &&
+                    typeof parameter.name ===
+                        "string" &&
+                    Array.isArray(
+                        parameter.optionen
+                    );
+            }
+        )
+
+        : [];
+}
+
+
+function bereichsparameterAuswahltypHolen(
+    parameter
+) {
+    return BEREICHSPARAMETER_AUSWAHLTYPEN[
+        parameter.id
+    ] || "einfach";
+}
+
+
+function bereichsparameterStatusHolen(
+    bereichId,
+    parameterId
+) {
+    if (!bereichsparameterSitzung[bereichId]) {
+        bereichsparameterSitzung[bereichId] =
+            {};
+    }
+
+
+    if (
+        !bereichsparameterSitzung[bereichId][
+            parameterId
+        ]
+    ) {
+        bereichsparameterSitzung[bereichId][
+            parameterId
+        ] = {
+            auswahlIds: [],
+            eigeneAngabe: ""
+        };
+    }
+
+
+    return bereichsparameterSitzung[
+        bereichId
+    ][parameterId];
+}
+
+
+function bereichsparameterIdsBereinigen(
+    parameter,
+    ids
+) {
+    const gewuenschteIds =
+        new Set(
+            (
+                Array.isArray(ids)
+
+                    ? ids
+
+                    : []
+            ).filter(
+                function (id) {
+                    return typeof id ===
+                        "string" &&
+                        id !==
+                            "keine-vorgabe";
+                }
+            )
+        );
+
+    const bereinigteIds = [
+        ...parameter.optionen
+            .filter(
+                function (option) {
+                    return option &&
+                        option.id !==
+                            "keine-vorgabe" &&
+                        gewuenschteIds.has(
+                            option.id
+                        );
+                }
+            )
+            .map(
+                function (option) {
+                    return option.id;
+                }
+            )
+    ];
+
+
+    return bereichsparameterAuswahltypHolen(
+        parameter
+    ) === "mehrfach"
+
+        ? bereinigteIds
+
+        : bereinigteIds.slice(
+            0,
+            1
+        );
+}
+
+
+function aktiveBereichsparameterEintraegeHolen() {
+    const bereichId =
+        bereichAuswahl.value;
+
+
+    return aktuelleBereichsparameterHolen()
+        .map(
+            function (parameter) {
+                const status =
+                    bereichsparameterStatusHolen(
+                        bereichId,
+                        parameter.id
+                    );
+
+
+                status.auswahlIds =
+                    bereichsparameterIdsBereinigen(
+                        parameter,
+                        status.auswahlIds
+                    );
+
+                status.eigeneAngabe =
+                    parameter.eigeneAngabeErlaubt ===
+                        true &&
+                    typeof status.eigeneAngabe ===
+                        "string"
+
+                        ? status.eigeneAngabe
+
+                        : "";
+
+
+                return {
+                    parameter: parameter,
+                    status: status
+                };
+            }
+        );
+}
+
+
+function empfehlungspaketHolen(
+    option
+) {
+    const empfehlungen =
+        option &&
+        (
+            option.empfehlungen ||
+            option.grundlagen
+        );
+
+    const hatEmpfehlungen =
+        empfehlungen &&
+        typeof empfehlungen ===
+            "object" &&
+        !Array.isArray(
+            empfehlungen
+        ) &&
+        Object.values(
+            empfehlungen
+        ).some(
+            function (werte) {
+                return Array.isArray(
+                    werte
+                ) &&
+                    werte.length >
+                        0;
+            }
+        );
+
+
+    return hatEmpfehlungen
+
+        ? empfehlungen
 
         : null;
 }
@@ -565,6 +804,66 @@ function querschnittIdsBereinigen(
 }
 
 
+function bereichsparameterQuellenHolen() {
+    const bereichId =
+        bereichAuswahl.value;
+
+    const quellen =
+        [];
+
+
+    aktiveBereichsparameterEintraegeHolen()
+        .forEach(
+            function (eintrag) {
+                const aktiveIds =
+                    new Set(
+                        eintrag.status.auswahlIds
+                    );
+
+
+                eintrag.parameter.optionen
+                    .forEach(
+                        function (option) {
+                            if (
+                                !aktiveIds.has(
+                                    option.id
+                                )
+                            ) {
+                                return;
+                            }
+
+
+                            const empfehlungen =
+                                empfehlungspaketHolen(
+                                    option
+                                );
+
+
+                            if (!empfehlungen) {
+                                return;
+                            }
+
+
+                            quellen.push({
+                                ebene:
+                                    "parameter",
+                                id:
+                                    `${bereichId}:${eintrag.parameter.id}:${option.id}`,
+                                pfad:
+                                    `${bereichId}/parameter/${eintrag.parameter.id}/${option.id}`,
+                                daten:
+                                    empfehlungen
+                            });
+                        }
+                    );
+            }
+        );
+
+
+    return quellen;
+}
+
+
 function querschnittParameterQuellenHolen() {
     const auswahl = [
         {
@@ -622,30 +921,12 @@ function querschnittParameterQuellenHolen() {
 
 
                     const empfehlungen =
-                        option.empfehlungen ||
-                        option.grundlagen;
-
-                    const hatEmpfehlungen =
-                        empfehlungen &&
-                        typeof empfehlungen ===
-                            "object" &&
-                        !Array.isArray(
-                            empfehlungen
-                        ) &&
-                        Object.values(
-                            empfehlungen
-                        ).some(
-                            function (werte) {
-                                return Array.isArray(
-                                    werte
-                                ) &&
-                                    werte.length >
-                                        0;
-                            }
+                        empfehlungspaketHolen(
+                            option
                         );
 
 
-                    if (!hatEmpfehlungen) {
+                    if (!empfehlungen) {
                         return;
                     }
 
@@ -663,6 +944,11 @@ function querschnittParameterQuellenHolen() {
                 }
             );
         }
+    );
+
+
+    quellen.push(
+        ...bereichsparameterQuellenHolen()
     );
 
 
@@ -1866,6 +2152,613 @@ function querschnittFelderInitialisieren() {
     zielgruppenAnzeigen();
 
     tonalitaetenAnzeigen();
+}
+
+
+function bereichsparameterWerteHolen(
+    parameter,
+    status
+) {
+    const aktiveIds =
+        new Set(
+            bereichsparameterIdsBereinigen(
+                parameter,
+                status.auswahlIds
+            )
+        );
+
+    const werte =
+        parameter.optionen
+            .filter(
+                function (option) {
+                    return aktiveIds.has(
+                        option.id
+                    );
+                }
+            )
+            .map(
+                function (option) {
+                    return option.name;
+                }
+            );
+
+    const eigeneAngabe =
+        parameter.eigeneAngabeErlaubt ===
+            true
+
+            ? String(
+                status.eigeneAngabe ||
+                ""
+            ).trim()
+
+            : "";
+
+
+    return [
+        ...new Set([
+            ...werte,
+            eigeneAngabe
+        ].filter(Boolean))
+    ];
+}
+
+
+function bereichsparameterSpeicherdatenHolen() {
+    const speicherdaten =
+        {};
+
+
+    aktiveBereichsparameterEintraegeHolen()
+        .forEach(
+            function (eintrag) {
+                const eigeneAngabe =
+                    eintrag.parameter
+                        .eigeneAngabeErlaubt ===
+                        true
+
+                        ? String(
+                            eintrag.status
+                                .eigeneAngabe ||
+                            ""
+                        )
+
+                        : "";
+
+
+                if (
+                    eintrag.status.auswahlIds
+                        .length === 0 &&
+                    eigeneAngabe.trim() ===
+                        ""
+                ) {
+                    return;
+                }
+
+
+                speicherdaten[
+                    eintrag.parameter.id
+                ] = {
+                    auswahlIds: [
+                        ...eintrag.status
+                            .auswahlIds
+                    ],
+                    eigeneAngabe:
+                        eigeneAngabe
+                };
+            }
+        );
+
+
+    return speicherdaten;
+}
+
+
+function bereichsparameterAusEintragWiederherstellen(
+    eintrag
+) {
+    const bereichId =
+        bereichAuswahl.value;
+
+    const gespeicherteParameter =
+        eintrag &&
+        eintrag.bereichsparameter &&
+        typeof eintrag.bereichsparameter ===
+            "object" &&
+        !Array.isArray(
+            eintrag.bereichsparameter
+        )
+
+            ? eintrag.bereichsparameter
+
+            : {};
+
+
+    bereichsparameterSitzung[bereichId] =
+        {};
+
+
+    aktuelleBereichsparameterHolen()
+        .forEach(
+            function (parameter) {
+                const gespeicherterStatus =
+                    gespeicherteParameter[
+                        parameter.id
+                    ];
+
+                const status =
+                    bereichsparameterStatusHolen(
+                        bereichId,
+                        parameter.id
+                    );
+
+
+                status.auswahlIds =
+                    bereichsparameterIdsBereinigen(
+                        parameter,
+                        gespeicherterStatus &&
+                        gespeicherterStatus
+                            .auswahlIds
+                    );
+
+                status.eigeneAngabe =
+                    parameter.eigeneAngabeErlaubt ===
+                        true &&
+                    gespeicherterStatus &&
+                    typeof gespeicherterStatus
+                        .eigeneAngabe ===
+                        "string"
+
+                        ? gespeicherterStatus
+                            .eigeneAngabe
+
+                        : "";
+            }
+        );
+}
+
+
+function bereichsparameterZusammenfassungHolen(
+    parameter,
+    status
+) {
+    const namen =
+        bereichsparameterWerteHolen(
+            {
+                ...parameter,
+                eigeneAngabeErlaubt:
+                    false
+            },
+            status
+        );
+
+
+    if (namen.length === 0) {
+        return `${parameter.name} auswählen`;
+    }
+
+
+    return namen.length <= 2
+
+        ? `${namen.length} ausgewählt: ${namen.join(", ")}`
+
+        : `${namen.length} Werte ausgewählt`;
+}
+
+
+function bereichsparameterMehrfachauswahlAnzeigen(
+    parameter,
+    status,
+    feld,
+    labelId,
+    hinweisId,
+    warGeoeffnet
+) {
+    const auswahl =
+        document.createElement(
+            "details"
+        );
+
+    const zusammenfassung =
+        document.createElement(
+            "summary"
+        );
+
+    const optionenContainer =
+        document.createElement(
+            "div"
+        );
+
+    const optionen =
+        parameter.optionen.filter(
+            function (option) {
+                return option.id !==
+                    "keine-vorgabe";
+            }
+        );
+
+
+    auswahl.className =
+        "querschnitt-auswahl";
+
+    auswahl.dataset.parameterId =
+        parameter.id;
+
+    auswahl.open =
+        warGeoeffnet;
+
+    zusammenfassung.textContent =
+        bereichsparameterZusammenfassungHolen(
+            parameter,
+            status
+        );
+
+    optionenContainer.className =
+        "querschnitt-optionen chip-container auswahl-chip-container";
+
+    optionenContainer.setAttribute(
+        "role",
+        "group"
+    );
+
+    optionenContainer.setAttribute(
+        "aria-labelledby",
+        labelId
+    );
+
+    optionenContainer.setAttribute(
+        "aria-describedby",
+        hinweisId
+    );
+
+
+    querschnittMehrfachauswahlAnzeigen(
+        optionenContainer,
+        optionen,
+        status.auswahlIds,
+        function (optionId) {
+            status.auswahlIds =
+                bereichsparameterIdsBereinigen(
+                    parameter,
+                    auswahlwertUmschalten(
+                        status.auswahlIds,
+                        optionId
+                    )
+                );
+
+            bereichsparameterAnzeigen();
+
+            unterkategorieAktualisieren(
+                false
+            );
+        },
+        bereichsparameterAbschnitt
+    );
+
+
+    auswahl.appendChild(
+        zusammenfassung
+    );
+
+    auswahl.appendChild(
+        optionenContainer
+    );
+
+    feld.appendChild(
+        auswahl
+    );
+}
+
+
+function bereichsparameterEinfachauswahlAnzeigen(
+    parameter,
+    status,
+    feld,
+    labelId,
+    hinweisId
+) {
+    const auswahl =
+        document.createElement(
+            "select"
+        );
+
+    const hatKeineVorgabe =
+        parameter.optionen.some(
+            function (option) {
+                return option.id ===
+                    "keine-vorgabe";
+            }
+        );
+
+
+    auswahl.id =
+        `bereichsparameter-${parameter.id}`;
+
+    auswahl.setAttribute(
+        "aria-labelledby",
+        labelId
+    );
+
+    auswahl.setAttribute(
+        "aria-describedby",
+        hinweisId
+    );
+
+
+    if (!hatKeineVorgabe) {
+        const leereOption =
+            document.createElement(
+                "option"
+            );
+
+
+        leereOption.value =
+            "keine-vorgabe";
+
+        leereOption.textContent =
+            "Keine Vorgabe";
+
+        auswahl.appendChild(
+            leereOption
+        );
+    }
+
+
+    parameter.optionen.forEach(
+        function (option) {
+            const optionElement =
+                document.createElement(
+                    "option"
+                );
+
+
+            optionElement.value =
+                option.id;
+
+            optionElement.textContent =
+                option.name;
+
+            auswahl.appendChild(
+                optionElement
+            );
+        }
+    );
+
+
+    auswahl.value =
+        status.auswahlIds[0] ||
+        "keine-vorgabe";
+
+    auswahl.addEventListener(
+        "change",
+        function () {
+            status.auswahlIds =
+                auswahl.value &&
+                auswahl.value !==
+                    "keine-vorgabe"
+
+                    ? [auswahl.value]
+
+                    : [];
+
+            unterkategorieAktualisieren(
+                false
+            );
+        }
+    );
+
+
+    feld.appendChild(
+        auswahl
+    );
+}
+
+
+function bereichsparameterEigeneAngabeAnzeigen(
+    parameter,
+    status,
+    feld
+) {
+    if (
+        parameter.eigeneAngabeErlaubt !==
+            true
+    ) {
+        return;
+    }
+
+
+    const label =
+        document.createElement(
+            "label"
+        );
+
+    const eingabe =
+        document.createElement(
+            "input"
+        );
+
+    const eingabeId =
+        `bereichsparameter-${parameter.id}-eigene-angabe`;
+
+
+    label.className =
+        "bereichsparameter-eigene-angabe";
+
+    label.htmlFor =
+        eingabeId;
+
+    label.textContent =
+        `Eigene ${parameter.name}`;
+
+    eingabe.type =
+        "text";
+
+    eingabe.id =
+        eingabeId;
+
+    eingabe.value =
+        status.eigeneAngabe;
+
+    eingabe.placeholder =
+        `Optional: eigene ${parameter.name.toLocaleLowerCase("de-DE")} eingeben ...`;
+
+    eingabe.addEventListener(
+        "input",
+        function () {
+            status.eigeneAngabe =
+                eingabe.value;
+
+            promptErstellen();
+        }
+    );
+
+
+    feld.appendChild(
+        label
+    );
+
+    feld.appendChild(
+        eingabe
+    );
+}
+
+
+function bereichsparameterAnzeigen() {
+    const offeneParameterIds =
+        new Set(
+            [
+                ...bereichsparameterContainer
+                    .querySelectorAll(
+                        "details[open][data-parameter-id]"
+                    )
+            ].map(
+                function (auswahl) {
+                    return auswahl.dataset
+                        .parameterId;
+                }
+            )
+        );
+
+    const eintraege =
+        aktiveBereichsparameterEintraegeHolen();
+
+
+    bereichsparameterContainer.innerHTML =
+        "";
+
+    bereichsparameterAbschnitt.classList.toggle(
+        "versteckt",
+        eintraege.length ===
+            0
+    );
+
+
+    eintraege.forEach(
+        function (eintrag) {
+            const parameter =
+                eintrag.parameter;
+
+            const status =
+                eintrag.status;
+
+            const feld =
+                document.createElement(
+                    "div"
+                );
+
+            const label =
+                document.createElement(
+                    "label"
+                );
+
+            const hinweis =
+                document.createElement(
+                    "p"
+                );
+
+            const labelId =
+                `bereichsparameter-${parameter.id}-label`;
+
+            const hinweisId =
+                `bereichsparameter-${parameter.id}-hinweis`;
+
+
+            feld.className =
+                "bereichsparameter-feld";
+
+            feld.dataset.bereichsparameterId =
+                parameter.id;
+
+            label.id =
+                labelId;
+
+            label.textContent =
+                parameter.name;
+
+            hinweis.id =
+                hinweisId;
+
+            hinweis.className =
+                "hinweis";
+
+            hinweis.textContent =
+                bereichsparameterAuswahltypHolen(
+                    parameter
+                ) === "mehrfach"
+
+                    ? "Optional. Du kannst mehrere Werte kombinieren."
+
+                    : "Optional. Wähle einen Wert aus.";
+
+
+            feld.appendChild(
+                label
+            );
+
+            feld.appendChild(
+                hinweis
+            );
+
+
+            if (
+                bereichsparameterAuswahltypHolen(
+                    parameter
+                ) === "mehrfach"
+            ) {
+                bereichsparameterMehrfachauswahlAnzeigen(
+                    parameter,
+                    status,
+                    feld,
+                    labelId,
+                    hinweisId,
+                    offeneParameterIds.has(
+                        parameter.id
+                    )
+                );
+            } else {
+                label.htmlFor =
+                    `bereichsparameter-${parameter.id}`;
+
+                bereichsparameterEinfachauswahlAnzeigen(
+                    parameter,
+                    status,
+                    feld,
+                    labelId,
+                    hinweisId
+                );
+            }
+
+
+            bereichsparameterEigeneAngabeAnzeigen(
+                parameter,
+                status,
+                feld
+            );
+
+            bereichsparameterContainer.appendChild(
+                feld
+            );
+        }
+    );
 }
 
 
@@ -4469,6 +5362,8 @@ function bereichGeaendert() {
     unterkategorienLaden();
     v2AuswahlMerken();
 
+    bereichsparameterAnzeigen();
+
     unterkategorieAktualisieren(
         true
     );
@@ -4960,6 +5855,24 @@ function promptErstellen() {
         );
 
 
+    aktiveBereichsparameterEintraegeHolen()
+        .forEach(
+            function (eintrag) {
+                prompt +=
+                    promptListenabschnittErstellen(
+                        eintrag.parameter.name
+                            .toLocaleUpperCase(
+                                "de-DE"
+                            ),
+                        bereichsparameterWerteHolen(
+                            eintrag.parameter,
+                            eintrag.status
+                        )
+                    );
+            }
+        );
+
+
     prompt +=
         "AUFGABE / ZIEL:\n";
 
@@ -5200,6 +6113,10 @@ function builderZuruecksetzen() {
         [];
 
 
+    bereichsparameterSitzung =
+        {};
+
+
     fachniveauOptionenLaden(
         "keine-vorgabe"
     );
@@ -5210,6 +6127,8 @@ function builderZuruecksetzen() {
     zielgruppenAnzeigen();
 
     tonalitaetenAnzeigen();
+
+    bereichsparameterAnzeigen();
 
 
     unterkategorieAktualisieren(
@@ -5981,6 +6900,9 @@ function builderDatenHolen() {
         eigeneTonalitaet:
             eigeneTonalitaet.value,
 
+        bereichsparameter:
+            bereichsparameterSpeicherdatenHolen(),
+
         rolle:
             rolle.value,
 
@@ -6389,9 +7311,15 @@ function promptBearbeiten(
 
             : "";
 
+    bereichsparameterAusEintragWiederherstellen(
+        eintrag
+    );
+
     zielgruppenAnzeigen();
 
     tonalitaetenAnzeigen();
+
+    bereichsparameterAnzeigen();
 
 
     unterkategorieAktualisieren(
@@ -8432,6 +9360,8 @@ v2AuswahlMerken();
 
 
 querschnittFelderInitialisieren();
+
+bereichsparameterAnzeigen();
 
 
 unterkategorieAktualisieren(

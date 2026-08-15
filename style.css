@@ -1409,6 +1409,47 @@ body.bereich-modal-offen {
 }
 
 
+.bereichsparameter-abschnitt {
+    padding-top:
+        18px;
+
+    border-top:
+        1px
+        solid
+        var(--rand);
+}
+
+
+.bereichsparameter-titel {
+    margin:
+        0
+        0
+        6px;
+
+    font-size:
+        17px;
+}
+
+
+.bereichsparameter-feld +
+.bereichsparameter-feld {
+    margin-top:
+        18px;
+}
+
+
+.bereichsparameter-feld .querschnitt-auswahl {
+    margin-bottom:
+        0;
+}
+
+
+.bereichsparameter-eigene-angabe {
+    margin-top:
+        12px;
+}
+
+
 .auswahl-chip {
     min-height:
         44px;
