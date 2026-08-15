@@ -489,10 +489,20 @@ textarea:focus {
 
 .bereiche-verwalten-button {
     width:
-        100%;
+        auto;
 
     margin-top:
-        2px;
+        0;
+
+    padding:
+        8px
+        12px;
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        13px;
 }
 
 
@@ -1403,6 +1413,193 @@ body.bereich-modal-offen {
 }
 
 
+.builder-pfadauswahl-hinweis {
+    margin:
+        -8px
+        0
+        24px;
+
+    padding:
+        11px
+        13px;
+
+    border-left:
+        3px
+        solid
+        var(--primaer);
+
+    border-radius:
+        0
+        10px
+        10px
+        0;
+
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        13px;
+
+    line-height:
+        1.45;
+}
+
+
+.feld-wichtig {
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    margin-left:
+        8px;
+
+    padding:
+        3px
+        7px;
+
+    border-radius:
+        999px;
+
+    background-color:
+        var(--chip);
+
+    color:
+        var(--chip-text);
+
+    font-size:
+        11px;
+
+    font-weight:
+        700;
+
+    vertical-align:
+        middle;
+}
+
+
+.builder-erweiterungen {
+    margin:
+        0
+        0
+        25px;
+
+    padding:
+        16px
+        0
+        0;
+
+    border-top:
+        1px
+        solid
+        var(--rand);
+
+    border-bottom:
+        1px
+        solid
+        var(--rand);
+}
+
+
+.builder-erweiterungen > summary {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        12px;
+
+    min-height:
+        44px;
+
+    padding:
+        0
+        2px
+        14px;
+
+    color:
+        var(--text);
+
+    cursor:
+        pointer;
+
+    font-weight:
+        700;
+}
+
+
+.builder-erweiterungen > summary:focus-visible {
+    outline:
+        none;
+
+    border-radius:
+        8px;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(79, 70, 229, 0.18);
+}
+
+
+.builder-erweiterungen-status {
+    flex-shrink:
+        0;
+
+    padding:
+        4px
+        8px;
+
+    border:
+        1px
+        solid
+        var(--rand);
+
+    border-radius:
+        999px;
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        12px;
+
+    font-weight:
+        600;
+}
+
+
+.builder-erweiterungen-hinweis {
+    margin:
+        0
+        0
+        18px;
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        13px;
+
+    line-height:
+        1.45;
+}
+
+
+.builder-erweiterungen .feld:last-child {
+    margin-bottom:
+        14px;
+}
+
+
 .querschnitt-gruppe .chip-container {
     margin-bottom:
         0;
@@ -1688,6 +1885,9 @@ button:active {
     min-height:
         420px;
 
+    max-height:
+        min(62vh, 680px);
+
     background-color:
         var(--karte-zwei);
 
@@ -1709,15 +1909,16 @@ button:active {
         1.65;
 
     font-family:
-        Consolas,
-        "Courier New",
-        monospace;
+        inherit;
 
     font-size:
-        14px;
+        15px;
 
     overflow-wrap:
         break-word;
+
+    overflow-y:
+        auto;
 }
 
 
@@ -3288,6 +3489,44 @@ footer {
 
         text-align:
             center;
+    }
+
+
+    #tonalitaetenContainer {
+        gap:
+            8px;
+    }
+
+
+    #tonalitaetenContainer .auswahl-chip {
+        width:
+            calc(50% - 4px);
+
+        flex:
+            1
+            1
+            calc(50% - 4px);
+
+        padding:
+            8px;
+    }
+
+
+    .builder-erweiterungen > summary {
+        padding-bottom:
+            12px;
+    }
+
+
+    .prompt-box {
+        min-height:
+            300px;
+
+        max-height:
+            52vh;
+
+        padding:
+            16px;
     }
 
     .kopfbereich {

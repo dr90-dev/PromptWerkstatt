@@ -2587,7 +2587,7 @@ function bereichsparameterEigeneAngabeAnzeigen(
         eingabeId;
 
     label.textContent =
-        `Eigene ${parameter.name}`;
+        `Eigene ${parameter.name} ergänzen (optional)`;
 
     eingabe.type =
         "text";
@@ -2599,7 +2599,7 @@ function bereichsparameterEigeneAngabeAnzeigen(
         status.eigeneAngabe;
 
     eingabe.placeholder =
-        `Optional: eigene ${parameter.name.toLocaleLowerCase("de-DE")} eingeben ...`;
+        `Optional: eigene ${parameter.name.toLocaleLowerCase("de-DE")} ergänzen ...`;
 
     eingabe.addEventListener(
         "input",
@@ -5146,7 +5146,7 @@ function regelPaketeAnzeigen(
 
                         ? "Besonders empfohlen – anklicken zum Übernehmen."
 
-                        : "V2-Empfehlung – anklicken zum Übernehmen.";
+                        : "Empfehlung – anklicken zum Übernehmen.";
             }
 
 
@@ -5642,7 +5642,7 @@ function promptQualitaetBewerten() {
     // --------------------------------------------------
 
     let bewertung =
-        "Ausbaufähig";
+        "Guter Start";
 
 
     if (

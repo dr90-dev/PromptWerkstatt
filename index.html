@@ -16,7 +16,7 @@
 
     <link
         rel="stylesheet"
-        href="style.css?v=22"
+        href="style.css?v=23"
     >
 </head>
 
@@ -351,166 +351,9 @@
 
 
 
-            <!-- ==================================================
-                 QUERSCHNITTSPARAMETER
-            =================================================== -->
-
-            <div class="feld">
-
-                <label id="zielgruppenLabel">
-                    Zielgruppe
-                </label>
-
-
-                <p
-                    id="zielgruppenHinweis"
-                    class="hinweis"
-                >
-                    Optional. Du kannst mehrere Zielgruppen kombinieren.
-                </p>
-
-
-                <details
-                    id="zielgruppenAuswahl"
-                    class="querschnitt-auswahl"
-                >
-
-                    <summary id="zielgruppenZusammenfassung">
-                        Zielgruppen auswählen
-                    </summary>
-
-
-                    <div
-                        id="zielgruppenOptionen"
-                        class="querschnitt-optionen"
-                        role="group"
-                        aria-labelledby="zielgruppenLabel"
-                        aria-describedby="zielgruppenHinweis"
-                    ></div>
-
-                </details>
-
-
-                <label for="eigeneZielgruppe">
-                    Eigene Zielgruppe
-                </label>
-
-
-                <input
-                    type="text"
-                    id="eigeneZielgruppe"
-                    placeholder="Optional: eigene Zielgruppe eingeben ..."
-                >
-
-            </div>
-
-
-            <div class="feld">
-
-                <label for="fachniveau">
-                    Fach-/Erklärniveau
-                </label>
-
-
-                <p class="hinweis">
-                    Optional. Legt fest, wie fachlich oder einfach die Antwort erklärt wird.
-                </p>
-
-
-                <select id="fachniveau"></select>
-
-            </div>
-
-
-            <div class="feld">
-
-                <label id="tonalitaetenLabel">
-                    Tonalität
-                </label>
-
-
-                <p
-                    id="tonalitaetenHinweis"
-                    class="hinweis"
-                >
-                    Optional. Du kannst mehrere Tonalitäten kombinieren.
-                </p>
-
-
-                <div
-                    id="tonalitaetenContainer"
-                    class="chip-container auswahl-chip-container"
-                    role="group"
-                    aria-labelledby="tonalitaetenLabel"
-                    aria-describedby="tonalitaetenHinweis"
-                ></div>
-
-
-                <label for="eigeneTonalitaet">
-                    Eigene Tonalität
-                </label>
-
-
-                <input
-                    type="text"
-                    id="eigeneTonalitaet"
-                    placeholder="Optional: eigene Tonalität eingeben ..."
-                >
-
-            </div>
-
-
-
-            <!-- ==================================================
-                 BEREICHSSPEZIFISCHE PARAMETER
-            =================================================== -->
-
-            <section
-                id="bereichsparameterAbschnitt"
-                class="feld bereichsparameter-abschnitt versteckt"
-                aria-labelledby="bereichsparameterTitel"
-            >
-
-                <h3
-                    id="bereichsparameterTitel"
-                    class="bereichsparameter-titel"
-                >
-                    Bereichsspezifische Angaben
-                </h3>
-
-
-                <p class="hinweis">
-                    Optional. Diese Angaben gelten nur für den aktuell gewählten Bereich.
-                </p>
-
-
-                <div id="bereichsparameterContainer"></div>
-
-            </section>
-
-
-
-            <!-- ==================================================
-                 ROLLE
-            =================================================== -->
-
-            <div class="feld">
-
-                <label for="rolle">
-                    Rolle der KI
-                </label>
-
-
-                <select id="rolle"></select>
-
-
-                <input
-                    type="text"
-                    id="eigeneRolle"
-                    placeholder="Oder eigene Rolle eingeben ..."
-                >
-
-            </div>
+            <p class="builder-pfadauswahl-hinweis">
+                Wähle zuerst Bereich, Hauptkategorie und Unterkategorie. Danach erscheinen passende Vorschläge.
+            </p>
 
 
 
@@ -522,6 +365,9 @@
 
                 <label id="zieleLabel">
                     Aufgabe / Ziel
+                    <span class="feld-wichtig" aria-hidden="true">
+                        Wichtig
+                    </span>
                 </label>
 
 
@@ -529,7 +375,7 @@
                     id="zieleHinweis"
                     class="hinweis"
                 >
-                    Du kannst mehrere Vorschläge auswählen.
+                    Wähle eine oder mehrere passende Empfehlungen aus.
                 </p>
 
 
@@ -554,7 +400,7 @@
 
                 <textarea
                     id="eigenesZiel"
-                    placeholder="Optional: Aufgabe genauer beschreiben ..."
+                    placeholder="Eigene Aufgabe ergänzen (optional) ..."
                 ></textarea>
 
             </div>
@@ -568,8 +414,13 @@
             <div class="feld">
 
                 <label for="kontext">
-                    Kontext
+                    Weitere Informationen
                 </label>
+
+
+                <p class="hinweis">
+                    Für genauere Ergebnisse optional ergänzen.
+                </p>
 
 
                 <div
@@ -582,10 +433,191 @@
 
                 <textarea
                     id="kontext"
-                    placeholder="Welche Informationen soll die KI zusätzlich kennen?"
+                    placeholder="Zum Beispiel: Rahmenbedingungen, vorhandene Informationen oder wichtige Details ..."
                 ></textarea>
 
             </div>
+
+
+
+            <!-- ==================================================
+                 ANTWORT GENAUER ANPASSEN
+            =================================================== -->
+
+            <details
+                class="builder-erweiterungen"
+                open
+            >
+
+                <summary>
+                    <span>
+                        Antwort genauer anpassen
+                    </span>
+
+                    <span class="builder-erweiterungen-status">
+                        Optional
+                    </span>
+                </summary>
+
+
+                <p class="builder-erweiterungen-hinweis">
+                    Zielgruppe, Erklärniveau, Tonalität, Bereichsangaben und Rolle verfeinern die Antwort.
+                </p>
+
+
+                <div class="feld">
+
+                    <label id="zielgruppenLabel">
+                        Zielgruppe
+                    </label>
+
+
+                    <p
+                        id="zielgruppenHinweis"
+                        class="hinweis"
+                    >
+                        Optional. Du kannst mehrere Zielgruppen kombinieren.
+                    </p>
+
+
+                    <details
+                        id="zielgruppenAuswahl"
+                        class="querschnitt-auswahl"
+                    >
+
+                        <summary id="zielgruppenZusammenfassung">
+                            Zielgruppen auswählen
+                        </summary>
+
+
+                        <div
+                            id="zielgruppenOptionen"
+                            class="querschnitt-optionen"
+                            role="group"
+                            aria-labelledby="zielgruppenLabel"
+                            aria-describedby="zielgruppenHinweis"
+                        ></div>
+
+                    </details>
+
+
+                    <label for="eigeneZielgruppe">
+                        Eigene Zielgruppe ergänzen (optional)
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="eigeneZielgruppe"
+                        placeholder="Optional: eigene Zielgruppe ergänzen ..."
+                    >
+
+                </div>
+
+
+                <div class="feld">
+
+                    <label for="fachniveau">
+                        Fach-/Erklärniveau
+                    </label>
+
+
+                    <p class="hinweis">
+                        Optional. Lege fest, wie einfach oder fachlich die Antwort sein soll.
+                    </p>
+
+
+                    <select id="fachniveau"></select>
+
+                </div>
+
+
+                <div class="feld">
+
+                    <label id="tonalitaetenLabel">
+                        Tonalität
+                    </label>
+
+
+                    <p
+                        id="tonalitaetenHinweis"
+                        class="hinweis"
+                    >
+                        Optional. Du kannst mehrere Tonalitäten kombinieren.
+                    </p>
+
+
+                    <div
+                        id="tonalitaetenContainer"
+                        class="chip-container auswahl-chip-container"
+                        role="group"
+                        aria-labelledby="tonalitaetenLabel"
+                        aria-describedby="tonalitaetenHinweis"
+                    ></div>
+
+
+                    <label for="eigeneTonalitaet">
+                        Eigene Tonalität ergänzen (optional)
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="eigeneTonalitaet"
+                        placeholder="Optional: eigene Tonalität ergänzen ..."
+                    >
+
+                </div>
+
+
+                <section
+                    id="bereichsparameterAbschnitt"
+                    class="feld bereichsparameter-abschnitt versteckt"
+                    aria-labelledby="bereichsparameterTitel"
+                >
+
+                    <h3
+                        id="bereichsparameterTitel"
+                        class="bereichsparameter-titel"
+                    >
+                        Bereichsspezifische Angaben
+                    </h3>
+
+
+                    <p class="hinweis">
+                        Optional. Diese Angaben gelten nur für den aktuell gewählten Bereich.
+                    </p>
+
+
+                    <div id="bereichsparameterContainer"></div>
+
+                </section>
+
+
+                <div class="feld">
+
+                    <label for="rolle">
+                        Rolle der KI
+                    </label>
+
+
+                    <p class="hinweis">
+                        Optional. Wähle eine passende Rolle oder ergänze eine eigene.
+                    </p>
+
+
+                    <select id="rolle"></select>
+
+
+                    <input
+                        type="text"
+                        id="eigeneRolle"
+                        placeholder="Eigene Rolle ergänzen (optional) ..."
+                    >
+
+                </div>
+
+            </details>
 
 
 
@@ -601,7 +633,7 @@
 
 
                 <p class="hinweis">
-                    Du kannst mehrere auswählen.
+                    Optional. Wähle Anforderungen, die besonders wichtig sind.
                 </p>
 
 
@@ -612,13 +644,13 @@
 
 
                 <label for="eigeneAnforderungen">
-                    Eigene Anforderungen
+                    Eigene Anforderungen ergänzen (optional)
                 </label>
 
 
                 <textarea
                     id="eigeneAnforderungen"
-                    placeholder="Optional: eine eigene Anforderung pro Zeile ..."
+                    placeholder="Optional: eine eigene Anforderung pro Zeile ergänzen ..."
                 ></textarea>
 
             </div>
@@ -637,7 +669,7 @@
 
 
                 <p class="hinweis">
-                    Wähle passende V2-Regeln aus.
+                    Optional. Wähle passende Regeln aus.
                 </p>
 
 
@@ -646,18 +678,8 @@
                     class="regel-container"
                 ></div>
 
-            </div>
-
-
-
-            <!-- ==================================================
-                 EIGENE REGELN
-            =================================================== -->
-
-            <div class="feld">
-
                 <label for="eigeneRegeln">
-                    Eigene Regeln
+                    Eigene Regeln ergänzen (optional)
                 </label>
 
 
@@ -685,7 +707,7 @@
                     id="ausgabeformateHinweis"
                     class="hinweis"
                 >
-                    Du kannst mehrere Vorschläge auswählen.
+                    Optional. Wähle ein oder mehrere passende Formate aus.
                 </p>
 
 
@@ -709,20 +731,25 @@
 
 
                 <label for="eigenesAusgabeformat">
-                    Eigenes Ausgabeformat
+                    Eigenes Ausgabeformat ergänzen (optional)
                 </label>
 
 
                 <input
                     type="text"
                     id="eigenesAusgabeformat"
-                    placeholder="Optional: eigenes Ausgabeformat eingeben ..."
+                    placeholder="Optional: eigenes Ausgabeformat ergänzen ..."
                 >
 
 
                 <label for="ausgabeAls">
-                    Ausgabe als
+                    Ausgabe als Datei oder Text
                 </label>
+
+
+                <p class="hinweis">
+                    Optional. Empfohlene Formate sind mit ★ markiert.
+                </p>
 
 
                 <select id="ausgabeAls">
@@ -1506,7 +1533,7 @@
 
     <script src="api.js"></script>
 
-    <script src="script.js?v=24"></script>
+    <script src="script.js?v=25"></script>
 
 
 </body>
