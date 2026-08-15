@@ -79,9 +79,9 @@ const eigeneRolle =
         "eigeneRolle"
     );
 
-const ziel =
+const zieleContainer =
     document.getElementById(
-        "ziel"
+        "zieleContainer"
     );
 
 const eigenesZiel =
@@ -119,9 +119,9 @@ const eigeneRegeln =
         "eigeneRegeln"
     );
 
-const ausgabeformat =
+const ausgabeformateContainer =
     document.getElementById(
-        "ausgabeformat"
+        "ausgabeformateContainer"
     );
 
 const eigenesAusgabeformat =
@@ -324,7 +324,13 @@ const ordnerListe =
 let aktiveAnforderungen =
     [];
 
+let aktiveZiele =
+    [];
+
 let aktiveRegelPakete =
+    [];
+
+let aktiveAusgabeformate =
     [];
 
 let nurFavoriten =
@@ -460,6 +466,7 @@ function unterkategorieDatenHolen() {
                 anforderungen: [],
                 besondersEmpfohleneAnforderungen: [],
                 regeln: [],
+                besondersEmpfohleneRegeln: [],
                 ausgabeformate: [],
                 ausgabeAls: [],
                 herkunft: {}
@@ -500,6 +507,16 @@ function ausgewaehlteAnforderungenHolen() {
                 eigeneAnforderungen.value
             )
         ])
+    ];
+}
+
+
+function ausgewaehlteZieleHolen() {
+    return [
+        ...new Set([
+            ...aktiveZiele,
+            eigenesZiel.value.trim()
+        ].filter(Boolean))
     ];
 }
 
@@ -549,11 +566,13 @@ function ausgewaehlteRegelnHolen() {
 }
 
 
-function gewaehltesAusgabeformatHolen() {
-    return (
-        eigenesAusgabeformat.value.trim() ||
-        ausgabeformat.value.trim()
-    );
+function ausgewaehlteAusgabeformateHolen() {
+    return [
+        ...new Set([
+            ...aktiveAusgabeformate,
+            eigenesAusgabeformat.value.trim()
+        ].filter(Boolean))
+    ];
 }
 
 
@@ -829,6 +848,20 @@ function empfohleneRegelPaketeHolen() {
 }
 
 
+function besondersEmpfohleneRegelnHolen() {
+    const regeln =
+        unterkategorieDatenHolen()
+            .besondersEmpfohleneRegeln;
+
+
+    return Array.isArray(regeln)
+
+        ? regeln
+
+        : [];
+}
+
+
 function leereEmpfehlungAnzeigen(
     container,
     text
@@ -924,6 +957,225 @@ function empfehlungsSelectAktualisieren(
             ? vorherigerWert
 
             : "";
+}
+
+
+function mehrfachauswahlAnzeigen(
+    container,
+    empfehlungen,
+    aktiveWerte,
+    leereMeldung,
+    beimUmschalten
+) {
+    const sichereEmpfehlungen =
+        Array.isArray(empfehlungen)
+
+            ? empfehlungen
+
+            : [];
+
+
+    container.innerHTML =
+        "";
+
+
+    if (sichereEmpfehlungen.length === 0) {
+        leereEmpfehlungAnzeigen(
+            container,
+            leereMeldung
+        );
+
+        return;
+    }
+
+
+    sichereEmpfehlungen.forEach(
+        function (empfehlung) {
+            const chip =
+                document.createElement(
+                    "button"
+                );
+
+            const istAktiv =
+                aktiveWerte.includes(
+                    empfehlung
+                );
+
+
+            chip.type =
+                "button";
+
+            chip.classList.add(
+                "chip",
+                "auswahl-chip"
+            );
+
+            chip.classList.toggle(
+                "aktiv",
+                istAktiv
+            );
+
+            chip.textContent =
+                istAktiv
+
+                    ? `✓ ${empfehlung}`
+
+                    : empfehlung;
+
+            chip.dataset.wert =
+                empfehlung;
+
+            chip.setAttribute(
+                "aria-pressed",
+                String(
+                    istAktiv
+                )
+            );
+
+            chip.setAttribute(
+                "aria-label",
+                `${empfehlung} – ${
+                    istAktiv
+
+                        ? "ausgewählt"
+
+                        : "nicht ausgewählt"
+                }`
+            );
+
+            chip.title =
+                istAktiv
+
+                    ? "Auswahl entfernen"
+
+                    : "Auswählen";
+
+            chip.addEventListener(
+                "click",
+                function () {
+                    beimUmschalten(
+                        empfehlung
+                    );
+
+
+                    const neuerChip =
+                        [
+                            ...container.querySelectorAll(
+                                ".auswahl-chip"
+                            )
+                        ].find(
+                            function (eintrag) {
+                                return (
+                                    eintrag.dataset.wert ===
+                                    empfehlung
+                                );
+                            }
+                        );
+
+
+                    if (neuerChip) {
+                        neuerChip.focus();
+                    }
+                }
+            );
+
+
+            chip.addEventListener(
+                "keydown",
+                function (event) {
+                    if (
+                        event.key !==
+                            "Enter" &&
+                        event.key !==
+                            " "
+                    ) {
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+                    chip.click();
+                }
+            );
+
+            container.appendChild(
+                chip
+            );
+        }
+    );
+}
+
+
+function auswahlwertUmschalten(
+    aktiveWerte,
+    wert
+) {
+    return aktiveWerte.includes(
+        wert
+    )
+
+        ? aktiveWerte.filter(
+            function (eintrag) {
+                return eintrag !==
+                    wert;
+            }
+        )
+
+        : [
+            ...aktiveWerte,
+            wert
+        ];
+}
+
+
+function zieleAnzeigen() {
+    const daten =
+        unterkategorieDatenHolen();
+
+
+    mehrfachauswahlAnzeigen(
+        zieleContainer,
+        daten.ziele,
+        aktiveZiele,
+        "Für diesen Pfad sind noch keine Zielvorschläge verfügbar.",
+        function (zielText) {
+            aktiveZiele =
+                auswahlwertUmschalten(
+                    aktiveZiele,
+                    zielText
+                );
+
+            zieleAnzeigen();
+
+            promptErstellen();
+        }
+    );
+}
+
+
+function ausgabeformateAnzeigen() {
+    const daten =
+        unterkategorieDatenHolen();
+
+
+    mehrfachauswahlAnzeigen(
+        ausgabeformateContainer,
+        daten.ausgabeformate,
+        aktiveAusgabeformate,
+        "Für diesen Pfad sind noch keine Ausgabeformat-Vorschläge verfügbar.",
+        function (formatText) {
+            aktiveAusgabeformate =
+                auswahlwertUmschalten(
+                    aktiveAusgabeformate,
+                    formatText
+                );
+
+            ausgabeformateAnzeigen();
+
+            promptErstellen();
+        }
+    );
 }
 
 
@@ -3102,7 +3354,9 @@ function anforderungenAnzeigen() {
 // REGEL-PAKETE ANZEIGEN
 // ======================================================
 
-function regelPaketeAnzeigen() {
+function regelPaketeAnzeigen(
+    fokusRegel = ""
+) {
 
     regelPaketeContainer.innerHTML =
         "";
@@ -3110,6 +3364,10 @@ function regelPaketeAnzeigen() {
 
     const empfehlungen =
         empfohleneRegelPaketeHolen();
+
+
+    const besondersEmpfohleneRegeln =
+        besondersEmpfohleneRegelnHolen();
 
 
     if (empfehlungen.length === 0) {
@@ -3125,6 +3383,18 @@ function regelPaketeAnzeigen() {
     empfehlungen.forEach(
 
         function (regel) {
+
+
+            const istAktiv =
+                aktiveRegelPakete.includes(
+                    regel
+                );
+
+
+            const istBesondersEmpfohlen =
+                besondersEmpfohleneRegeln.includes(
+                    regel
+                );
 
 
             const button =
@@ -3146,20 +3416,48 @@ function regelPaketeAnzeigen() {
 
                 "aktiv",
 
-                aktiveRegelPakete.includes(
-                    regel
-                )
+                istAktiv
 
             );
+
+
+            button.dataset.besondersEmpfohlen =
+                String(
+                    istBesondersEmpfohlen
+                );
 
 
             button.setAttribute(
                 "aria-pressed",
                 String(
-                    aktiveRegelPakete.includes(
-                        regel
-                    )
+                    istAktiv
                 )
+            );
+
+
+            const statusTeile =
+                [];
+
+
+            if (istBesondersEmpfohlen) {
+                statusTeile.push(
+                    "besonders empfohlen"
+                );
+            }
+
+
+            statusTeile.push(
+                istAktiv
+                    ? "ausgewählt"
+                    : "nicht ausgewählt"
+            );
+
+
+            button.setAttribute(
+                "aria-label",
+                `${regel} – ${statusTeile.join(
+                    ", "
+                )}`
             );
 
 
@@ -3169,8 +3467,30 @@ function regelPaketeAnzeigen() {
                 );
 
 
+            const statusSymbole =
+                [];
+
+
+            if (istBesondersEmpfohlen) {
+                statusSymbole.push(
+                    "⭐"
+                );
+            }
+
+
+            if (istAktiv) {
+                statusSymbole.push(
+                    "✓"
+                );
+            }
+
+
             titel.textContent =
-                regel;
+                statusSymbole.length > 0
+
+                    ? `${statusSymbole.join(" ")} ${regel}`
+
+                    : regel;
 
 
             const beschreibung =
@@ -3179,8 +3499,22 @@ function regelPaketeAnzeigen() {
                 );
 
 
-            beschreibung.textContent =
-                "V2-Empfehlung – anklicken zum Übernehmen.";
+            if (istAktiv) {
+                beschreibung.textContent =
+                    istBesondersEmpfohlen
+
+                        ? "Besonders empfohlen und ausgewählt – anklicken zum Entfernen."
+
+                        : "Ausgewählt – anklicken zum Entfernen.";
+
+            } else {
+                beschreibung.textContent =
+                    istBesondersEmpfohlen
+
+                        ? "Besonders empfohlen – anklicken zum Übernehmen."
+
+                        : "V2-Empfehlung – anklicken zum Übernehmen.";
+            }
 
 
             button.appendChild(
@@ -3226,7 +3560,9 @@ function regelPaketeAnzeigen() {
                     }
 
 
-                    regelPaketeAnzeigen();
+                    regelPaketeAnzeigen(
+                        regel
+                    );
 
                     promptErstellen();
                 }
@@ -3234,9 +3570,34 @@ function regelPaketeAnzeigen() {
             );
 
 
+            button.addEventListener(
+                "keydown",
+                function (event) {
+                    if (
+                        event.key !==
+                            "Enter" &&
+                        event.key !==
+                            " "
+                    ) {
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+                    button.click();
+                }
+            );
+
+
             regelPaketeContainer.appendChild(
                 button
             );
+
+
+            if (regel === fokusRegel) {
+                button.focus();
+            }
         }
 
     );
@@ -3262,18 +3623,24 @@ function unterkategorieAktualisieren(
     );
 
 
-    empfehlungsSelectAktualisieren(
-        ziel,
-        daten.ziele,
-        "Zielvorschlag auswählen …"
-    );
+    aktiveZiele =
+        aktiveZiele.filter(
+            function (zielText) {
+                return daten.ziele.includes(
+                    zielText
+                );
+            }
+        );
 
 
-    empfehlungsSelectAktualisieren(
-        ausgabeformat,
-        daten.ausgabeformate,
-        "Ausgabeformat auswählen …"
-    );
+    aktiveAusgabeformate =
+        aktiveAusgabeformate.filter(
+            function (formatText) {
+                return daten.ausgabeformate.includes(
+                    formatText
+                );
+            }
+        );
 
 
     ausgabeAlsEmpfehlungenAktualisieren(
@@ -3315,9 +3682,13 @@ function unterkategorieAktualisieren(
 
     kontextHinweisAktualisieren();
 
+    zieleAnzeigen();
+
     anforderungenAnzeigen();
 
     regelPaketeAnzeigen();
+
+    ausgabeformateAnzeigen();
 
     promptErstellen();
 }
@@ -3432,8 +3803,8 @@ function promptQualitaetBewerten() {
         );
 
     } else if (
-        ziel.value.trim() !==
-        ""
+        aktiveZiele.length >
+        0
     ) {
 
         punkte +=
@@ -3604,8 +3975,9 @@ function promptQualitaetBewerten() {
     // --------------------------------------------------
 
     if (
-        gewaehltesAusgabeformatHolen() !==
-        ""
+        ausgewaehlteAusgabeformateHolen()
+            .length >
+        0
     ) {
 
         punkte +=
@@ -3746,15 +4118,7 @@ function promptErstellen() {
 
 
     const gewaehlteZiele =
-
-        [
-            ziel.value.trim(),
-            eigenesZiel.value.trim()
-        ]
-
-            .filter(
-                Boolean
-            );
+        ausgewaehlteZieleHolen();
 
 
     if (
@@ -3780,7 +4144,12 @@ function promptErstellen() {
 
 
     prompt +=
-        "AUFGABE:\n";
+        "AUFGABE / ZIEL:\n";
+
+
+    const mehrereZiele =
+        gewaehlteZiele.length >
+        1;
 
 
     prompt +=
@@ -3794,9 +4163,13 @@ function promptErstellen() {
                         );
 
 
-                    return (
-                        `${zielOhnePunkt}.`
-                    );
+                    return `${
+                        mehrereZiele
+
+                            ? "- "
+
+                            : ""
+                    }${zielOhnePunkt}.`;
                 }
             )
             .join(
@@ -3881,12 +4254,36 @@ function promptErstellen() {
         "AUSGABEFORMAT:\n";
 
 
-    const gewaehltesAusgabeformat =
-        gewaehltesAusgabeformatHolen();
+    const gewaehlteAusgabeformate =
+        ausgewaehlteAusgabeformateHolen();
 
 
-    prompt +=
-        `Erstelle die Antwort als ${gewaehltesAusgabeformat || "strukturierte Antwort"}.`;
+    if (
+        gewaehlteAusgabeformate.length ===
+        0
+    ) {
+        prompt +=
+            "Erstelle die Antwort als strukturierte Antwort.";
+
+    } else if (
+        gewaehlteAusgabeformate.length ===
+        1
+    ) {
+        prompt +=
+            `Erstelle die Antwort als ${gewaehlteAusgabeformate[0]}.`;
+
+    } else {
+        prompt +=
+            gewaehlteAusgabeformate
+                .map(
+                    function (formatText) {
+                        return `- ${formatText}`;
+                    }
+                )
+                .join(
+                    "\n"
+                );
+    }
 
 
     if (
@@ -3919,9 +4316,6 @@ function builderZuruecksetzen() {
     v2AuswahlMerken();
 
     eigeneRolle.value =
-        "";
-
-    ziel.value =
         "";
 
     eigenesZiel.value =
@@ -3963,7 +4357,15 @@ function builderZuruecksetzen() {
         [];
 
 
+    aktiveZiele =
+        [];
+
+
     aktiveRegelPakete =
+        [];
+
+
+    aktiveAusgabeformate =
         [];
 
 
@@ -4718,8 +5120,14 @@ function builderDatenHolen() {
         eigeneRolle:
             eigeneRolle.value,
 
+        ziele:
+            [
+                ...aktiveZiele
+            ],
+
         ziel:
-            ziel.value,
+            aktiveZiele[0] ||
+            "",
 
         eigenesZiel:
             eigenesZiel.value,
@@ -4743,8 +5151,14 @@ function builderDatenHolen() {
         eigeneRegeln:
             eigeneRegeln.value,
 
+        ausgabeformate:
+            [
+                ...aktiveAusgabeformate
+            ],
+
         ausgabeformat:
-            ausgabeformat.value,
+            aktiveAusgabeformate[0] ||
+            "",
 
         eigenesAusgabeformat:
             eigenesAusgabeformat.value,
@@ -4923,6 +5337,72 @@ function promptSpeichernAusfuehren() {
 // PROMPT BEARBEITEN
 // ======================================================
 
+function gespeicherteAuswahlwerteHolen(
+    eintrag,
+    arrayFeld,
+    einzelFeld
+) {
+    const werte =
+        [];
+
+
+    if (
+        Array.isArray(
+            eintrag[arrayFeld]
+        )
+    ) {
+        werte.push(
+            ...eintrag[arrayFeld]
+        );
+    }
+
+
+    if (
+        typeof eintrag[einzelFeld] ===
+            "string"
+    ) {
+        werte.push(
+            eintrag[einzelFeld]
+        );
+    }
+
+
+    return [
+        ...new Set(
+            werte
+                .filter(
+                    function (wert) {
+                        return typeof wert ===
+                            "string";
+                    }
+                )
+                .map(
+                    function (wert) {
+                        return wert.trim();
+                    }
+                )
+                .filter(Boolean)
+        )
+    ];
+}
+
+
+function freitextMitAuswahlresten(
+    freitext,
+    auswahlreste,
+    trennzeichen
+) {
+    return [
+        ...new Set([
+            String(freitext || "")
+                .trim(),
+            ...auswahlreste
+        ].filter(Boolean))
+    ].join(
+        trennzeichen
+    );
+}
+
 function promptBearbeiten(
     id
 ) {
@@ -5045,38 +5525,43 @@ function promptBearbeiten(
         );
 
 
-    const zielIstVerfuegbar =
-        [
-            ...ziel.options
-        ].some(
+    const aktuelleEmpfehlungen =
+        unterkategorieDatenHolen();
 
-            function (option) {
 
-                return (
-                    option.value ===
-                    eintrag.ziel
-                );
-            }
-
+    const gespeicherteZiele =
+        gespeicherteAuswahlwerteHolen(
+            eintrag,
+            "ziele",
+            "ziel"
         );
 
 
-    if (zielIstVerfuegbar) {
-
-        ziel.value =
-            eintrag.ziel;
-    }
+    aktiveZiele =
+        gespeicherteZiele.filter(
+            function (zielText) {
+                return aktuelleEmpfehlungen
+                    .ziele
+                    .includes(
+                        zielText
+                    );
+            }
+        );
 
 
     eigenesZiel.value =
-        eintrag.eigenesZiel ||
-        (
-            !zielIstVerfuegbar &&
-            eintrag.ziel
-
-                ? eintrag.ziel
-
-                : ""
+        freitextMitAuswahlresten(
+            eintrag.eigenesZiel,
+            gespeicherteZiele.filter(
+                function (zielText) {
+                    return !aktuelleEmpfehlungen
+                        .ziele
+                        .includes(
+                            zielText
+                        );
+                }
+            ),
+            "\n"
         );
 
 
@@ -5084,9 +5569,6 @@ function promptBearbeiten(
         eintrag.kontext ||
         "";
 
-
-    const aktuelleEmpfehlungen =
-        unterkategorieDatenHolen();
 
     const gespeicherteAnforderungen =
         Array.isArray(eintrag.anforderungen)
@@ -5192,38 +5674,39 @@ function promptBearbeiten(
         ].join("\n");
 
 
-    const ausgabeformatIstVerfuegbar =
-        [
-            ...ausgabeformat.options
-        ].some(
-
-            function (option) {
-
-                return (
-                    option.value ===
-                    eintrag.ausgabeformat
-                );
-            }
-
+    const gespeicherteAusgabeformate =
+        gespeicherteAuswahlwerteHolen(
+            eintrag,
+            "ausgabeformate",
+            "ausgabeformat"
         );
 
 
-    if (ausgabeformatIstVerfuegbar) {
-
-        ausgabeformat.value =
-            eintrag.ausgabeformat;
-    }
+    aktiveAusgabeformate =
+        gespeicherteAusgabeformate.filter(
+            function (formatText) {
+                return aktuelleEmpfehlungen
+                    .ausgabeformate
+                    .includes(
+                        formatText
+                    );
+            }
+        );
 
 
     eigenesAusgabeformat.value =
-        eintrag.eigenesAusgabeformat ||
-        (
-            !ausgabeformatIstVerfuegbar &&
-            eintrag.ausgabeformat
-
-                ? eintrag.ausgabeformat
-
-                : ""
+        freitextMitAuswahlresten(
+            eintrag.eigenesAusgabeformat,
+            gespeicherteAusgabeformate.filter(
+                function (formatText) {
+                    return !aktuelleEmpfehlungen
+                        .ausgabeformate
+                        .includes(
+                            formatText
+                        );
+                }
+            ),
+            "; "
         );
 
 
@@ -5254,9 +5737,13 @@ function promptBearbeiten(
 
     kontextHinweisAktualisieren();
 
+    zieleAnzeigen();
+
     anforderungenAnzeigen();
 
     regelPaketeAnzeigen();
+
+    ausgabeformateAnzeigen();
 
     promptErstellen();
 
@@ -5611,8 +6098,28 @@ function bibliothekAnzeigen() {
                             kategorie.unterName,
                             prompt.rolle,
                             prompt.eigeneRolle,
+                            ...(
+                                Array.isArray(
+                                    prompt.ziele
+                                )
+
+                                    ? prompt.ziele
+
+                                    : []
+                            ),
                             prompt.ziel,
-                            prompt.eigenesZiel
+                            prompt.eigenesZiel,
+                            ...(
+                                Array.isArray(
+                                    prompt.ausgabeformate
+                                )
+
+                                    ? prompt.ausgabeformate
+
+                                    : []
+                            ),
+                            prompt.ausgabeformat,
+                            prompt.eigenesAusgabeformat
                         ]
 
                             .filter(
@@ -6037,10 +6544,24 @@ function bibliothekAnzeigen() {
             );
 
 
+            const gespeicherteFormate =
+                gespeicherteAuswahlwerteHolen(
+                    prompt,
+                    "ausgabeformate",
+                    "ausgabeformat"
+                );
+
+
             formatChip.textContent =
-
-                prompt.ausgabeformat ||
-
+                [
+                    ...new Set([
+                        ...gespeicherteFormate,
+                        String(
+                            prompt.eigenesAusgabeformat ||
+                            ""
+                        ).trim()
+                    ].filter(Boolean))
+                ].join(", ") ||
                 "Kein Format";
 
 
@@ -6640,12 +7161,6 @@ eigeneRolle.addEventListener(
 );
 
 
-ziel.addEventListener(
-    "change",
-    promptErstellen
-);
-
-
 eigenesZiel.addEventListener(
     "input",
     promptErstellen
@@ -6666,12 +7181,6 @@ eigeneAnforderungen.addEventListener(
 
 eigeneRegeln.addEventListener(
     "input",
-    promptErstellen
-);
-
-
-ausgabeformat.addEventListener(
-    "change",
     promptErstellen
 );
 

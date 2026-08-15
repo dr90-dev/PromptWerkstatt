@@ -23,6 +23,9 @@
             regeln: [
                 ...(werte.regeln || [])
             ],
+            besondersEmpfohleneRegeln: [
+                ...(werte.besondersEmpfohleneRegeln || [])
+            ],
             ausgabeformate: [
                 ...(werte.ausgabeformate || [])
             ],

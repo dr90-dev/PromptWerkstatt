@@ -15,6 +15,7 @@
                 anforderungen: [],
                 besondersEmpfohleneAnforderungen: [],
                 regeln: [],
+                besondersEmpfohleneRegeln: [],
                 ausgabeformate: [],
                 ausgabeAls: []
             }
@@ -37,6 +38,7 @@
                 anforderungen: [],
                 besondersEmpfohleneAnforderungen: [],
                 regeln: [],
+                besondersEmpfohleneRegeln: [],
                 ausgabeformate: [],
                 ausgabeAls: []
             },
@@ -160,7 +162,9 @@
                             ],
                             ziele: [
                                 "Ein kompaktes Kurzvideo-Skript erstellen.",
-                                "Einen klaren Ablauf für die Szenen erstellen."
+                                "Einen klaren Ablauf für die Szenen erstellen.",
+                                "Einen passenden Einstieg erstellen, der sofort Interesse weckt.",
+                                "Eine klare Handlungsaufforderung passend einbauen."
                             ],
                             kontextHinweise: [
                                 "Für welche Plattform ist das Video?",
@@ -180,6 +184,10 @@
                                 "Für jede Szene Bildidee, Sprechertext und ungefähre Dauer angeben."
                             ],
                             regeln: [
+                                "Keine nicht belegten Fakten in den Sprechertext aufnehmen.",
+                                "Nicht davon ausgehen, dass Musik-, Bild- und Markenrechte automatisch geklärt sind."
+                            ],
+                            besondersEmpfohleneRegeln: [
                                 "Keine nicht belegten Fakten in den Sprechertext aufnehmen.",
                                 "Nicht davon ausgehen, dass Musik-, Bild- und Markenrechte automatisch geklärt sind."
                             ],

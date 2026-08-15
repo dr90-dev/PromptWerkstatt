@@ -15,6 +15,7 @@
                 anforderungen: [],
                 besondersEmpfohleneAnforderungen: [],
                 regeln: [],
+                besondersEmpfohleneRegeln: [],
                 ausgabeformate: [],
                 ausgabeAls: []
             }
@@ -37,6 +38,7 @@
                 anforderungen: [],
                 besondersEmpfohleneAnforderungen: [],
                 regeln: [],
+                besondersEmpfohleneRegeln: [],
                 ausgabeformate: [],
                 ausgabeAls: []
             },
@@ -207,7 +209,10 @@
                             ],
                             ziele: [
                                 "Eine klar gegliederte Design-FMEA erstellen.",
-                                "Mögliche Produktfehler systematisch untersuchen."
+                                "Mögliche Produktfehler systematisch untersuchen.",
+                                "Risiken anhand der vorgegebenen Bewertungsgrundlage bewerten.",
+                                "Geeignete Maßnahmen zur Risikominderung ableiten.",
+                                "Kritische Punkte übersichtlich hervorheben."
                             ],
                             kontextHinweise: [
                                 "Produkt oder Baugruppe",
@@ -232,6 +237,11 @@
                             regeln: [
                                 "Keine Risikobewertung ohne festgelegte Bewertungsgrundlage vornehmen.",
                                 "Nicht bekannte Bewertungen und Nachweise als offen kennzeichnen."
+                            ],
+                            besondersEmpfohleneRegeln: [
+                                "Keine technischen Werte oder Materialkennwerte erfinden.",
+                                "Bekannte Fakten, Annahmen und Schlussfolgerungen klar trennen.",
+                                "Ohne belastbare Grundlage keine Risikowerte vergeben."
                             ],
                             ausgabeformate: [
                                 "FMEA-Tabelle mit Funktionen, Fehlern, Ursachen und Maßnahmen",

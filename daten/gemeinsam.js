@@ -13,6 +13,7 @@
         "anforderungen",
         "besondersEmpfohleneAnforderungen",
         "regeln",
+        "besondersEmpfohleneRegeln",
         "ausgabeformate",
         "ausgabeAls"
     ];
@@ -55,6 +56,7 @@
             anforderungen: [],
             besondersEmpfohleneAnforderungen: [],
             regeln: [],
+            besondersEmpfohleneRegeln: [],
             ausgabeformate: [],
             ausgabeAls: []
         };
@@ -323,6 +325,164 @@
                         );
                 }
             );
+    }
+
+
+    function besondersEmpfohleneListenValidieren(
+        empfehlungen
+    ) {
+        const sichereEmpfehlungen =
+            istObjekt(empfehlungen)
+                ? empfehlungen
+                : {};
+
+
+        const paare = [
+            {
+                basisTyp: "anforderungen",
+                topTyp:
+                    "besondersEmpfohleneAnforderungen",
+                validierungsTyp:
+                    "ungueltigeBesondersEmpfohleneAnforderungen"
+            },
+            {
+                basisTyp: "regeln",
+                topTyp:
+                    "besondersEmpfohleneRegeln",
+                validierungsTyp:
+                    "ungueltigeBesondersEmpfohleneRegeln"
+            }
+        ];
+
+
+        const validierung = {
+            istGueltig: true,
+            ungueltigeBesondersEmpfohleneAnforderungen:
+                [],
+            ungueltigeBesondersEmpfohleneRegeln:
+                []
+        };
+
+
+        paare.forEach(
+            function (paar) {
+                const basisListe =
+                    Array.isArray(
+                        sichereEmpfehlungen[
+                            paar.basisTyp
+                        ]
+                    )
+
+                        ? sichereEmpfehlungen[
+                            paar.basisTyp
+                        ]
+
+                        : [];
+
+                const topListe =
+                    Array.isArray(
+                        sichereEmpfehlungen[
+                            paar.topTyp
+                        ]
+                    )
+
+                        ? sichereEmpfehlungen[
+                            paar.topTyp
+                        ]
+
+                        : [];
+
+
+                validierung[
+                    paar.validierungsTyp
+                ] =
+                    topListe.filter(
+                        function (eintrag) {
+                            return !basisListe.includes(
+                                eintrag
+                            );
+                        }
+                    );
+
+
+                if (
+                    validierung[
+                        paar.validierungsTyp
+                    ].length > 0
+                ) {
+                    validierung.istGueltig =
+                        false;
+                }
+            }
+        );
+
+
+        return validierung;
+    }
+
+
+    function besondersEmpfohleneListenBegrenzen(
+        ergebnis
+    ) {
+        const validierung =
+            besondersEmpfohleneListenValidieren(
+                ergebnis
+            );
+
+
+        ergebnis.validierung =
+            validierung;
+
+
+        const paare = [
+            {
+                topTyp:
+                    "besondersEmpfohleneAnforderungen",
+                validierungsTyp:
+                    "ungueltigeBesondersEmpfohleneAnforderungen"
+            },
+            {
+                topTyp:
+                    "besondersEmpfohleneRegeln",
+                validierungsTyp:
+                    "ungueltigeBesondersEmpfohleneRegeln"
+            }
+        ];
+
+
+        paare.forEach(
+            function (paar) {
+                const ungueltigeEintraege =
+                    validierung[
+                        paar.validierungsTyp
+                    ];
+
+
+                ergebnis[paar.topTyp] =
+                    ergebnis[paar.topTyp]
+                        .filter(
+                            function (eintrag) {
+                                return !ungueltigeEintraege
+                                    .includes(
+                                        eintrag
+                                    );
+                            }
+                        );
+
+
+                ergebnis.herkunft[paar.topTyp] =
+                    ergebnis.herkunft[paar.topTyp]
+                        .filter(
+                            function (herkunft) {
+                                return ergebnis[
+                                    paar.topTyp
+                                ].includes(
+                                    herkunft.wert
+                                );
+                            }
+                        );
+            }
+        );
     }
 
 
@@ -647,6 +807,9 @@
         empfehlungenZusammenfuehren:
             empfehlungenZusammenfuehren,
 
+        empfehlungenValidieren:
+            besondersEmpfohleneListenValidieren,
+
 
         empfehlungenFuerPfad(
             bereichId,
@@ -753,29 +916,9 @@
             );
 
 
-            ergebnis.besondersEmpfohleneAnforderungen =
-                ergebnis.besondersEmpfohleneAnforderungen
-                    .filter(
-                        function (anforderung) {
-                            return ergebnis.anforderungen
-                                .includes(
-                                    anforderung
-                                );
-                        }
-                    );
-
-
-            ergebnis.herkunft.besondersEmpfohleneAnforderungen =
-                ergebnis.herkunft.besondersEmpfohleneAnforderungen
-                    .filter(
-                        function (herkunft) {
-                            return ergebnis
-                                .besondersEmpfohleneAnforderungen
-                                .includes(
-                                    herkunft.wert
-                                );
-                        }
-                    );
+            besondersEmpfohleneListenBegrenzen(
+                ergebnis
+            );
 
 
             return ergebnis;

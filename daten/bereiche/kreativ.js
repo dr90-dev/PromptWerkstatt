@@ -15,6 +15,7 @@
                 anforderungen: [],
                 besondersEmpfohleneAnforderungen: [],
                 regeln: [],
+                besondersEmpfohleneRegeln: [],
                 ausgabeformate: [],
                 ausgabeAls: []
             }
@@ -37,6 +38,7 @@
                 anforderungen: [],
                 besondersEmpfohleneAnforderungen: [],
                 regeln: [],
+                besondersEmpfohleneRegeln: [],
                 ausgabeformate: [],
                 ausgabeAls: []
             },
@@ -117,7 +119,9 @@
                             ],
                             ziele: [
                                 "Eine altersgerechte Bastelidee finden.",
-                                "Eine Schritt-für-Schritt-Bastelanleitung erstellen."
+                                "Eine Schritt-für-Schritt-Bastelanleitung erstellen.",
+                                "Geeignete Materialien und Werkzeuge zusammenstellen.",
+                                "Die Bastelidee an Alter, Zeit und vorhandene Materialien anpassen."
                             ],
                             kontextHinweise: [
                                 "Wie alt sind die Kinder?",
@@ -136,6 +140,10 @@
                                 "Alter der Kinder und nötige Aufsicht berücksichtigen."
                             ],
                             regeln: [
+                                "Nur altersgerechte Materialien und Werkzeuge empfehlen.",
+                                "Erstickungs-, Schnitt- und Verbrennungsgefahren klar benennen."
+                            ],
+                            besondersEmpfohleneRegeln: [
                                 "Nur altersgerechte Materialien und Werkzeuge empfehlen.",
                                 "Erstickungs-, Schnitt- und Verbrennungsgefahren klar benennen."
                             ],

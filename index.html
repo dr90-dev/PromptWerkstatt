@@ -16,7 +16,7 @@
 
     <link
         rel="stylesheet"
-        href="style.css"
+        href="style.css?v=20"
     >
 </head>
 
@@ -381,12 +381,36 @@
 
             <div class="feld">
 
-                <label for="ziel">
+                <label id="zieleLabel">
                     Aufgabe / Ziel
                 </label>
 
 
-                <select id="ziel"></select>
+                <p
+                    id="zieleHinweis"
+                    class="hinweis"
+                >
+                    Du kannst mehrere Vorschläge auswählen.
+                </p>
+
+
+                <div
+                    id="zieleContainer"
+                    class="chip-container auswahl-chip-container"
+                    role="group"
+                    aria-labelledby="zieleLabel"
+                    aria-describedby="zieleHinweis"
+                ></div>
+
+
+                <select
+                    id="ziel"
+                    class="versteckt"
+                    hidden
+                    disabled
+                    aria-hidden="true"
+                    tabindex="-1"
+                ></select>
 
 
                 <textarea
@@ -513,12 +537,36 @@
 
             <div class="feld">
 
-                <label for="ausgabeformat">
+                <label id="ausgabeformateLabel">
                     Ausgabeformat
                 </label>
 
 
-                <select id="ausgabeformat"></select>
+                <p
+                    id="ausgabeformateHinweis"
+                    class="hinweis"
+                >
+                    Du kannst mehrere Vorschläge auswählen.
+                </p>
+
+
+                <div
+                    id="ausgabeformateContainer"
+                    class="chip-container auswahl-chip-container"
+                    role="group"
+                    aria-labelledby="ausgabeformateLabel"
+                    aria-describedby="ausgabeformateHinweis"
+                ></div>
+
+
+                <select
+                    id="ausgabeformat"
+                    class="versteckt"
+                    hidden
+                    disabled
+                    aria-hidden="true"
+                    tabindex="-1"
+                ></select>
 
 
                 <label for="eigenesAusgabeformat">
@@ -1311,7 +1359,7 @@
 
     <script src="api.js"></script>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=22"></script>
 
 
 </body>

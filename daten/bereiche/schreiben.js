@@ -23,6 +23,9 @@
             regeln: [
                 ...(werte.regeln || [])
             ],
+            besondersEmpfohleneRegeln: [
+                ...(werte.besondersEmpfohleneRegeln || [])
+            ],
             ausgabeformate: [
                 ...(werte.ausgabeformate || [])
             ],
@@ -83,7 +86,15 @@
                 "e-mails",
                 "E-Mails",
                 [
-                    ["geschaeftliche-anfrage", "Geschäftliche Anfrage"],
+                    [
+                        "geschaeftliche-anfrage",
+                        "Geschäftliche Anfrage",
+                        {
+                            ziele: [
+                                "Mit der E-Mail gezielt Informationen anfragen."
+                            ]
+                        }
+                    ],
                     [
                         "antwort-auf-e-mail",
                         "Antwort auf E-Mail",
@@ -94,11 +105,22 @@
                         }
                     ],
                     ["angebotsanfrage", "Angebotsanfrage"],
-                    ["nachfrage-erinnerung", "Nachfrage & Erinnerung"],
+                    [
+                        "nachfrage-erinnerung",
+                        "Nachfrage & Erinnerung",
+                        {
+                            ziele: [
+                                "Höflich an eine offene Antwort oder Aufgabe erinnern."
+                            ]
+                        }
+                    ],
                     [
                         "terminvereinbarung",
                         "Terminvereinbarung",
                         {
+                            ziele: [
+                                "Einen Termin oder Zeitraum abstimmen."
+                            ],
                             kontextHinweise: [
                                 "Welche Termine oder Zeiträume kommen infrage?"
                             ]
@@ -112,7 +134,7 @@
                 ],
                 {
                     ziele: [
-                        "Eine E-Mail schreiben, in der das Anliegen schnell verständlich wird."
+                        "Eine vollständige E-Mail mit passendem Betreff schreiben."
                     ],
                     anforderungen: [
                         "Einen passenden Betreff formulieren."
@@ -280,8 +302,24 @@
                 "zusammenfassen-umformulieren",
                 "Zusammenfassen & umformulieren",
                 [
-                    ["text-zusammenfassen", "Text zusammenfassen"],
-                    ["stichpunkte-erstellen", "Stichpunkte erstellen"],
+                    [
+                        "text-zusammenfassen",
+                        "Text zusammenfassen",
+                        {
+                            ziele: [
+                                "Die Kernaussagen und wichtigsten Details herausarbeiten."
+                            ]
+                        }
+                    ],
+                    [
+                        "stichpunkte-erstellen",
+                        "Stichpunkte erstellen",
+                        {
+                            ziele: [
+                                "Die Kernaussagen als übersichtliche Stichpunkte herausarbeiten."
+                            ]
+                        }
+                    ],
                     ["text-vereinfachen", "Text vereinfachen"],
                     ["neutral-umformulieren", "Neutral umformulieren"],
                     [
@@ -327,11 +365,44 @@
                 "beschwerden-reklamationen",
                 "Beschwerden & Reklamationen",
                 [
-                    ["reklamation", "Reklamation"],
+                    [
+                        "reklamation",
+                        "Reklamation",
+                        {
+                            ziele: [
+                                "Eine Reklamation zu einem Produkt oder einer Dienstleistung schreiben.",
+                                "Eine Rückerstattung anfragen."
+                            ]
+                        }
+                    ],
                     ["beschwerde", "Beschwerde"],
-                    ["rueckerstattung-verlangen", "Rückerstattung verlangen"],
-                    ["mangel-melden", "Mangel melden"],
-                    ["sachliche-eskalation", "Sachliche Eskalation"]
+                    [
+                        "rueckerstattung-verlangen",
+                        "Rückerstattung verlangen",
+                        {
+                            ziele: [
+                                "Eine Rückerstattung anfragen."
+                            ]
+                        }
+                    ],
+                    [
+                        "mangel-melden",
+                        "Mangel melden",
+                        {
+                            ziele: [
+                                "Einen Austausch, Ersatz oder eine Nachbesserung anfragen."
+                            ]
+                        }
+                    ],
+                    [
+                        "sachliche-eskalation",
+                        "Sachliche Eskalation",
+                        {
+                            ziele: [
+                                "Das Anliegen sachlich an eine zuständige Stelle weitergeben."
+                            ]
+                        }
+                    ]
                 ],
                 [
                     "beschweren-reklamieren"
@@ -342,7 +413,16 @@
                 "Reden & persönliche Texte",
                 [
                     ["rede", "Rede"],
-                    ["geburtstagsrede", "Geburtstagsrede"],
+                    [
+                        "geburtstagsrede",
+                        "Geburtstagsrede",
+                        {
+                            ziele: [
+                                "Gemeinsame Erinnerungen oder wichtige Stationen würdigen.",
+                                "Der Person danken und gute Wünsche mitgeben."
+                            ]
+                        }
+                    ],
                     ["dankesrede", "Dankesrede"],
                     [
                         "trauertext",

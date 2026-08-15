@@ -15,7 +15,10 @@
             ],
             ziele: [
                 "Einen realistischen und umsetzbaren Plan erstellen.",
-                "Aufgaben, Prioritäten und Abhängigkeiten sinnvoll ordnen."
+                "Die wichtigsten Aufgaben und Prioritäten festlegen.",
+                "Die Schritte in eine sinnvolle Reihenfolge bringen.",
+                "Termine und verfügbare Zeit realistisch berücksichtigen.",
+                "Abhängigkeiten und nötige Vorarbeiten erkennen."
             ],
             kontextHinweise: [
                 "Was möchtest du erreichen?",
@@ -43,6 +46,10 @@
                 "Schätzungen und Annahmen klar kennzeichnen.",
                 "Keine fachlichen oder persönlichen Voraussetzungen annehmen, die nicht genannt wurden."
             ],
+            besondersEmpfohleneRegeln: [
+                "Fehlende Angaben zu Zeit oder verfügbaren Mitteln klar kennzeichnen.",
+                "Schätzungen und Annahmen klar kennzeichnen."
+            ],
             ausgabeformate: [
                 "Plan mit klaren Prioritäten",
                 "Zeit- und Meilensteinplan",
@@ -66,7 +73,9 @@
             ],
             ziele: [
                 "Mehrere Möglichkeiten nach klaren Kriterien miteinander vergleichen.",
-                "Eine Entscheidungshilfe mit einer klar begründeten Empfehlung erstellen."
+                "Die wichtigsten Vor- und Nachteile der Möglichkeiten herausarbeiten.",
+                "Die Möglichkeit finden, die am besten zu meinen Anforderungen passt.",
+                "Die Entscheidung anhand der wichtigsten Kriterien nachvollziehbar begründen."
             ],
             kontextHinweise: [
                 "Welche Möglichkeiten möchtest du vergleichen?",
@@ -94,6 +103,10 @@
                 "Fehlende Angaben nicht einfach durch Annahmen ersetzen.",
                 "Persönliche Gewichtungen und Bewertungen klar als solche kennzeichnen."
             ],
+            besondersEmpfohleneRegeln: [
+                "Keine Eigenschaften oder Vergleichswerte erfinden.",
+                "Persönliche Gewichtungen und Bewertungen klar als solche kennzeichnen."
+            ],
             ausgabeformate: [
                 "Vergleichstabelle",
                 "Vor- und Nachteile-Liste",
@@ -118,7 +131,9 @@
             ],
             ziele: [
                 "Gezielt nach Informationen zu einer klaren Frage suchen.",
-                "Quellen vergleichen und verlässliche Ergebnisse verständlich zusammenfassen."
+                "Geeignete und verlässliche Quellen finden.",
+                "Aussagen verschiedener Quellen vergleichen und Widersprüche erkennen.",
+                "Die wichtigsten Ergebnisse verständlich zusammenfassen."
             ],
             kontextHinweise: [
                 "Welche genaue Frage soll beantwortet werden?",
@@ -145,6 +160,10 @@
                 "Nicht überprüfbare Aussagen klar als unsicher kennzeichnen.",
                 "Aus einem fehlenden Beleg keine sichere Aussage ableiten."
             ],
+            besondersEmpfohleneRegeln: [
+                "Keine Quellen, Fundstellen oder Rechercheergebnisse erfinden.",
+                "Nicht überprüfbare Aussagen klar als unsicher kennzeichnen."
+            ],
             ausgabeformate: [
                 "Übersichtliche Recherche-Zusammenfassung",
                 "Quellenvergleich mit Kernaussagen",
@@ -168,7 +187,9 @@
             ],
             ziele: [
                 "Mehrere gute Ideen finden, die ich wirklich umsetzen kann.",
-                "Das Problem besser verstehen und passende Lösungen dafür finden."
+                "Das Problem und seine möglichen Ursachen besser verstehen.",
+                "Verschiedene Lösungswege mit ihren Vor- und Nachteilen vergleichen.",
+                "Die passendsten Lösungen für die nächsten Schritte auswählen."
             ],
             kontextHinweise: [
                 "Wie sieht die aktuelle Situation aus?",
@@ -196,6 +217,10 @@
                 "Annahmen klar kennzeichnen.",
                 "Genannte Grenzen und Ausschlüsse einhalten."
             ],
+            besondersEmpfohleneRegeln: [
+                "Fehlende Informationen nicht erfinden.",
+                "Genannte Grenzen und Ausschlüsse einhalten."
+            ],
             ausgabeformate: [
                 "Ideenliste",
                 "Lösungsideen mit Vor- und Nachteilen",
@@ -220,7 +245,9 @@
             ],
             ziele: [
                 "Informationen übersichtlich ordnen, damit sie sich leicht nutzen lassen.",
-                "Eine vollständige Checkliste erstellen, die sich direkt nutzen lässt."
+                "Eine vollständige Checkliste erstellen, die sich direkt nutzen lässt.",
+                "Die Punkte in eine praktische Reihenfolge bringen.",
+                "Wichtige oder dringende Punkte klar hervorheben."
             ],
             kontextHinweise: [
                 "Wofür brauchst du die Liste oder Übersicht?",
@@ -248,6 +275,10 @@
                 "Unklare oder vom Einzelfall abhängige Angaben klar kennzeichnen.",
                 "Widersprüchliche oder doppelte Einträge vermeiden."
             ],
+            besondersEmpfohleneRegeln: [
+                "Fehlende Punkte nicht ohne Grundlage als Pflicht darstellen.",
+                "Unklare oder vom Einzelfall abhängige Angaben klar kennzeichnen."
+            ],
             ausgabeformate: [
                 "Checkliste",
                 "Gegliederte Übersicht",
@@ -271,8 +302,10 @@
                 "Begleiter für Anträge und Behördengänge"
             ],
             ziele: [
-                "Herausfinden, welche Angaben und Unterlagen ich brauche und was noch fehlt.",
-                "Mich Schritt für Schritt auf einen Antrag oder Behördengang vorbereiten und wissen, was als Nächstes zu tun ist."
+                "Herausfinden, welche Angaben und Unterlagen ich brauche.",
+                "Erkennen, welche Angaben oder Unterlagen noch fehlen.",
+                "Mich Schritt für Schritt auf einen Antrag oder Behördengang vorbereiten.",
+                "Die nächsten sinnvollen Schritte für den Antrag oder Behördengang festlegen."
             ],
             kontextHinweise: [
                 "Welche Stelle oder Behörde ist zuständig?",
@@ -301,6 +334,10 @@
                 "Unsicherheiten klar kennzeichnen.",
                 "Nicht den Eindruck einer verbindlichen Rechtsberatung erwecken."
             ],
+            besondersEmpfohleneRegeln: [
+                "Unbekannte Anforderungen, Fristen oder Zuständigkeiten nicht erfinden.",
+                "Unsicherheiten klar kennzeichnen."
+            ],
             ausgabeformate: [
                 "Unterlagen-Checkliste",
                 "Schritt-für-Schritt-Vorgehen",
@@ -324,7 +361,8 @@
             ],
             ziele: [
                 "Eine passende Nachricht klar und verständlich formulieren.",
-                "Eine Nachricht höflich und passend zum Anlass schreiben."
+                "Eine Nachricht höflich und passend zum Anlass schreiben.",
+                "Um eine Antwort oder Rückmeldung bitten."
             ],
             kontextHinweise: [
                 "Wer soll die Nachricht bekommen?",
@@ -352,6 +390,10 @@
                 "Keine Zusagen oder Behauptungen ergänzen, die nicht genannt wurden.",
                 "Unsicherheiten nicht als Fakten darstellen."
             ],
+            besondersEmpfohleneRegeln: [
+                "Keine Informationen erfinden.",
+                "Keine Zusagen oder Behauptungen ergänzen, die nicht genannt wurden."
+            ],
             ausgabeformate: [
                 "Fertiger Text"
             ],
@@ -372,8 +414,9 @@
                 "Korrekturhelfer"
             ],
             ziele: [
-                "Einen vorhandenen Text verständlicher und flüssiger formulieren.",
-                "Fehler korrigieren, ohne die Aussage unbeabsichtigt zu verändern."
+                "Einen vorhandenen Text flüssiger und natürlicher formulieren.",
+                "Fehler korrigieren, ohne die Aussage unbeabsichtigt zu verändern.",
+                "Stil und Wortwahl an die Zielgruppe anpassen."
             ],
             kontextHinweise: [
                 "Welcher Text soll überarbeitet werden?",
@@ -399,6 +442,10 @@
             regeln: [
                 "Keine neuen Fakten hinzufügen.",
                 "Aussagen nicht stärker oder verbindlicher machen, wenn das nicht gewünscht ist.",
+                "Eigennamen, Zahlen und wichtige Daten nicht ungeprüft verändern."
+            ],
+            besondersEmpfohleneRegeln: [
+                "Keine neuen Fakten hinzufügen.",
                 "Eigennamen, Zahlen und wichtige Daten nicht ungeprüft verändern."
             ],
             ausgabeformate: [
@@ -454,6 +501,10 @@
                 "Keine wichtige Aussage durch die Kürzung verfälschen.",
                 "Unsicherheiten im Original nicht als Gewissheiten darstellen."
             ],
+            besondersEmpfohleneRegeln: [
+                "Nichts erfinden.",
+                "Keine wichtige Aussage durch die Kürzung verfälschen."
+            ],
             ausgabeformate: [
                 "Kurzfassung",
                 "Stichpunkte",
@@ -506,6 +557,10 @@
                 "Keine unangemessenen Aussagen hinzufügen.",
                 "Die gewünschte Stimmung respektieren."
             ],
+            besondersEmpfohleneRegeln: [
+                "Keine persönlichen Fakten erfinden.",
+                "Die gewünschte Stimmung respektieren."
+            ],
             ausgabeformate: [
                 "Persönlicher Text"
             ],
@@ -527,7 +582,9 @@
             ],
             ziele: [
                 "Eine klare und sachliche Beschwerde formulieren.",
-                "Erklären, was passiert ist, und die gewünschte Lösung verständlich nennen."
+                "Klar erklären, was passiert ist.",
+                "Die gewünschte Lösung verständlich nennen.",
+                "Um eine Antwort oder Klärung bitten."
             ],
             kontextHinweise: [
                 "Was ist passiert?",
@@ -555,6 +612,10 @@
                 "Keine unbekannten Fristen ergänzen.",
                 "Keine Drohungen oder Behauptungen hinzufügen, die nicht genannt wurden.",
                 "Rechtliche Aussagen nur bei ausreichender Grundlage machen."
+            ],
+            besondersEmpfohleneRegeln: [
+                "Keine Rechtsansprüche erfinden.",
+                "Keine unbekannten Fristen ergänzen."
             ],
             ausgabeformate: [
                 "Beschwerde-E-Mail",

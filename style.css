@@ -464,9 +464,7 @@ textarea:focus {
 }
 
 
-#rolle:disabled,
-#ziel:disabled,
-#ausgabeformat:disabled {
+#rolle:disabled {
     cursor:
         not-allowed;
 
@@ -1296,6 +1294,30 @@ body.bereich-modal-offen {
 
     margin-bottom:
         12px;
+}
+
+
+.auswahl-chip-container {
+    align-items:
+        flex-start;
+}
+
+
+.auswahl-chip {
+    min-height:
+        44px;
+
+    max-width:
+        100%;
+
+    line-height:
+        1.4;
+
+    overflow-wrap:
+        anywhere;
+
+    text-align:
+        left;
 }
 
 
@@ -3112,6 +3134,14 @@ footer {
 ========================================================= */
 
 @media (max-width: 600px) {
+
+    .auswahl-chip {
+        width:
+            100%;
+
+        text-align:
+            center;
+    }
 
     .kopfbereich {
         padding:
