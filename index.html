@@ -16,7 +16,7 @@
 
     <link
         rel="stylesheet"
-        href="style.css?v=20"
+        href="style.css?v=21"
     >
 </head>
 
@@ -346,6 +346,116 @@
                     ></div>
 
                 </div>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 QUERSCHNITTSPARAMETER
+            =================================================== -->
+
+            <div class="feld">
+
+                <label id="zielgruppenLabel">
+                    Zielgruppe
+                </label>
+
+
+                <p
+                    id="zielgruppenHinweis"
+                    class="hinweis"
+                >
+                    Optional. Du kannst mehrere Zielgruppen kombinieren.
+                </p>
+
+
+                <details
+                    id="zielgruppenAuswahl"
+                    class="querschnitt-auswahl"
+                >
+
+                    <summary id="zielgruppenZusammenfassung">
+                        Zielgruppen auswählen
+                    </summary>
+
+
+                    <div
+                        id="zielgruppenOptionen"
+                        class="querschnitt-optionen"
+                        role="group"
+                        aria-labelledby="zielgruppenLabel"
+                        aria-describedby="zielgruppenHinweis"
+                    ></div>
+
+                </details>
+
+
+                <label for="eigeneZielgruppe">
+                    Eigene Zielgruppe
+                </label>
+
+
+                <input
+                    type="text"
+                    id="eigeneZielgruppe"
+                    placeholder="Optional: eigene Zielgruppe eingeben ..."
+                >
+
+            </div>
+
+
+            <div class="feld">
+
+                <label for="fachniveau">
+                    Fach-/Erklärniveau
+                </label>
+
+
+                <p class="hinweis">
+                    Optional. Legt fest, wie fachlich oder einfach die Antwort erklärt wird.
+                </p>
+
+
+                <select id="fachniveau"></select>
+
+            </div>
+
+
+            <div class="feld">
+
+                <label id="tonalitaetenLabel">
+                    Tonalität
+                </label>
+
+
+                <p
+                    id="tonalitaetenHinweis"
+                    class="hinweis"
+                >
+                    Optional. Du kannst mehrere Tonalitäten kombinieren.
+                </p>
+
+
+                <div
+                    id="tonalitaetenContainer"
+                    class="chip-container auswahl-chip-container"
+                    role="group"
+                    aria-labelledby="tonalitaetenLabel"
+                    aria-describedby="tonalitaetenHinweis"
+                ></div>
+
+
+                <label for="eigeneTonalitaet">
+                    Eigene Tonalität
+                </label>
+
+
+                <input
+                    type="text"
+                    id="eigeneTonalitaet"
+                    placeholder="Optional: eigene Tonalität eingeben ..."
+                >
 
             </div>
 
@@ -1325,6 +1435,12 @@
 
     <script src="daten/bereiche.js"></script>
 
+    <script src="daten/zielgruppen.js"></script>
+
+    <script src="daten/fachniveaus.js"></script>
+
+    <script src="daten/tonalitaeten.js"></script>
+
     <script src="daten/profile.js"></script>
 
     <script src="daten/profile-phase4d.js"></script>
@@ -1361,7 +1477,7 @@
 
     <script src="api.js"></script>
 
-    <script src="script.js?v=22"></script>
+    <script src="script.js?v=23"></script>
 
 
 </body>

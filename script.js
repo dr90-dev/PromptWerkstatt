@@ -18,6 +18,41 @@ const unterkategorie =
         "unterkategorie"
     );
 
+const zielgruppenAuswahl =
+    document.getElementById(
+        "zielgruppenAuswahl"
+    );
+
+const zielgruppenZusammenfassung =
+    document.getElementById(
+        "zielgruppenZusammenfassung"
+    );
+
+const zielgruppenOptionen =
+    document.getElementById(
+        "zielgruppenOptionen"
+    );
+
+const eigeneZielgruppe =
+    document.getElementById(
+        "eigeneZielgruppe"
+    );
+
+const fachniveau =
+    document.getElementById(
+        "fachniveau"
+    );
+
+const tonalitaetenContainer =
+    document.getElementById(
+        "tonalitaetenContainer"
+    );
+
+const eigeneTonalitaet =
+    document.getElementById(
+        "eigeneTonalitaet"
+    );
+
 const bereichAuswahl =
     document.getElementById(
         "bereichAuswahl"
@@ -333,6 +368,12 @@ let aktiveRegelPakete =
 let aktiveAusgabeformate =
     [];
 
+let aktiveZielgruppenIds =
+    [];
+
+let aktiveTonalitaetenIds =
+    [];
+
 let nurFavoriten =
     false;
 
@@ -419,6 +460,216 @@ function aktuelleUnterkategorieHolen() {
 }
 
 
+function querschnittDatenHolen(
+    id
+) {
+    return v2Daten &&
+        v2Daten.querschnitt &&
+        v2Daten.querschnitt[id]
+
+        ? v2Daten.querschnitt[id]
+
+        : null;
+}
+
+
+function querschnittOptionenHolen(
+    id
+) {
+    const daten =
+        querschnittDatenHolen(
+            id
+        );
+
+
+    if (!daten) {
+        return [];
+    }
+
+
+    if (Array.isArray(daten.gruppen)) {
+        return daten.gruppen.flatMap(
+            function (gruppe) {
+                return Array.isArray(
+                    gruppe.optionen
+                )
+
+                    ? gruppe.optionen
+
+                    : [];
+            }
+        );
+    }
+
+
+    return Array.isArray(daten.optionen)
+
+        ? daten.optionen
+
+        : [];
+}
+
+
+function querschnittOptionHolen(
+    querschnittId,
+    optionId
+) {
+    return querschnittOptionenHolen(
+        querschnittId
+    ).find(
+        function (option) {
+            return option.id ===
+                optionId;
+        }
+    ) || null;
+}
+
+
+function querschnittIdsBereinigen(
+    querschnittId,
+    ids
+) {
+    const erlaubteIds =
+        new Set(
+            querschnittOptionenHolen(
+                querschnittId
+            ).map(
+                function (option) {
+                    return option.id;
+                }
+            )
+        );
+
+
+    return [
+        ...new Set(
+            (
+                Array.isArray(ids)
+
+                    ? ids
+
+                    : []
+            ).filter(
+                function (id) {
+                    return typeof id ===
+                        "string" &&
+                        id !==
+                            "keine-vorgabe" &&
+                        erlaubteIds.has(
+                            id
+                        );
+                }
+            )
+        )
+    ];
+}
+
+
+function querschnittParameterQuellenHolen() {
+    const auswahl = [
+        {
+            querschnittId:
+                "zielgruppen",
+            optionIds:
+                aktiveZielgruppenIds
+        },
+        {
+            querschnittId:
+                "fachniveaus",
+            optionIds:
+                fachniveau.value &&
+                fachniveau.value !==
+                    "keine-vorgabe"
+
+                    ? [fachniveau.value]
+
+                    : []
+        },
+        {
+            querschnittId:
+                "tonalitaeten",
+            optionIds:
+                aktiveTonalitaetenIds
+        }
+    ];
+
+    const quellen =
+        [];
+
+
+    auswahl.forEach(
+        function (eintrag) {
+            const aktiveIds =
+                new Set(
+                    querschnittIdsBereinigen(
+                        eintrag.querschnittId,
+                        eintrag.optionIds
+                    )
+                );
+
+
+            querschnittOptionenHolen(
+                eintrag.querschnittId
+            ).forEach(
+                function (option) {
+                    if (
+                        !aktiveIds.has(
+                            option.id
+                        )
+                    ) {
+                        return;
+                    }
+
+
+                    const empfehlungen =
+                        option.empfehlungen ||
+                        option.grundlagen;
+
+                    const hatEmpfehlungen =
+                        empfehlungen &&
+                        typeof empfehlungen ===
+                            "object" &&
+                        !Array.isArray(
+                            empfehlungen
+                        ) &&
+                        Object.values(
+                            empfehlungen
+                        ).some(
+                            function (werte) {
+                                return Array.isArray(
+                                    werte
+                                ) &&
+                                    werte.length >
+                                        0;
+                            }
+                        );
+
+
+                    if (!hatEmpfehlungen) {
+                        return;
+                    }
+
+
+                    quellen.push({
+                        ebene:
+                            "parameter",
+                        id:
+                            `${eintrag.querschnittId}:${option.id}`,
+                        pfad:
+                            `querschnitt/${eintrag.querschnittId}/${option.id}`,
+                        daten:
+                            empfehlungen
+                    });
+                }
+            );
+        }
+    );
+
+
+    return quellen;
+}
+
+
 // ======================================================
 // UNTERKATEGORIE-DATEN HOLEN
 // ======================================================
@@ -456,7 +707,8 @@ function unterkategorieDatenHolen() {
             ? v2Daten.empfehlungenFuerPfad(
                 bereichAuswahl.value,
                 hauptkategorie.value,
-                unterkategorie.value
+                unterkategorie.value,
+                querschnittParameterQuellenHolen()
             )
 
             : {
@@ -1126,6 +1378,494 @@ function auswahlwertUmschalten(
             ...aktiveWerte,
             wert
         ];
+}
+
+
+function querschnittNamenHolen(
+    querschnittId,
+    aktiveIds
+) {
+    const ausgewaehlteIds =
+        new Set(
+            querschnittIdsBereinigen(
+                querschnittId,
+                aktiveIds
+            )
+        );
+
+
+    return querschnittOptionenHolen(
+        querschnittId
+    )
+        .filter(
+            function (option) {
+                return ausgewaehlteIds.has(
+                    option.id
+                );
+            }
+        )
+        .map(
+            function (option) {
+                return option.name;
+            }
+        );
+}
+
+
+function querschnittWerteHolen(
+    querschnittId,
+    aktiveIds,
+    eigeneAngabe
+) {
+    return [
+        ...new Set([
+            ...querschnittNamenHolen(
+                querschnittId,
+                aktiveIds
+            ),
+            String(
+                eigeneAngabe ||
+                ""
+            ).trim()
+        ].filter(Boolean))
+    ];
+}
+
+
+function ausgewaehlteZielgruppenHolen() {
+    return querschnittWerteHolen(
+        "zielgruppen",
+        aktiveZielgruppenIds,
+        eigeneZielgruppe.value
+    );
+}
+
+
+function ausgewaehlteTonalitaetenHolen() {
+    return querschnittWerteHolen(
+        "tonalitaeten",
+        aktiveTonalitaetenIds,
+        eigeneTonalitaet.value
+    );
+}
+
+
+function ausgewaehltesFachniveauHolen() {
+    if (
+        !fachniveau.value ||
+        fachniveau.value ===
+            "keine-vorgabe"
+    ) {
+        return "";
+    }
+
+
+    const option =
+        querschnittOptionHolen(
+            "fachniveaus",
+            fachniveau.value
+        );
+
+
+    return option
+
+        ? option.name
+
+        : "";
+}
+
+
+function querschnittMehrfachauswahlAnzeigen(
+    container,
+    optionen,
+    aktiveIds,
+    beimUmschalten,
+    fokusContainer =
+        container
+) {
+    optionen.forEach(
+        function (option) {
+            const chip =
+                document.createElement(
+                    "button"
+                );
+
+            const istAktiv =
+                aktiveIds.includes(
+                    option.id
+                );
+
+
+            chip.type =
+                "button";
+
+            chip.classList.add(
+                "chip",
+                "auswahl-chip"
+            );
+
+            chip.classList.toggle(
+                "aktiv",
+                istAktiv
+            );
+
+            chip.textContent =
+                istAktiv
+
+                    ? `✓ ${option.name}`
+
+                    : option.name;
+
+            chip.dataset.wert =
+                option.id;
+
+            chip.setAttribute(
+                "aria-pressed",
+                String(
+                    istAktiv
+                )
+            );
+
+            chip.setAttribute(
+                "aria-label",
+                `${option.name} – ${
+                    istAktiv
+
+                        ? "ausgewählt"
+
+                        : "nicht ausgewählt"
+                }`
+            );
+
+            chip.title =
+                istAktiv
+
+                    ? "Auswahl entfernen"
+
+                    : "Auswählen";
+
+            chip.addEventListener(
+                "click",
+                function () {
+                    beimUmschalten(
+                        option.id
+                    );
+
+
+                    const neuerChip =
+                        fokusContainer.querySelector(
+                            `[data-wert="${option.id}"]`
+                        );
+
+
+                    if (neuerChip) {
+                        neuerChip.focus();
+                    }
+                }
+            );
+
+            chip.addEventListener(
+                "keydown",
+                function (event) {
+                    if (
+                        event.key !==
+                            "Enter" &&
+                        event.key !==
+                            " "
+                    ) {
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+                    chip.click();
+                }
+            );
+
+            container.appendChild(
+                chip
+            );
+        }
+    );
+}
+
+
+function zielgruppenAnzeigen() {
+    const daten =
+        querschnittDatenHolen(
+            "zielgruppen"
+        );
+
+
+    aktiveZielgruppenIds =
+        querschnittIdsBereinigen(
+            "zielgruppen",
+            aktiveZielgruppenIds
+        );
+
+    zielgruppenOptionen.innerHTML =
+        "";
+
+
+    const ausgewaehlteNamen =
+        querschnittNamenHolen(
+            "zielgruppen",
+            aktiveZielgruppenIds
+        );
+
+
+    zielgruppenZusammenfassung.textContent =
+        ausgewaehlteNamen.length >
+            0
+
+            ? ausgewaehlteNamen.length <=
+                2
+
+                ? `${ausgewaehlteNamen.length} ausgewählt: ${ausgewaehlteNamen.join(", ")}`
+
+                : `${ausgewaehlteNamen.length} Zielgruppen ausgewählt`
+
+            : "Zielgruppen auswählen";
+
+
+    if (
+        !daten ||
+        !Array.isArray(
+            daten.gruppen
+        )
+    ) {
+        leereEmpfehlungAnzeigen(
+            zielgruppenOptionen,
+            "Noch keine Zielgruppen verfügbar."
+        );
+
+        return;
+    }
+
+
+    daten.gruppen.forEach(
+        function (gruppe) {
+            const bereich =
+                document.createElement(
+                    "div"
+                );
+
+            const titel =
+                document.createElement(
+                    "span"
+                );
+
+            const chipContainer =
+                document.createElement(
+                    "div"
+                );
+
+
+            bereich.className =
+                "querschnitt-gruppe";
+
+            titel.className =
+                "querschnitt-gruppe-titel";
+
+            titel.textContent =
+                gruppe.name;
+
+            chipContainer.className =
+                "chip-container auswahl-chip-container";
+
+
+            bereich.appendChild(
+                titel
+            );
+
+            bereich.appendChild(
+                chipContainer
+            );
+
+            zielgruppenOptionen.appendChild(
+                bereich
+            );
+
+
+            querschnittMehrfachauswahlAnzeigen(
+                chipContainer,
+                Array.isArray(
+                    gruppe.optionen
+                )
+
+                    ? gruppe.optionen
+
+                    : [],
+                aktiveZielgruppenIds,
+                function (optionId) {
+                    aktiveZielgruppenIds =
+                        auswahlwertUmschalten(
+                            aktiveZielgruppenIds,
+                            optionId
+                        );
+
+                    zielgruppenAnzeigen();
+
+                    unterkategorieAktualisieren(
+                        false
+                    );
+                },
+                zielgruppenOptionen
+            );
+        }
+    );
+}
+
+
+function tonalitaetenAnzeigen() {
+    const optionen =
+        querschnittOptionenHolen(
+            "tonalitaeten"
+        ).filter(
+            function (option) {
+                return option.id !==
+                    "keine-vorgabe";
+            }
+        );
+
+
+    aktiveTonalitaetenIds =
+        querschnittIdsBereinigen(
+            "tonalitaeten",
+            aktiveTonalitaetenIds
+        );
+
+    tonalitaetenContainer.innerHTML =
+        "";
+
+
+    if (optionen.length === 0) {
+        leereEmpfehlungAnzeigen(
+            tonalitaetenContainer,
+            "Noch keine Tonalitäten verfügbar."
+        );
+
+        return;
+    }
+
+
+    querschnittMehrfachauswahlAnzeigen(
+        tonalitaetenContainer,
+        optionen,
+        aktiveTonalitaetenIds,
+        function (optionId) {
+            aktiveTonalitaetenIds =
+                auswahlwertUmschalten(
+                    aktiveTonalitaetenIds,
+                    optionId
+                );
+
+            tonalitaetenAnzeigen();
+
+            unterkategorieAktualisieren(
+                false
+            );
+        }
+    );
+}
+
+
+function fachniveauOptionenLaden(
+    bevorzugteId =
+        fachniveau.value
+) {
+    const optionen =
+        querschnittOptionenHolen(
+            "fachniveaus"
+        );
+
+
+    fachniveau.innerHTML =
+        "";
+
+
+    if (optionen.length === 0) {
+        const platzhalter =
+            document.createElement(
+                "option"
+            );
+
+
+        platzhalter.value =
+            "";
+
+        platzhalter.textContent =
+            "Noch keine Werte verfügbar";
+
+        fachniveau.appendChild(
+            platzhalter
+        );
+
+        fachniveau.disabled =
+            true;
+
+        return;
+    }
+
+
+    optionen.forEach(
+        function (option) {
+            const eintrag =
+                document.createElement(
+                    "option"
+                );
+
+
+            eintrag.value =
+                option.id;
+
+            eintrag.textContent =
+                option.name;
+
+            fachniveau.appendChild(
+                eintrag
+            );
+        }
+    );
+
+
+    const gueltigeIds =
+        new Set(
+            optionen.map(
+                function (option) {
+                    return option.id;
+                }
+            )
+        );
+
+
+    fachniveau.disabled =
+        false;
+
+    fachniveau.value =
+        gueltigeIds.has(
+            bevorzugteId
+        )
+
+            ? bevorzugteId
+
+            : gueltigeIds.has(
+                "keine-vorgabe"
+            )
+
+                ? "keine-vorgabe"
+
+                : "";
+}
+
+
+function querschnittFelderInitialisieren() {
+    fachniveauOptionenLaden();
+
+    zielgruppenAnzeigen();
+
+    tonalitaetenAnzeigen();
 }
 
 
@@ -4106,6 +4846,60 @@ function promptQualitaetBewerten() {
 // PROMPT ERSTELLEN
 // ======================================================
 
+function promptListenabschnittErstellen(
+    titel,
+    werte
+) {
+    const sichereWerte =
+        [
+            ...new Set(
+                (
+                    Array.isArray(werte)
+
+                        ? werte
+
+                        : []
+                )
+                    .filter(
+                        function (wert) {
+                            return typeof wert ===
+                                "string";
+                        }
+                    )
+                    .map(
+                        function (wert) {
+                            return wert.trim();
+                        }
+                    )
+                    .filter(Boolean)
+            )
+        ];
+
+
+    if (sichereWerte.length === 0) {
+        return "";
+    }
+
+
+    return `${titel}:\n${
+        sichereWerte.length ===
+            1
+
+            ? sichereWerte[0]
+
+            : sichereWerte
+                .map(
+                    function (wert) {
+                        return `- ${wert}`;
+                    }
+                )
+                .join(
+                    "\n"
+                )
+    }\n\n`;
+}
+
+
 function promptErstellen() {
 
     const gewaehlteRolle =
@@ -4141,6 +4935,29 @@ function promptErstellen() {
 
     prompt +=
         `Übernimm folgende Rolle: ${gewaehlteRolle}.\n\n`;
+
+
+    prompt +=
+        promptListenabschnittErstellen(
+            "ZIELGRUPPE",
+            ausgewaehlteZielgruppenHolen()
+        );
+
+
+    prompt +=
+        promptListenabschnittErstellen(
+            "FACH-/ERKLÄRNIVEAU",
+            [
+                ausgewaehltesFachniveauHolen()
+            ]
+        );
+
+
+    prompt +=
+        promptListenabschnittErstellen(
+            "TONALITÄT",
+            ausgewaehlteTonalitaetenHolen()
+        );
 
 
     prompt +=
@@ -4318,6 +5135,12 @@ function builderZuruecksetzen() {
     eigeneRolle.value =
         "";
 
+    eigeneZielgruppe.value =
+        "";
+
+    eigeneTonalitaet.value =
+        "";
+
     eigenesZiel.value =
         "";
 
@@ -4367,6 +5190,26 @@ function builderZuruecksetzen() {
 
     aktiveAusgabeformate =
         [];
+
+
+    aktiveZielgruppenIds =
+        [];
+
+
+    aktiveTonalitaetenIds =
+        [];
+
+
+    fachniveauOptionenLaden(
+        "keine-vorgabe"
+    );
+
+    zielgruppenAuswahl.open =
+        false;
+
+    zielgruppenAnzeigen();
+
+    tonalitaetenAnzeigen();
 
 
     unterkategorieAktualisieren(
@@ -5114,6 +5957,30 @@ function builderDatenHolen() {
 
                 : unterkategorie.value,
 
+        zielgruppenIds:
+            [
+                ...aktiveZielgruppenIds
+            ],
+
+        eigeneZielgruppe:
+            eigeneZielgruppe.value,
+
+        fachniveauId:
+            fachniveau.value ===
+                "keine-vorgabe"
+
+                ? ""
+
+                : fachniveau.value,
+
+        tonalitaetenIds:
+            [
+                ...aktiveTonalitaetenIds
+            ],
+
+        eigeneTonalitaet:
+            eigeneTonalitaet.value,
+
         rolle:
             rolle.value,
 
@@ -5483,6 +6350,48 @@ function promptBearbeiten(
 
 
     v2AuswahlMerken();
+
+
+    aktiveZielgruppenIds =
+        querschnittIdsBereinigen(
+            "zielgruppen",
+            eintrag.zielgruppenIds
+        );
+
+    eigeneZielgruppe.value =
+        typeof eintrag.eigeneZielgruppe ===
+            "string"
+
+            ? eintrag.eigeneZielgruppe
+
+            : "";
+
+    fachniveauOptionenLaden(
+        typeof eintrag.fachniveauId ===
+            "string"
+
+            ? eintrag.fachniveauId
+
+            : ""
+    );
+
+    aktiveTonalitaetenIds =
+        querschnittIdsBereinigen(
+            "tonalitaeten",
+            eintrag.tonalitaetenIds
+        );
+
+    eigeneTonalitaet.value =
+        typeof eintrag.eigeneTonalitaet ===
+            "string"
+
+            ? eintrag.eigeneTonalitaet
+
+            : "";
+
+    zielgruppenAnzeigen();
+
+    tonalitaetenAnzeigen();
 
 
     unterkategorieAktualisieren(
@@ -7149,6 +8058,28 @@ document.addEventListener(
 // EVENTS: BUILDER
 // ======================================================
 
+fachniveau.addEventListener(
+    "change",
+    function () {
+        unterkategorieAktualisieren(
+            false
+        );
+    }
+);
+
+
+eigeneZielgruppe.addEventListener(
+    "input",
+    promptErstellen
+);
+
+
+eigeneTonalitaet.addEventListener(
+    "input",
+    promptErstellen
+);
+
+
 rolle.addEventListener(
     "change",
     promptErstellen
@@ -7498,6 +8429,9 @@ hauptkategorienLaden();
 unterkategorienLaden();
 
 v2AuswahlMerken();
+
+
+querschnittFelderInitialisieren();
 
 
 unterkategorieAktualisieren(
