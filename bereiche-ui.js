@@ -244,6 +244,21 @@
     }
 
 
+    function bereichswechselMelden() {
+        document.dispatchEvent(
+            new CustomEvent(
+                "promptwerkstatt:bereich-geaendert",
+                {
+                    detail: {
+                        bereichId:
+                            aktuelleId
+                    }
+                }
+            )
+        );
+    }
+
+
     const gespeicherteIds =
         aktiveBereicheLaden();
 
@@ -534,6 +549,9 @@
 
 
     function auswahlSpeichern() {
+        const vorherigeAktuelleId =
+            aktuelleId;
+
         const neueIds =
             idsBereinigen(
                 modalCheckboxen()
@@ -604,6 +622,14 @@
             );
 
         modalSchliessen();
+
+
+        if (
+            aktuelleId !==
+            vorherigeAktuelleId
+        ) {
+            bereichswechselMelden();
+        }
     }
 
 
@@ -673,6 +699,8 @@
             aktuellenBereichSpeichern(
                 aktuelleId
             );
+
+            bereichswechselMelden();
         }
     );
 

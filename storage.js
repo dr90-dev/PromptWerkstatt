@@ -35,7 +35,10 @@ const StorageService = {
             "promptwerkstatt-aktive-bereiche-v2",
 
         aktiverBereichV2:
-            "promptwerkstatt-aktiver-bereich-v2"
+            "promptwerkstatt-aktiver-bereich-v2",
+
+        navigationV2:
+            "promptwerkstatt-navigation-v2"
 
     },
 
@@ -526,6 +529,172 @@ navigationLaden() {
 
 
     // ==================================================
+    // V2-KATEGORIENAVIGATION
+    // ==================================================
+
+    navigationV2Standard() {
+        return {
+            version: 2,
+            hauptkategorienNachBereich: {},
+            unterkategorienNachPfad: {},
+            aktiveAuswahl: {
+                bereichId: null,
+                hauptkategorieId: null,
+                unterkategorieId: null
+            }
+        };
+    },
+
+
+    navigationV2Bereinigen(daten) {
+        const standard =
+            this.navigationV2Standard();
+
+
+        if (
+            !daten ||
+            typeof daten !== "object" ||
+            Array.isArray(daten)
+        ) {
+            return standard;
+        }
+
+
+        function stringZuStringMap(wert) {
+            const ergebnis = {};
+
+
+            if (
+                !wert ||
+                typeof wert !== "object" ||
+                Array.isArray(wert)
+            ) {
+                return ergebnis;
+            }
+
+
+            Object.entries(wert).forEach(
+                function ([schluessel, eintrag]) {
+                    if (
+                        typeof schluessel === "string" &&
+                        schluessel !== "" &&
+                        typeof eintrag === "string" &&
+                        eintrag !== ""
+                    ) {
+                        ergebnis[schluessel] =
+                            eintrag;
+                    }
+                }
+            );
+
+
+            return ergebnis;
+        }
+
+
+        function idOderNull(wert) {
+            return typeof wert === "string" &&
+                wert !== ""
+
+                ? wert
+
+                : null;
+        }
+
+
+        const aktiveAuswahl =
+            daten.aktiveAuswahl &&
+            typeof daten.aktiveAuswahl === "object" &&
+            !Array.isArray(daten.aktiveAuswahl)
+
+                ? daten.aktiveAuswahl
+
+                : {};
+
+
+        return {
+            version: 2,
+            hauptkategorienNachBereich:
+                stringZuStringMap(
+                    daten.hauptkategorienNachBereich
+                ),
+            unterkategorienNachPfad:
+                stringZuStringMap(
+                    daten.unterkategorienNachPfad
+                ),
+            aktiveAuswahl: {
+                bereichId:
+                    idOderNull(
+                        aktiveAuswahl.bereichId
+                    ),
+                hauptkategorieId:
+                    idOderNull(
+                        aktiveAuswahl.hauptkategorieId
+                    ),
+                unterkategorieId:
+                    idOderNull(
+                        aktiveAuswahl.unterkategorieId
+                    )
+            }
+        };
+    },
+
+
+    navigationV2Laden() {
+        try {
+            const daten =
+                localStorage.getItem(
+                    this.keys.navigationV2
+                );
+
+
+            return daten
+
+                ? this.navigationV2Bereinigen(
+                    JSON.parse(daten)
+                )
+
+                : this.navigationV2Standard();
+
+        } catch (fehler) {
+            console.error(
+                "Die V2-Kategorienavigation konnte nicht geladen werden:",
+                fehler
+            );
+
+
+            return this.navigationV2Standard();
+        }
+    },
+
+
+    navigationV2Speichern(navigationV2) {
+        try {
+            localStorage.setItem(
+                this.keys.navigationV2,
+                JSON.stringify(
+                    this.navigationV2Bereinigen(
+                        navigationV2
+                    )
+                )
+            );
+
+
+            return true;
+
+        } catch (fehler) {
+            console.error(
+                "Die V2-Kategorienavigation konnte nicht gespeichert werden:",
+                fehler
+            );
+
+
+            return false;
+        }
+    },
+
+
+    // ==================================================
     // KOMPLETTE DATEN SICHERN
     // ==================================================
     //
@@ -555,7 +724,16 @@ navigationLaden() {
                 this.themeLaden(),
 
             navigation:
-                this.navigationLaden()
+                this.navigationLaden(),
+
+            navigationV2:
+                this.navigationV2Laden(),
+
+            aktiveBereicheV2:
+                this.aktiveBereicheV2Laden(),
+
+            aktiverBereichV2:
+                this.aktiverBereichV2Laden()
 
         };
     },
@@ -677,6 +855,39 @@ alleDatenSpeichern(importDaten) {
         );
 
 
+        if (
+            importDaten.navigationV2 &&
+            typeof importDaten.navigationV2 ===
+                "object"
+        ) {
+            this.navigationV2Speichern(
+                importDaten.navigationV2
+            );
+        }
+
+
+        if (
+            Array.isArray(
+                importDaten.aktiveBereicheV2
+            )
+        ) {
+            this.aktiveBereicheV2Speichern(
+                importDaten.aktiveBereicheV2
+            );
+        }
+
+
+        if (
+            typeof importDaten.aktiverBereichV2 ===
+                "string" &&
+            importDaten.aktiverBereichV2 !== ""
+        ) {
+            this.aktiverBereichV2Speichern(
+                importDaten.aktiverBereichV2
+            );
+        }
+
+
         return {
 
             erfolgreich:
@@ -747,6 +958,11 @@ alleDatenSpeichern(importDaten) {
 
         localStorage.removeItem(
             this.keys.aktiverBereichV2
+        );
+
+
+        localStorage.removeItem(
+            this.keys.navigationV2
         );
     }
 

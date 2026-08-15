@@ -1,6 +1,51 @@
 (function (global) {
     "use strict";
 
+    function unterkategorie(
+        id,
+        name
+    ) {
+        return {
+            id: id,
+            name: name,
+            empfehlungen: {
+                rollen: [],
+                anforderungen: [],
+                regeln: [],
+                ausgabeformate: [],
+                ausgabeAls: []
+            }
+        };
+    }
+
+
+    function hauptkategorie(
+        id,
+        name,
+        eintraege
+    ) {
+        return {
+            id: id,
+            name: name,
+            grundlagen: {
+                rollen: [],
+                anforderungen: [],
+                regeln: [],
+                ausgabeformate: [],
+                ausgabeAls: []
+            },
+            unterkategorien:
+                eintraege.map(
+                    function ([unterId, unterName]) {
+                        return unterkategorie(
+                            unterId,
+                            unterName
+                        );
+                    }
+                )
+        };
+    }
+
     global.PromptWerkstattDatenV2.bereichRegistrieren({
         id: "social-media",
         name: "Social Media, Creator & Influencer",
@@ -41,6 +86,29 @@
             }
         ],
         hauptkategorien: [
+            hauptkategorie(
+                "content-ideen",
+                "Content-Ideen",
+                [
+                    ["themenideen", "Themenideen"],
+                    ["serienformate", "Serienformate"],
+                    ["trend-ideen", "Trend-Ideen"],
+                    ["content-pillars", "Content-Pillars"],
+                    ["saisonale-inhalte", "Saisonale Inhalte"]
+                ]
+            ),
+            hauptkategorie(
+                "posts-captions",
+                "Posts & Captions",
+                [
+                    ["caption", "Caption"],
+                    ["posttext", "Posttext"],
+                    ["hook", "Hook"],
+                    ["call-to-action", "Call-to-Action"],
+                    ["hashtags", "Hashtags"],
+                    ["story-text", "Story-Text"]
+                ]
+            ),
             {
                 id: "kurzvideos-reels",
                 name: "Kurzvideos & Reels",
@@ -61,6 +129,18 @@
                     ausgabeAls: []
                 },
                 unterkategorien: [
+                    unterkategorie(
+                        "reel-idee",
+                        "Reel-Idee"
+                    ),
+                    unterkategorie(
+                        "tiktok-idee",
+                        "TikTok-Idee"
+                    ),
+                    unterkategorie(
+                        "youtube-short",
+                        "YouTube Short"
+                    ),
                     {
                         id: "videoskript",
                         name: "Videoskript",
@@ -85,9 +165,70 @@
                                 "CSV (.csv)"
                             ]
                         }
-                    }
+                    },
+                    unterkategorie(
+                        "szenenplan",
+                        "Szenenplan"
+                    ),
+                    unterkategorie(
+                        "video-hook",
+                        "Video-Hook"
+                    )
                 ]
-            }
+            },
+            hauptkategorie(
+                "content-planung",
+                "Content-Planung",
+                [
+                    ["wochenplan", "Wochenplan"],
+                    ["monatsplan", "Monatsplan"],
+                    ["redaktionsplan", "Redaktionsplan"],
+                    ["kampagne", "Kampagne"],
+                    ["posting-rhythmus", "Posting-Rhythmus"]
+                ]
+            ),
+            hauptkategorie(
+                "community-interaktion",
+                "Community & Interaktion",
+                [
+                    ["kommentare-beantworten", "Kommentare beantworten"],
+                    ["community-fragen", "Community-Fragen"],
+                    ["engagement-ideen", "Engagement-Ideen"],
+                    ["umfragen", "Umfragen"]
+                ]
+            ),
+            hauptkategorie(
+                "kooperationen-sponsoring",
+                "Kooperationen & Sponsoring",
+                [
+                    ["kooperationsanfrage", "Kooperationsanfrage"],
+                    ["media-kit-inhalte", "Media-Kit-Inhalte"],
+                    ["sponsoring-pitch", "Sponsoring-Pitch"],
+                    ["markenansprache", "Markenansprache"]
+                ]
+            ),
+            hauptkategorie(
+                "personal-branding",
+                "Personal Branding",
+                [
+                    ["positionierung", "Positionierung"],
+                    ["profiltext", "Profiltext"],
+                    ["bio", "Bio"],
+                    ["markenstimme", "Markenstimme"],
+                    ["themenprofil", "Themenprofil"]
+                ]
+            ),
+            hauptkategorie(
+                "wachstum-strategie",
+                "Wachstum & Strategie",
+                [
+                    ["zielgruppenstrategie", "Zielgruppenstrategie"],
+                    ["content-strategie", "Content-Strategie"],
+                    ["reichweite", "Reichweite"],
+                    ["themenanalyse", "Themenanalyse"],
+                    ["konkurrenzanalyse", "Konkurrenzanalyse"]
+                ]
+            )
         ]
     });
 })(globalThis);

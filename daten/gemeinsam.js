@@ -287,54 +287,180 @@
         },
 
 
+        bereichHolen(bereichId) {
+            return (
+                typeof bereichId === "string" &&
+                this.bereiche[bereichId]
+            ) || null;
+        },
+
+
+        hauptkategorienFuerBereich(bereichId) {
+            const bereich =
+                this.bereichHolen(bereichId);
+
+
+            return bereich &&
+                Array.isArray(bereich.hauptkategorien)
+
+                ? bereich.hauptkategorien
+
+                : [];
+        },
+
+
+        hauptkategorieHolen(
+            bereichId,
+            hauptkategorieId
+        ) {
+            return this
+                .hauptkategorienFuerBereich(
+                    bereichId
+                )
+                .find(
+                    function (eintrag) {
+                        return (
+                            eintrag.id ===
+                            hauptkategorieId
+                        );
+                    }
+                ) || null;
+        },
+
+
+        unterkategorienFuerPfad(
+            bereichId,
+            hauptkategorieId
+        ) {
+            const hauptkategorie =
+                this.hauptkategorieHolen(
+                    bereichId,
+                    hauptkategorieId
+                );
+
+
+            return hauptkategorie &&
+                Array.isArray(
+                    hauptkategorie.unterkategorien
+                )
+
+                ? hauptkategorie.unterkategorien
+
+                : [];
+        },
+
+
+        unterkategorieHolen(
+            bereichId,
+            hauptkategorieId,
+            unterkategorieId
+        ) {
+            return this
+                .unterkategorienFuerPfad(
+                    bereichId,
+                    hauptkategorieId
+                )
+                .find(
+                    function (eintrag) {
+                        return (
+                            eintrag.id ===
+                            unterkategorieId
+                        );
+                    }
+                ) || null;
+        },
+
+
         pfadAufloesen(
             bereichId,
             hauptkategorieId,
             unterkategorieId
         ) {
             const bereich =
-                this.bereiche[bereichId] ||
-                null;
+                this.bereichHolen(
+                    bereichId
+                );
 
             const hauptkategorie =
-                bereich &&
-                Array.isArray(
-                    bereich.hauptkategorien
-                )
-
-                    ? bereich.hauptkategorien.find(
-                        function (eintrag) {
-                            return (
-                                eintrag.id ===
-                                hauptkategorieId
-                            );
-                        }
-                    ) || null
-
-                    : null;
+                this.hauptkategorieHolen(
+                    bereichId,
+                    hauptkategorieId
+                );
 
             const unterkategorie =
-                hauptkategorie &&
-                Array.isArray(
-                    hauptkategorie.unterkategorien
-                )
-
-                    ? hauptkategorie.unterkategorien.find(
-                        function (eintrag) {
-                            return (
-                                eintrag.id ===
-                                unterkategorieId
-                            );
-                        }
-                    ) || null
-
-                    : null;
+                this.unterkategorieHolen(
+                    bereichId,
+                    hauptkategorieId,
+                    unterkategorieId
+                );
 
 
             return {
                 bereich: bereich,
                 hauptkategorie: hauptkategorie,
                 unterkategorie: unterkategorie
+            };
+        },
+
+
+        pfadValidieren(
+            bereichId,
+            hauptkategorieId,
+            unterkategorieId
+        ) {
+            const pfad =
+                this.pfadAufloesen(
+                    bereichId,
+                    hauptkategorieId,
+                    unterkategorieId
+                );
+
+            const hauptkategorien =
+                this.hauptkategorienFuerBereich(
+                    bereichId
+                );
+
+            const unterkategorien =
+                this.unterkategorienFuerPfad(
+                    bereichId,
+                    hauptkategorieId
+                );
+
+            const bereichGueltig =
+                Boolean(pfad.bereich);
+
+            const hauptkategorieGueltig =
+                hauptkategorien.length === 0
+
+                    ? !hauptkategorieId
+
+                    : Boolean(
+                        pfad.hauptkategorie
+                    );
+
+            const unterkategorieGueltig =
+                !pfad.hauptkategorie ||
+                unterkategorien.length === 0
+
+                    ? !unterkategorieId
+
+                    : Boolean(
+                        pfad.unterkategorie
+                    );
+
+
+            return {
+                ...pfad,
+                bereichGueltig:
+                    bereichGueltig,
+                hauptkategorieGueltig:
+                    hauptkategorieGueltig,
+                unterkategorieGueltig:
+                    unterkategorieGueltig,
+                istGueltig:
+                    bereichGueltig &&
+                    hauptkategorieGueltig &&
+                    unterkategorieGueltig
             };
         },
 

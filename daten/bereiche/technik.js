@@ -1,6 +1,51 @@
 (function (global) {
     "use strict";
 
+    function unterkategorie(
+        id,
+        name
+    ) {
+        return {
+            id: id,
+            name: name,
+            empfehlungen: {
+                rollen: [],
+                anforderungen: [],
+                regeln: [],
+                ausgabeformate: [],
+                ausgabeAls: []
+            }
+        };
+    }
+
+
+    function hauptkategorie(
+        id,
+        name,
+        eintraege
+    ) {
+        return {
+            id: id,
+            name: name,
+            grundlagen: {
+                rollen: [],
+                anforderungen: [],
+                regeln: [],
+                ausgabeformate: [],
+                ausgabeAls: []
+            },
+            unterkategorien:
+                eintraege.map(
+                    function ([unterId, unterName]) {
+                        return unterkategorie(
+                            unterId,
+                            unterName
+                        );
+                    }
+                )
+        };
+    }
+
     global.PromptWerkstattDatenV2.bereichRegistrieren({
         id: "technik",
         name: "Technik & Engineering",
@@ -42,6 +87,85 @@
             }
         ],
         hauptkategorien: [
+            hauptkategorie(
+                "konstruktion-produktentwicklung",
+                "Konstruktion & Produktentwicklung",
+                [
+                    ["konzeptentwicklung", "Konzeptentwicklung"],
+                    ["bauteil-entwickeln", "Bauteil entwickeln"],
+                    ["baugruppe-entwickeln", "Baugruppe entwickeln"],
+                    ["variantenvergleich", "Variantenvergleich"],
+                    ["bauraumoptimierung", "Bauraumoptimierung"],
+                    ["design-review", "Design Review"]
+                ]
+            ),
+            hauptkategorie(
+                "mechanik-maschinenbau",
+                "Mechanik & Maschinenbau",
+                [
+                    ["kraefte-momente", "Kräfte & Momente"],
+                    ["verbindungen", "Verbindungen"],
+                    ["lagerungen", "Lagerungen"],
+                    ["getriebe", "Getriebe"],
+                    ["verriegelungen", "Verriegelungen"],
+                    ["federn", "Federn"],
+                    ["seile", "Seile"],
+                    ["mechanismen", "Mechanismen"]
+                ]
+            ),
+            hauptkategorie(
+                "elektrotechnik-elektronik",
+                "Elektrotechnik & Elektronik",
+                [
+                    ["schaltung", "Schaltung"],
+                    ["bauteilauswahl", "Bauteilauswahl"],
+                    ["sensorik", "Sensorik"],
+                    ["aktorik", "Aktorik"],
+                    ["stromversorgung", "Stromversorgung"],
+                    ["batterie-akku", "Batterie & Akku"],
+                    ["pcb", "PCB"],
+                    ["emv", "EMV"]
+                ]
+            ),
+            hauptkategorie(
+                "fertigung-produktion",
+                "Fertigung & Produktion",
+                [
+                    ["cnc", "CNC"],
+                    ["drehen", "Drehen"],
+                    ["fraesen", "Fräsen"],
+                    ["spritzguss", "Spritzguss"],
+                    ["blech", "Blech"],
+                    ["schweissen", "Schweißen"],
+                    ["additive-fertigung", "Additive Fertigung"],
+                    ["montage", "Montage"]
+                ]
+            ),
+            hauptkategorie(
+                "werkstoffe-materialien",
+                "Werkstoffe & Materialien",
+                [
+                    ["metall", "Metall"],
+                    ["kunststoff", "Kunststoff"],
+                    ["elastomer", "Elastomer"],
+                    ["verbundwerkstoff", "Verbundwerkstoff"],
+                    ["korrosion", "Korrosion"],
+                    ["oberflaechen", "Oberflächen"],
+                    ["materialvergleich", "Materialvergleich"]
+                ]
+            ),
+            hauptkategorie(
+                "berechnung-simulation",
+                "Berechnung & Simulation",
+                [
+                    ["festigkeitsberechnung", "Festigkeitsberechnung"],
+                    ["fem", "FEM"],
+                    ["kinematik", "Kinematik"],
+                    ["toleranzanalyse", "Toleranzanalyse"],
+                    ["waerme", "Wärme"],
+                    ["elektrische-berechnung", "Elektrische Berechnung"]
+                ]
+            ),
             {
                 id: "qualitaet-risiko",
                 name: "Qualität & Risikoanalyse",
@@ -88,9 +212,63 @@
                                 "CSV (.csv)"
                             ]
                         }
-                    }
+                    },
+                    unterkategorie(
+                        "prozess-fmea",
+                        "Prozess-FMEA"
+                    ),
+                    unterkategorie(
+                        "risikoanalyse",
+                        "Risikoanalyse"
+                    ),
+                    unterkategorie(
+                        "fehlerbaumanalyse",
+                        "Fehlerbaumanalyse"
+                    ),
+                    unterkategorie(
+                        "pruefplanung",
+                        "Prüfplanung"
+                    ),
+                    unterkategorie(
+                        "qualitaetspruefung",
+                        "Qualitätsprüfung"
+                    )
                 ]
-            }
+            },
+            hauptkategorie(
+                "fehlersuche-ursachenanalyse",
+                "Fehlersuche & Ursachenanalyse",
+                [
+                    ["fuenf-why", "5-Why"],
+                    ["ishikawa", "Ishikawa"],
+                    ["fehlerbild-analysieren", "Fehlerbild analysieren"],
+                    ["versuch-planen", "Versuch planen"],
+                    ["ursache-eingrenzen", "Ursache eingrenzen"]
+                ]
+            ),
+            hauptkategorie(
+                "technische-dokumentation",
+                "Technische Dokumentation",
+                [
+                    ["technische-beschreibung", "Technische Beschreibung"],
+                    ["spezifikation", "Spezifikation"],
+                    ["lastenheft", "Lastenheft"],
+                    ["pflichtenheft", "Pflichtenheft"],
+                    ["bedienungsanleitung", "Bedienungsanleitung"],
+                    ["pruefbericht", "Prüfbericht"]
+                ]
+            ),
+            hauptkategorie(
+                "normgerechte-entwicklung",
+                "Normgerechte Entwicklung",
+                [
+                    ["normenrecherche", "Normenrecherche"],
+                    ["anforderungen-ableiten", "Anforderungen ableiten"],
+                    ["konformitaet", "Konformität"],
+                    ["pruefkriterien", "Prüfkriterien"],
+                    ["technische-richtlinien", "Technische Richtlinien"]
+                ]
+            )
         ]
     });
 })(globalThis);

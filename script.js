@@ -18,6 +18,14 @@ const unterkategorie =
         "unterkategorie"
     );
 
+const bereichAuswahl =
+    document.getElementById(
+        "bereichAuswahl"
+    );
+
+const v2Daten =
+    globalThis.PromptWerkstattDatenV2;
+
 const hauptFavoritButton =
     document.getElementById(
         "hauptFavoritButton"
@@ -328,6 +336,9 @@ let ordner =
 let navigation =
     StorageService.navigationLaden();
 
+let navigationV2 =
+    StorageService.navigationV2Laden();
+
 
 // ======================================================
 // ID ERZEUGEN
@@ -360,12 +371,16 @@ function neueId() {
 
 function aktuelleHauptkategorieHolen() {
 
-    return (
-        hauptkategorien[
+    return v2Daten &&
+        typeof v2Daten.hauptkategorieHolen ===
+            "function"
+
+        ? v2Daten.hauptkategorieHolen(
+            bereichAuswahl.value,
             hauptkategorie.value
-        ] ||
-        null
-    );
+        )
+
+        : null;
 }
 
 
@@ -374,23 +389,17 @@ function aktuelleHauptkategorieHolen() {
 // ======================================================
 
 function aktuelleUnterkategorieHolen() {
+    return v2Daten &&
+        typeof v2Daten.unterkategorieHolen ===
+            "function"
 
-    const haupt =
-        aktuelleHauptkategorieHolen();
-
-
-    if (!haupt) {
-
-        return null;
-    }
-
-
-    return (
-        haupt.unterkategorien[
+        ? v2Daten.unterkategorieHolen(
+            bereichAuswahl.value,
+            hauptkategorie.value,
             unterkategorie.value
-        ] ||
-        null
-    );
+        )
+
+        : null;
 }
 
 
@@ -400,90 +409,57 @@ function aktuelleUnterkategorieHolen() {
 
 function unterkategorieDatenHolen() {
 
-    const daten =
+    const unterDaten =
         aktuelleUnterkategorieHolen();
 
+    const hauptDaten =
+        aktuelleHauptkategorieHolen();
 
-    if (!daten) {
+    const bereichDaten =
+        v2Daten &&
+        typeof v2Daten.bereichHolen ===
+            "function"
 
-        return {
+            ? v2Daten.bereichHolen(
+                bereichAuswahl.value
+            )
 
-            name:
-                "Allgemein",
+            : null;
 
-            rollen: [
-                "Fachexperte",
-                "Berater",
-                "Analyst",
-                "Coach"
-            ],
-
-            ziele: [
-                "Thema bearbeiten"
-            ],
-
-            anforderungen: [
-                "Praxisnah antworten",
-                "Wichtigste Punkte priorisieren",
-                "Konkrete Beispiele geben",
-                "Annahmen klar kennzeichnen"
-            ],
-
-            ausgabeformate: [
-                "Schritt-für-Schritt-Anleitung",
-                "Checkliste",
-                "Tabelle",
-                "Kurzempfehlung",
-                "Ausführliche Analyse"
-            ]
-
-        };
-    }
+    const navigationDaten =
+        unterDaten ||
+        hauptDaten ||
+        bereichDaten ||
+        { name: "Allgemein" };
 
 
+    // Phase 3 stellt nur die Navigation um. Die fachlichen
+    // V2-Empfehlungen werden erst in Phase 4 vererbt.
     return {
-
         name:
-            daten.name,
-
-        rollen:
-            daten.rollen ||
-            [
-                "Fachexperte",
-                "Berater",
-                "Analyst",
-                "Coach"
-            ],
-
-        ziele:
-            daten.ziele ||
-            [
-                `${daten.name} bearbeiten`,
-                `${daten.name} planen`,
-                `${daten.name} analysieren`,
-                `Empfehlungen zu ${daten.name} erhalten`
-            ],
-
-        anforderungen:
-            daten.anforderungen ||
-            [
-                "Praxisnah antworten",
-                "Wichtigste Punkte priorisieren",
-                "Konkrete Beispiele geben",
-                "Annahmen klar kennzeichnen",
-                "Alternativen nennen"
-            ],
-
-        ausgabeformate:
-            daten.ausgabeformate ||
-            [
-                "Schritt-für-Schritt-Anleitung",
-                "Checkliste",
-                "Tabelle",
-                "Kurzempfehlung",
-                "Ausführliche Analyse"
-            ]
-
+            navigationDaten.name,
+        rollen: [
+            "Fachexperte",
+            "Berater",
+            "Analyst",
+            "Coach"
+        ],
+        ziele: [
+            "Thema bearbeiten"
+        ],
+        anforderungen: [
+            "Praxisnah antworten",
+            "Wichtigste Punkte priorisieren",
+            "Konkrete Beispiele geben",
+            "Annahmen klar kennzeichnen"
+        ],
+        ausgabeformate: [
+            "Schritt-für-Schritt-Anleitung",
+            "Checkliste",
+            "Tabelle",
+            "Kurzempfehlung",
+            "Ausführliche Analyse"
+        ]
     };
 }
 
@@ -516,53 +492,168 @@ function navigationSpeichernLokal() {
 }
 
 
+function v2PfadSchluessel(
+    bereichId,
+    hauptkategorieId
+) {
+    return `${encodeURIComponent(bereichId)}/${encodeURIComponent(hauptkategorieId)}`;
+}
+
+
+function v2HauptkategorienHolen(
+    bereichId
+) {
+    return v2Daten &&
+        typeof v2Daten.hauptkategorienFuerBereich ===
+            "function"
+
+        ? v2Daten.hauptkategorienFuerBereich(
+            bereichId
+        )
+
+        : [];
+}
+
+
+function v2UnterkategorienHolen(
+    bereichId,
+    hauptkategorieId
+) {
+    return v2Daten &&
+        typeof v2Daten.unterkategorienFuerPfad ===
+            "function"
+
+        ? v2Daten.unterkategorienFuerPfad(
+            bereichId,
+            hauptkategorieId
+        )
+
+        : [];
+}
+
+
+function v2NavigationSpeichernLokal() {
+    StorageService.navigationV2Speichern(
+        navigationV2
+    );
+}
+
+
+function v2AuswahlMerken() {
+    const bereichId =
+        bereichAuswahl.value ||
+        null;
+
+    const hauptkategorieId =
+        hauptkategorie.disabled
+
+            ? null
+
+            : hauptkategorie.value ||
+                null;
+
+    const unterkategorieId =
+        unterkategorie.disabled
+
+            ? null
+
+            : unterkategorie.value ||
+                null;
+
+
+    if (bereichId) {
+        if (hauptkategorieId) {
+            navigationV2.hauptkategorienNachBereich[
+                bereichId
+            ] = hauptkategorieId;
+
+            const pfadSchluessel =
+                v2PfadSchluessel(
+                    bereichId,
+                    hauptkategorieId
+                );
+
+
+            if (unterkategorieId) {
+                navigationV2.unterkategorienNachPfad[
+                    pfadSchluessel
+                ] = unterkategorieId;
+            } else {
+                delete navigationV2
+                    .unterkategorienNachPfad[
+                        pfadSchluessel
+                    ];
+            }
+        } else {
+            delete navigationV2
+                .hauptkategorienNachBereich[
+                    bereichId
+                ];
+        }
+    }
+
+
+    navigationV2.aktiveAuswahl = {
+        bereichId:
+            bereichId,
+        hauptkategorieId:
+            hauptkategorieId,
+        unterkategorieId:
+            unterkategorieId
+    };
+
+
+    v2NavigationSpeichernLokal();
+}
+
+
+function alteKategorienavigationDeaktivieren() {
+    [
+        hauptFavoritButton,
+        unterFavoritButton,
+        hauptSortierungToggle,
+        unterSortierungToggle,
+        hauptSortierungPanel,
+        unterSortierungPanel
+    ].forEach(
+        function (element) {
+            if (!element) {
+                return;
+            }
+
+
+            element.hidden = true;
+            element.classList.add(
+                "versteckt"
+            );
+            element.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+
+            if (
+                "disabled" in element
+            ) {
+                element.disabled = true;
+            }
+        }
+    );
+}
+
+
 // ======================================================
 // KONTEXT-HINWEIS
 // ======================================================
 
 function kontextHinweisAktualisieren() {
-
-    const hauptKey =
-        hauptkategorie.value;
-
-    const unterKey =
-        unterkategorie.value;
-
     const daten =
         unterkategorieDatenHolen();
 
-
-    let hinweis =
-        "";
-
-
-    if (
-        typeof kontextHinweise !==
-            "undefined" &&
-        kontextHinweise[
-            hauptKey
-        ] &&
-        kontextHinweise[
-            hauptKey
-        ][
-            unterKey
-        ]
-    ) {
-
-        hinweis =
-            kontextHinweise[
-                hauptKey
-            ][
-                unterKey
-            ];
-
-    } else {
-
-        hinweis =
-            `Beschreibe dein konkretes Ziel bei „${daten.name}“, ` +
-            "die Ausgangssituation, vorhandene Informationen, " +
-            "wichtige Rahmenbedingungen und besondere Einschränkungen.";
-    }
+    const hinweis =
+        `Beschreibe dein konkretes Ziel bei „${daten.name}“, ` +
+        "die Ausgangssituation, vorhandene Informationen, " +
+        "wichtige Rahmenbedingungen und besondere Einschränkungen.";
 
 
     kontextHinweis.textContent =
@@ -575,38 +666,7 @@ function kontextHinweisAktualisieren() {
 // ======================================================
 
 function empfohleneAnforderungenHolen() {
-
-    const hauptKey =
-        hauptkategorie.value;
-
-    const unterKey =
-        unterkategorie.value;
-
-
-    if (
-        typeof anforderungsEmpfehlungen ===
-            "undefined" ||
-        !anforderungsEmpfehlungen[
-            hauptKey
-        ] ||
-        !anforderungsEmpfehlungen[
-            hauptKey
-        ][
-            unterKey
-        ]
-    ) {
-
-        return [];
-    }
-
-
-    return [
-        ...anforderungsEmpfehlungen[
-            hauptKey
-        ][
-            unterKey
-        ]
-    ];
+    return [];
 }
 
 
@@ -615,38 +675,7 @@ function empfohleneAnforderungenHolen() {
 // ======================================================
 
 function empfohleneRegelPaketeHolen() {
-
-    const hauptKey =
-        hauptkategorie.value;
-
-    const unterKey =
-        unterkategorie.value;
-
-
-    if (
-        typeof regelEmpfehlungen ===
-            "undefined" ||
-        !regelEmpfehlungen[
-            hauptKey
-        ] ||
-        !regelEmpfehlungen[
-            hauptKey
-        ][
-            unterKey
-        ]
-    ) {
-
-        return [];
-    }
-
-
-    return [
-        ...regelEmpfehlungen[
-            hauptKey
-        ][
-            unterKey
-        ]
-    ];
+    return [];
 }
 
 
@@ -1065,88 +1094,94 @@ function eintragInnerhalbGruppeVerschieben(
 function hauptkategorienLaden(
     gewuenschteHauptkategorie
 ) {
+    const bereichId =
+        bereichAuswahl.value;
 
-    const vorherigeAuswahl =
+    const hauptkategorienV2 =
+        v2HauptkategorienHolen(
+            bereichId
+        );
 
-        arguments.length >
-            0
+    const hatAusdruecklichenWunsch =
+        arguments.length > 0;
+
+    const gespeicherteAuswahl =
+        navigationV2
+            .hauptkategorienNachBereich[
+                bereichId
+            ] ||
+        null;
+
+    const bevorzugteAuswahl =
+        hatAusdruecklichenWunsch
 
             ? gewuenschteHauptkategorie
 
-            : hauptkategorie.value;
+            : gespeicherteAuswahl;
 
 
-    hauptkategorie.innerHTML =
-        "";
+    hauptkategorie.innerHTML = "";
 
 
-    sortierteHauptkategorieSchluessel()
-        .forEach(
-
-            function (key) {
-
-                const daten =
-                    hauptkategorien[
-                        key
-                    ];
+    if (hauptkategorienV2.length === 0) {
+        const option =
+            document.createElement(
+                "option"
+            );
 
 
-                const istFavorit =
-                    navigation.hauptFavoriten.includes(
-                        key
-                    );
+        option.value = "";
+        option.textContent =
+            "Noch keine Hauptkategorien verfügbar";
 
-
-                const option =
-                    document.createElement(
-                        "option"
-                    );
-
-
-                option.value =
-                    key;
-
-
-                option.textContent =
-
-                    istFavorit
-
-                        ? `★ ${daten.icon} ${daten.name}`
-
-                        : `${daten.icon} ${daten.name}`;
-
-
-                hauptkategorie.appendChild(
-                    option
-                );
-            }
-
+        hauptkategorie.appendChild(
+            option
         );
 
-
-    if (
-        vorherigeAuswahl &&
-        hauptkategorien[
-            vorherigeAuswahl
-        ]
-    ) {
-
-        hauptkategorie.value =
-            vorherigeAuswahl;
-
-    } else if (
-        hauptkategorie.options.length >
-        0
-    ) {
-
-        hauptkategorie.value =
-            hauptkategorie.options[
-                0
-            ].value;
+        hauptkategorie.disabled = true;
+        return;
     }
 
 
-    hauptFavoritButtonAktualisieren();
+    hauptkategorienV2.forEach(
+        function (daten) {
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                daten.id;
+
+            option.textContent =
+                daten.name;
+
+            hauptkategorie.appendChild(
+                option
+            );
+        }
+    );
+
+
+    const auswahlGueltig =
+        hauptkategorienV2.some(
+            function (daten) {
+                return (
+                    daten.id ===
+                    bevorzugteAuswahl
+                );
+            }
+        );
+
+
+    hauptkategorie.disabled = false;
+    hauptkategorie.value =
+        auswahlGueltig
+
+            ? bevorzugteAuswahl
+
+            : hauptkategorienV2[0].id;
 }
 
 
@@ -1157,62 +1192,85 @@ function hauptkategorienLaden(
 function unterkategorienLaden(
     gewuenschteUnterkategorie
 ) {
+    const bereichId =
+        bereichAuswahl.value;
 
-    const vorherigeAuswahl =
+    const hauptkategorieId =
+        hauptkategorie.disabled
 
-        arguments.length >
-            0
+            ? ""
+
+            : hauptkategorie.value;
+
+    const unterkategorienV2 =
+        v2UnterkategorienHolen(
+            bereichId,
+            hauptkategorieId
+        );
+
+    const hatAusdruecklichenWunsch =
+        arguments.length > 0;
+
+    const pfadSchluessel =
+        hauptkategorieId
+
+            ? v2PfadSchluessel(
+                bereichId,
+                hauptkategorieId
+            )
+
+            : "";
+
+    const gespeicherteAuswahl =
+        pfadSchluessel
+
+            ? navigationV2
+                .unterkategorienNachPfad[
+                    pfadSchluessel
+                ] || null
+
+            : null;
+
+    const bevorzugteAuswahl =
+        hatAusdruecklichenWunsch
 
             ? gewuenschteUnterkategorie
 
-            : unterkategorie.value;
+            : gespeicherteAuswahl;
 
 
-    unterkategorie.innerHTML =
-        "";
+    unterkategorie.innerHTML = "";
 
 
-    const hauptKey =
-        hauptkategorie.value;
+    if (
+        !hauptkategorieId ||
+        unterkategorienV2.length === 0
+    ) {
+        const option =
+            document.createElement(
+                "option"
+            );
 
 
-    const haupt =
-        hauptkategorien[
-            hauptKey
-        ];
+        option.value = "";
+        option.textContent =
+            hauptkategorieId
 
+                ? "Noch keine Unterkategorien verfügbar"
 
-    if (!haupt) {
+                : "Bitte zuerst eine Hauptkategorie wählen";
 
+        unterkategorie.appendChild(
+            option
+        );
+
+        unterkategorie.disabled = true;
         return;
     }
 
 
-    const favoriten =
-        navigation.unterFavoriten[
-            hauptKey
-        ] ||
-        [];
-
-
-    sortierteUnterkategorieSchluessel(
-        hauptKey
-    ).forEach(
-
-        function (key) {
-
-            const daten =
-                haupt.unterkategorien[
-                    key
-                ];
-
-
-            const istFavorit =
-                favoriten.includes(
-                    key
-                );
-
-
+    unterkategorienV2.forEach(
+        function (daten) {
             const option =
                 document.createElement(
                     "option"
@@ -1220,49 +1278,36 @@ function unterkategorienLaden(
 
 
             option.value =
-                key;
-
+                daten.id;
 
             option.textContent =
-
-                istFavorit
-
-                    ? `★ ${daten.name}`
-
-                    : daten.name;
-
+                daten.name;
 
             unterkategorie.appendChild(
                 option
             );
         }
-
     );
 
 
-    if (
-        vorherigeAuswahl &&
-        haupt.unterkategorien[
-            vorherigeAuswahl
-        ]
-    ) {
-
-        unterkategorie.value =
-            vorherigeAuswahl;
-
-    } else if (
-        unterkategorie.options.length >
-        0
-    ) {
-
-        unterkategorie.value =
-            unterkategorie.options[
-                0
-            ].value;
-    }
+    const auswahlGueltig =
+        unterkategorienV2.some(
+            function (daten) {
+                return (
+                    daten.id ===
+                    bevorzugteAuswahl
+                );
+            }
+        );
 
 
-    unterFavoritButtonAktualisieren();
+    unterkategorie.disabled = false;
+    unterkategorie.value =
+        auswahlGueltig
+
+            ? bevorzugteAuswahl
+
+            : unterkategorienV2[0].id;
 }
 
 
@@ -2977,8 +3022,6 @@ function unterkategorieAktualisieren(
     }
 
 
-    unterFavoritButtonAktualisieren();
-
     kontextHinweisAktualisieren();
 
     anforderungenAnzeigen();
@@ -2986,16 +3029,6 @@ function unterkategorieAktualisieren(
     regelPaketeAnzeigen();
 
     promptErstellen();
-
-
-    if (
-        !unterSortierungPanel.classList.contains(
-            "versteckt"
-        )
-    ) {
-
-        unterSortierungAnzeigen();
-    }
 }
 
 
@@ -3004,71 +3037,14 @@ function unterkategorieAktualisieren(
 // ======================================================
 
 function hauptkategorieGeaendert() {
+    unterkategorienLaden();
 
-    const hauptKey =
-        hauptkategorie.value;
-
-
-    // Zuletzt gewählte Hauptkategorie merken
-    navigation.aktiveHauptkategorie =
-        hauptKey;
-
-
-    // Falls für diese Hauptkategorie schon einmal
-    // eine Unterkategorie gewählt wurde, wiederherstellen
-    const gespeicherteUnterkategorie =
-
-        navigation.aktiveUnterkategorien[
-            hauptKey
-        ] ||
-
-        null;
-
-
-    navigationSpeichernLokal();
-
-
-    hauptFavoritButtonAktualisieren();
-
-
-    unterkategorienLaden(
-        gespeicherteUnterkategorie
-    );
-
-
-    // Aktuell tatsächlich ausgewählte Unterkategorie merken
-    navigation.aktiveUnterkategorien[
-        hauptKey
-    ] =
-        unterkategorie.value;
-
-
-    navigationSpeichernLokal();
+    v2AuswahlMerken();
 
 
     unterkategorieAktualisieren(
         true
     );
-
-
-    if (
-        !hauptSortierungPanel.classList.contains(
-            "versteckt"
-        )
-    ) {
-
-        hauptSortierungAnzeigen();
-    }
-
-
-    if (
-        !unterSortierungPanel.classList.contains(
-            "versteckt"
-        )
-    ) {
-
-        unterSortierungAnzeigen();
-    }
 }
 
 
@@ -3077,30 +3053,19 @@ function hauptkategorieGeaendert() {
 // ======================================================
 
 function unterkategorieGeaendert() {
-
-    const hauptKey =
-        hauptkategorie.value;
-
-    const unterKey =
-        unterkategorie.value;
+    v2AuswahlMerken();
 
 
-    // Aktuelle Auswahl merken
-    navigation.aktiveHauptkategorie =
-        hauptKey;
+    unterkategorieAktualisieren(
+        true
+    );
+}
 
 
-    navigation.aktiveUnterkategorien[
-        hauptKey
-    ] =
-        unterKey;
-
-
-    navigationSpeichernLokal();
-
-
-    unterFavoritButtonAktualisieren();
-
+function bereichGeaendert() {
+    hauptkategorienLaden();
+    unterkategorienLaden();
+    v2AuswahlMerken();
 
     unterkategorieAktualisieren(
         true
@@ -3665,6 +3630,12 @@ promptQualitaetBewerten();
 // ======================================================
 
 function builderZuruecksetzen() {
+
+    hauptkategorienLaden();
+
+    unterkategorienLaden();
+
+    v2AuswahlMerken();
 
     eigeneRolle.value =
         "";
@@ -4420,11 +4391,36 @@ function builderDatenHolen() {
 
     return {
 
+        bereichId:
+            bereichAuswahl.value,
+
+        hauptkategorieId:
+            hauptkategorie.disabled
+
+                ? null
+
+                : hauptkategorie.value,
+
+        unterkategorieId:
+            unterkategorie.disabled
+
+                ? null
+
+                : unterkategorie.value,
+
         hauptkategorie:
-            hauptkategorie.value,
+            hauptkategorie.disabled
+
+                ? null
+
+                : hauptkategorie.value,
 
         unterkategorie:
-            unterkategorie.value,
+            unterkategorie.disabled
+
+                ? null
+
+                : unterkategorie.value,
 
         rolle:
             rolle.value,
@@ -4663,32 +4659,54 @@ function promptBearbeiten(
         eintrag.name;
 
 
-    const gespeicherteHauptkategorie =
-
-        eintrag.hauptkategorie ||
-
-        "bild";
+    const istV2Prompt =
+        typeof eintrag.bereichId ===
+            "string";
 
 
-    hauptkategorienLaden(
+    if (istV2Prompt) {
+        const bereichIstAktiv =
+            [
+                ...bereichAuswahl.options
+            ].some(
+                function (option) {
+                    return (
+                        option.value ===
+                        eintrag.bereichId
+                    );
+                }
+            );
 
-        hauptkategorien[
-            gespeicherteHauptkategorie
-        ]
 
-            ? gespeicherteHauptkategorie
+        if (bereichIstAktiv) {
+            bereichAuswahl.value =
+                eintrag.bereichId;
 
-            : "bild"
+            bereichAuswahl.dispatchEvent(
+                new Event(
+                    "change"
+                )
+            );
+        }
 
-    );
+
+        hauptkategorienLaden(
+            eintrag.hauptkategorieId ||
+            null
+        );
+
+        unterkategorienLaden(
+            eintrag.unterkategorieId ||
+            null
+        );
+    } else {
+        // Alte Testprompts erhalten einen sauberen V2-Fallback.
+        hauptkategorienLaden();
+        unterkategorienLaden();
+    }
 
 
-    unterkategorienLaden(
-
-        eintrag.unterkategorie ||
-        null
-
-    );
+    v2AuswahlMerken();
 
 
     unterkategorieAktualisieren(
@@ -4822,10 +4840,6 @@ function promptBearbeiten(
         "";
 
 
-    hauptFavoritButtonAktualisieren();
-
-    unterFavoritButtonAktualisieren();
-
     kontextHinweisAktualisieren();
 
     anforderungenAnzeigen();
@@ -4833,26 +4847,6 @@ function promptBearbeiten(
     regelPaketeAnzeigen();
 
     promptErstellen();
-
-
-    if (
-        !hauptSortierungPanel.classList.contains(
-            "versteckt"
-        )
-    ) {
-
-        hauptSortierungAnzeigen();
-    }
-
-
-    if (
-        !unterSortierungPanel.classList.contains(
-            "versteckt"
-        )
-    ) {
-
-        unterSortierungAnzeigen();
-    }
 
 
     promptSpeichern.textContent =
@@ -5070,6 +5064,44 @@ function ordnerFinden(
 function gespeichertenPromptKategorieHolen(
     prompt
 ) {
+
+    if (
+        typeof prompt.bereichId ===
+            "string" &&
+        v2Daten &&
+        typeof v2Daten.pfadAufloesen ===
+            "function"
+    ) {
+        const pfad =
+            v2Daten.pfadAufloesen(
+                prompt.bereichId,
+                prompt.hauptkategorieId,
+                prompt.unterkategorieId
+            );
+
+
+        return {
+            hauptName:
+                pfad.hauptkategorie
+
+                    ? pfad.hauptkategorie.name
+
+                    : "Noch keine Hauptkategorie",
+            hauptIcon:
+                pfad.bereich &&
+                pfad.bereich.icon
+
+                    ? pfad.bereich.icon
+
+                    : "📄",
+            unterName:
+                pfad.unterkategorie
+
+                    ? pfad.unterkategorie.name
+
+                    : ""
+        };
+    }
 
     const hauptKey =
 
@@ -6174,6 +6206,12 @@ unterkategorie.addEventListener(
 );
 
 
+document.addEventListener(
+    "promptwerkstatt:bereich-geaendert",
+    bereichGeaendert
+);
+
+
 // ======================================================
 // EVENTS: BUILDER
 // ======================================================
@@ -6503,76 +6541,30 @@ navigationVorbereiten();
 
 
 // ======================================================
-// LETZTE HAUPTKATEGORIE WIEDERHERSTELLEN
-// ======================================================
-//
-// Reihenfolge:
-// 1. zuletzt gewählte Hauptkategorie
-// 2. oberster Favorit
-// 3. erste normale Kategorie
+// V2-NAVIGATION WIEDERHERSTELLEN
 // ======================================================
 
-const gespeicherteHauptkategorie =
-
-    (
-        navigation.aktiveHauptkategorie &&
-        hauptkategorien[
-            navigation.aktiveHauptkategorie
-        ]
-    )
-
-        ? navigation.aktiveHauptkategorie
-
-        : (
-            sortierteHauptkategorieSchluessel()[
-                0
-            ] ||
-            null
-        );
+alteKategorienavigationDeaktivieren();
 
 
-hauptkategorienLaden(
-    gespeicherteHauptkategorie
-);
+if (
+    !v2Daten ||
+    typeof v2Daten.hauptkategorienFuerBereich !==
+        "function" ||
+    typeof v2Daten.unterkategorienFuerPfad !==
+        "function"
+) {
+    console.error(
+        "V2-Kategorienavigation: Die Daten-Registry ist unvollständig."
+    );
+}
 
 
-// ======================================================
-// LETZTE UNTERKATEGORIE WIEDERHERSTELLEN
-// ======================================================
+hauptkategorienLaden();
 
-const startHauptKey =
-    hauptkategorie.value;
+unterkategorienLaden();
 
-
-const gespeicherteUnterkategorie =
-
-    navigation.aktiveUnterkategorien[
-        startHauptKey
-    ] ||
-
-    null;
-
-
-unterkategorienLaden(
-    gespeicherteUnterkategorie
-);
-
-
-// Tatsächlich geladene Auswahl wieder speichern.
-// Dadurch werden auch alte oder nicht mehr vorhandene
-// Kategorien automatisch sauber korrigiert.
-
-navigation.aktiveHauptkategorie =
-    hauptkategorie.value;
-
-
-navigation.aktiveUnterkategorien[
-    hauptkategorie.value
-] =
-    unterkategorie.value;
-
-
-navigationSpeichernLokal();
+v2AuswahlMerken();
 
 
 unterkategorieAktualisieren(

@@ -92,7 +92,7 @@
 
 
             <!-- ==================================================
-                 BEREICH – V2-NAVIGATION (PHASE 2)
+                 BEREICH – V2-NAVIGATION (PHASE 3)
             =================================================== -->
 
             <div class="feld">
@@ -216,21 +216,18 @@
 
                 <div class="kategorie-auswahl-zeile">
 
-                    <select id="hauptkategorie">
-
-                        <option value="bild">
-                            🖼️ Bild & visuelle Medien
-                        </option>
-
-                    </select>
+                    <select id="hauptkategorie"></select>
 
 
                     <button
                         type="button"
                         id="hauptFavoritButton"
-                        class="kategorie-favorit-button"
+                        class="kategorie-favorit-button versteckt"
                         title="Hauptkategorie als Favorit markieren"
                         aria-label="Hauptkategorie als Favorit markieren"
+                        aria-hidden="true"
+                        hidden
+                        disabled
                     >
                         ☆
                     </button>
@@ -241,8 +238,11 @@
                 <button
                     type="button"
                     id="hauptSortierungToggle"
-                    class="sortierung-toggle"
+                    class="sortierung-toggle versteckt"
                     aria-expanded="false"
+                    aria-hidden="true"
+                    hidden
+                    disabled
                 >
                     ⚙ Reihenfolge anpassen
                 </button>
@@ -296,9 +296,12 @@
                     <button
                         type="button"
                         id="unterFavoritButton"
-                        class="kategorie-favorit-button"
+                        class="kategorie-favorit-button versteckt"
                         title="Unterkategorie als Favorit markieren"
                         aria-label="Unterkategorie als Favorit markieren"
+                        aria-hidden="true"
+                        hidden
+                        disabled
                     >
                         ☆
                     </button>
@@ -309,8 +312,11 @@
                 <button
                     type="button"
                     id="unterSortierungToggle"
-                    class="sortierung-toggle"
+                    class="sortierung-toggle versteckt"
                     aria-expanded="false"
+                    aria-hidden="true"
+                    hidden
+                    disabled
                 >
                     ⚙ Reihenfolge anpassen
                 </button>
