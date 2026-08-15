@@ -8,7 +8,10 @@
 
     const LISTEN_TYPEN = [
         "rollen",
+        "ziele",
+        "kontextHinweise",
         "anforderungen",
+        "besondersEmpfohleneAnforderungen",
         "regeln",
         "ausgabeformate",
         "ausgabeAls"
@@ -47,7 +50,10 @@
     function leereListen() {
         return {
             rollen: [],
+            ziele: [],
+            kontextHinweise: [],
             anforderungen: [],
+            besondersEmpfohleneAnforderungen: [],
             regeln: [],
             ausgabeformate: [],
             ausgabeAls: []
@@ -142,27 +148,48 @@
                                 }
 
 
+                                const bereinigterEintrag =
+                                    eintrag.trim();
+
+
                                 const vorhandeneHerkunft =
                                     bekannteEintraege[typ]
-                                        .get(eintrag);
+                                        .get(
+                                            bereinigterEintrag
+                                        );
 
 
                                 if (vorhandeneHerkunft) {
-                                    vorhandeneHerkunft.quellen.push({
-                                        ...beschreibung
-                                    });
+                                    const quelleSchonErfasst =
+                                        vorhandeneHerkunft.quellen
+                                            .some(
+                                                function (quelle) {
+                                                    return (
+                                                        quelle.ebene === beschreibung.ebene &&
+                                                        quelle.id === beschreibung.id &&
+                                                        quelle.pfad === beschreibung.pfad
+                                                    );
+                                                }
+                                            );
+
+
+                                    if (!quelleSchonErfasst) {
+                                        vorhandeneHerkunft.quellen.push({
+                                            ...beschreibung
+                                        });
+                                    }
 
                                     return;
                                 }
 
 
                                 ergebnis[typ].push(
-                                    eintrag
+                                    bereinigterEintrag
                                 );
 
 
                                 const herkunft = {
-                                    wert: eintrag,
+                                    wert: bereinigterEintrag,
                                     quellen: [
                                         {
                                             ...beschreibung
@@ -176,7 +203,7 @@
                                 );
 
                                 bekannteEintraege[typ].set(
-                                    eintrag,
+                                    bereinigterEintrag,
                                     herkunft
                                 );
                             }
@@ -192,7 +219,7 @@
 
 
     const registry = {
-        version: 1,
+        version: 2,
         listenTypen:
             Object.freeze([
                 ...LISTEN_TYPEN
@@ -536,9 +563,38 @@
             }
 
 
-            return empfehlungenZusammenfuehren(
+            const ergebnis =
+                empfehlungenZusammenfuehren(
                 quellen
             );
+
+
+            ergebnis.besondersEmpfohleneAnforderungen =
+                ergebnis.besondersEmpfohleneAnforderungen
+                    .filter(
+                        function (anforderung) {
+                            return ergebnis.anforderungen
+                                .includes(
+                                    anforderung
+                                );
+                        }
+                    );
+
+
+            ergebnis.herkunft.besondersEmpfohleneAnforderungen =
+                ergebnis.herkunft.besondersEmpfohleneAnforderungen
+                    .filter(
+                        function (herkunft) {
+                            return ergebnis
+                                .besondersEmpfohleneAnforderungen
+                                .includes(
+                                    herkunft.wert
+                                );
+                        }
+                    );
+
+
+            return ergebnis;
         }
     };
 

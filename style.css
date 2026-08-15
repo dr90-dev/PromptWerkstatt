@@ -464,6 +464,26 @@ textarea:focus {
 }
 
 
+#rolle:disabled,
+#ziel:disabled,
+#ausgabeformat:disabled {
+    cursor:
+        not-allowed;
+
+    opacity:
+        1;
+
+    background-color:
+        var(--karte);
+
+    color:
+        var(--text-hell);
+
+    -webkit-text-fill-color:
+        var(--text-hell);
+}
+
+
 
 /* =========================================================
    BEREICHSAUSWAHL UND -VERWALTUNG (V2)
@@ -1273,6 +1293,9 @@ body.bereich-modal-offen {
 
     gap:
         9px;
+
+    margin-bottom:
+        12px;
 }
 
 
@@ -1306,6 +1329,25 @@ body.bereich-modal-offen {
 .chip:hover {
     border-color:
         var(--primaer);
+
+    background-color:
+        var(--karte-zwei);
+
+    color:
+        var(--text);
+}
+
+
+.chip:focus-visible {
+    outline:
+        none;
+
+    border-color:
+        var(--primaer);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(79, 70, 229, 0.18);
 }
 
 
@@ -1589,6 +1631,35 @@ button:active {
 
     line-height:
         1.5;
+}
+
+
+.kontext-hilfe strong {
+    display:
+        block;
+}
+
+
+.kontext-hilfe ul {
+    margin:
+        6px
+        0
+        0;
+
+    padding-left:
+        20px;
+}
+
+
+.leere-empfehlung {
+    margin:
+        0;
+
+    color:
+        var(--text-hell);
+
+    font-size:
+        13px;
 }
 
 

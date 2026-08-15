@@ -104,6 +104,11 @@ const anforderungenContainer =
         "anforderungenContainer"
     );
 
+const eigeneAnforderungen =
+    document.getElementById(
+        "eigeneAnforderungen"
+    );
+
 const regelPaketeContainer =
     document.getElementById(
         "regelPaketeContainer"
@@ -117,6 +122,11 @@ const eigeneRegeln =
 const ausgabeformat =
     document.getElementById(
         "ausgabeformat"
+    );
+
+const eigenesAusgabeformat =
+    document.getElementById(
+        "eigenesAusgabeformat"
     );
 
 const ausgabeAls =
@@ -432,35 +442,118 @@ function unterkategorieDatenHolen() {
         bereichDaten ||
         { name: "Allgemein" };
 
+    const empfehlungen =
+        v2Daten &&
+        typeof v2Daten.empfehlungenFuerPfad ===
+            "function"
 
-    // Phase 3 stellt nur die Navigation um. Die fachlichen
-    // V2-Empfehlungen werden erst in Phase 4 vererbt.
+            ? v2Daten.empfehlungenFuerPfad(
+                bereichAuswahl.value,
+                hauptkategorie.value,
+                unterkategorie.value
+            )
+
+            : {
+                rollen: [],
+                ziele: [],
+                kontextHinweise: [],
+                anforderungen: [],
+                besondersEmpfohleneAnforderungen: [],
+                regeln: [],
+                ausgabeformate: [],
+                ausgabeAls: [],
+                herkunft: {}
+            };
+
+
     return {
         name:
             navigationDaten.name,
-        rollen: [
-            "Fachexperte",
-            "Berater",
-            "Analyst",
-            "Coach"
-        ],
-        ziele: [
-            "Thema bearbeiten"
-        ],
-        anforderungen: [
-            "Praxisnah antworten",
-            "Wichtigste Punkte priorisieren",
-            "Konkrete Beispiele geben",
-            "Annahmen klar kennzeichnen"
-        ],
-        ausgabeformate: [
-            "Schritt-für-Schritt-Anleitung",
-            "Checkliste",
-            "Tabelle",
-            "Kurzempfehlung",
-            "Ausführliche Analyse"
-        ]
+        ...empfehlungen
     };
+}
+
+
+function mehrzeiligeEingabeTeilen(
+    wert
+) {
+    return [
+        ...new Set(
+            String(wert || "")
+                .split(/\r?\n/)
+                .map(
+                    function (eintrag) {
+                        return eintrag.trim();
+                    }
+                )
+                .filter(Boolean)
+        )
+    ];
+}
+
+
+function ausgewaehlteAnforderungenHolen() {
+    return [
+        ...new Set([
+            ...aktiveAnforderungen,
+            ...mehrzeiligeEingabeTeilen(
+                eigeneAnforderungen.value
+            )
+        ])
+    ];
+}
+
+
+function ausgewaehlteRegelnHolen() {
+    let regeln =
+        [];
+
+
+    aktiveRegelPakete.forEach(
+        function (auswahl) {
+
+            if (
+                typeof regelPakete !== "undefined" &&
+                regelPakete[auswahl]
+            ) {
+                regeln.push(
+                    ...regelPakete[auswahl].regeln
+                );
+
+                return;
+            }
+
+
+            if (
+                typeof auswahl === "string" &&
+                auswahl.trim() !== ""
+            ) {
+                regeln.push(
+                    auswahl.trim()
+                );
+            }
+        }
+    );
+
+
+    regeln.push(
+        ...mehrzeiligeEingabeTeilen(
+            eigeneRegeln.value
+        )
+    );
+
+
+    return [
+        ...new Set(regeln)
+    ];
+}
+
+
+function gewaehltesAusgabeformatHolen() {
+    return (
+        eigenesAusgabeformat.value.trim() ||
+        ausgabeformat.value.trim()
+    );
 }
 
 
@@ -650,14 +743,69 @@ function kontextHinweisAktualisieren() {
     const daten =
         unterkategorieDatenHolen();
 
-    const hinweis =
-        `Beschreibe dein konkretes Ziel bei „${daten.name}“, ` +
-        "die Ausgangssituation, vorhandene Informationen, " +
-        "wichtige Rahmenbedingungen und besondere Einschränkungen.";
+    kontextHinweis.innerHTML =
+        "";
 
 
-    kontextHinweis.textContent =
-        `💡 Hilfreicher Kontext: ${hinweis}`;
+    const titel =
+        document.createElement(
+            "strong"
+        );
+
+
+    titel.textContent =
+        "💡 Hilfreicher Kontext";
+
+    kontextHinweis.appendChild(
+        titel
+    );
+
+
+    if (daten.kontextHinweise.length === 0) {
+        const neutralerHinweis =
+            document.createElement(
+                "span"
+            );
+
+
+        neutralerHinweis.textContent =
+            " Für diesen Pfad sind noch keine speziellen Hinweise hinterlegt.";
+
+        kontextHinweis.appendChild(
+            neutralerHinweis
+        );
+
+        return;
+    }
+
+
+    const liste =
+        document.createElement(
+            "ul"
+        );
+
+
+    daten.kontextHinweise.forEach(
+        function (hinweis) {
+            const eintrag =
+                document.createElement(
+                    "li"
+                );
+
+
+            eintrag.textContent =
+                hinweis;
+
+            liste.appendChild(
+                eintrag
+            );
+        }
+    );
+
+
+    kontextHinweis.appendChild(
+        liste
+    );
 }
 
 
@@ -666,7 +814,8 @@ function kontextHinweisAktualisieren() {
 // ======================================================
 
 function empfohleneAnforderungenHolen() {
-    return [];
+    return unterkategorieDatenHolen()
+        .besondersEmpfohleneAnforderungen;
 }
 
 
@@ -675,7 +824,142 @@ function empfohleneAnforderungenHolen() {
 // ======================================================
 
 function empfohleneRegelPaketeHolen() {
-    return [];
+    return unterkategorieDatenHolen()
+        .regeln;
+}
+
+
+function leereEmpfehlungAnzeigen(
+    container,
+    text
+) {
+    const hinweis =
+        document.createElement(
+            "p"
+        );
+
+
+    hinweis.className =
+        "leere-empfehlung";
+
+    hinweis.textContent =
+        text;
+
+    container.appendChild(
+        hinweis
+    );
+}
+
+
+function empfehlungsSelectAktualisieren(
+    select,
+    empfehlungen,
+    platzhalter
+) {
+    const vorherigerWert =
+        select.value;
+
+    const sichereEmpfehlungen =
+        Array.isArray(empfehlungen)
+
+            ? empfehlungen
+
+            : [];
+
+
+    select.innerHTML =
+        "";
+
+
+    const leereOption =
+        document.createElement(
+            "option"
+        );
+
+
+    leereOption.value =
+        "";
+
+    leereOption.textContent =
+        sichereEmpfehlungen.length === 0
+
+            ? "Noch keine Vorschläge verfügbar"
+
+            : platzhalter;
+
+    select.appendChild(
+        leereOption
+    );
+
+
+    sichereEmpfehlungen.forEach(
+        function (empfehlung) {
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                empfehlung;
+
+            option.textContent =
+                empfehlung;
+
+            select.appendChild(
+                option
+            );
+        }
+    );
+
+
+    select.disabled =
+        sichereEmpfehlungen.length === 0;
+
+    select.value =
+        sichereEmpfehlungen.includes(
+            vorherigerWert
+        )
+
+            ? vorherigerWert
+
+            : "";
+}
+
+
+function ausgabeAlsEmpfehlungenAktualisieren(
+    empfehlungen
+) {
+    const sichereEmpfehlungen =
+        Array.isArray(empfehlungen)
+
+            ? empfehlungen
+
+            : [];
+
+
+    [
+        ...ausgabeAls.options
+    ].forEach(
+        function (option) {
+
+            if (!option.dataset.standardText) {
+                option.dataset.standardText =
+                    option.textContent.trim();
+            }
+
+
+            option.textContent =
+                option.value &&
+                sichereEmpfehlungen.includes(
+                    option.value
+                )
+
+                    ? `★ Empfohlen: ${option.dataset.standardText}`
+
+                    : option.dataset.standardText;
+        }
+    );
 }
 
 
@@ -2665,12 +2949,22 @@ function anforderungenAnzeigen() {
         unterkategorieDatenHolen();
 
 
-    const empfehlungen =
+    const besondersEmpfohleneAnforderungen =
         empfohleneAnforderungenHolen();
 
 
     anforderungenContainer.innerHTML =
         "";
+
+
+    if (daten.anforderungen.length === 0) {
+        leereEmpfehlungAnzeigen(
+            anforderungenContainer,
+            "Für diesen Pfad sind noch keine Anforderungen hinterlegt."
+        );
+
+        return;
+    }
 
 
     daten.anforderungen.forEach(
@@ -2692,25 +2986,65 @@ function anforderungenAnzeigen() {
             );
 
 
-            chip.textContent =
-
-                empfehlungen.includes(
+            const istAktiv =
+                aktiveAnforderungen.includes(
                     anforderung
-                )
+                );
 
-                    ? `⭐ ${anforderung}`
+
+            const istBesondersEmpfohlen =
+                besondersEmpfohleneAnforderungen
+                    .includes(
+                        anforderung
+                    );
+
+
+            const statusSymbole =
+                [];
+
+
+            if (istBesondersEmpfohlen) {
+                statusSymbole.push(
+                    "⭐"
+                );
+            }
+
+
+            if (istAktiv) {
+                statusSymbole.push(
+                    "✓"
+                );
+            }
+
+
+            chip.textContent =
+                statusSymbole.length > 0
+
+                    ? `${statusSymbole.join(" ")} ${anforderung}`
 
                     : anforderung;
+
+
+            chip.dataset.besondersEmpfohlen =
+                String(
+                    istBesondersEmpfohlen
+                );
 
 
             chip.classList.toggle(
 
                 "aktiv",
 
-                aktiveAnforderungen.includes(
-                    anforderung
-                )
+                istAktiv
 
+            );
+
+
+            chip.setAttribute(
+                "aria-pressed",
+                String(
+                    istAktiv
+                )
             );
 
 
@@ -2778,22 +3112,19 @@ function regelPaketeAnzeigen() {
         empfohleneRegelPaketeHolen();
 
 
-    Object.keys(
-        regelPakete
-    ).forEach(
+    if (empfehlungen.length === 0) {
+        leereEmpfehlungAnzeigen(
+            regelPaketeContainer,
+            "Für diesen Pfad sind noch keine Regeln hinterlegt."
+        );
 
-        function (key) {
-
-            const paket =
-                regelPakete[
-                    key
-                ];
+        return;
+    }
 
 
-            const istEmpfohlen =
-                empfehlungen.includes(
-                    key
-                );
+    empfehlungen.forEach(
+
+        function (regel) {
 
 
             const button =
@@ -2816,9 +3147,19 @@ function regelPaketeAnzeigen() {
                 "aktiv",
 
                 aktiveRegelPakete.includes(
-                    key
+                    regel
                 )
 
+            );
+
+
+            button.setAttribute(
+                "aria-pressed",
+                String(
+                    aktiveRegelPakete.includes(
+                        regel
+                    )
+                )
             );
 
 
@@ -2829,12 +3170,7 @@ function regelPaketeAnzeigen() {
 
 
             titel.textContent =
-
-                istEmpfohlen
-
-                    ? `⭐ Empfohlen: ${paket.name}`
-
-                    : paket.name;
+                regel;
 
 
             const beschreibung =
@@ -2844,7 +3180,7 @@ function regelPaketeAnzeigen() {
 
 
             beschreibung.textContent =
-                paket.beschreibung;
+                "V2-Empfehlung – anklicken zum Übernehmen.";
 
 
             button.appendChild(
@@ -2865,7 +3201,7 @@ function regelPaketeAnzeigen() {
 
                     if (
                         aktiveRegelPakete.includes(
-                            key
+                            regel
                         )
                     ) {
 
@@ -2876,7 +3212,7 @@ function regelPaketeAnzeigen() {
 
                                     return (
                                         eintrag !==
-                                        key
+                                        regel
                                     );
                                 }
 
@@ -2885,7 +3221,7 @@ function regelPaketeAnzeigen() {
                     } else {
 
                         aktiveRegelPakete.push(
-                            key
+                            regel
                         );
                     }
 
@@ -2919,93 +3255,29 @@ function unterkategorieAktualisieren(
         unterkategorieDatenHolen();
 
 
-    rolle.innerHTML =
-        "";
-
-
-    daten.rollen.forEach(
-
-        function (rollenName) {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                rollenName;
-
-
-            option.textContent =
-                rollenName;
-
-
-            rolle.appendChild(
-                option
-            );
-        }
-
+    empfehlungsSelectAktualisieren(
+        rolle,
+        daten.rollen,
+        "Rolle auswählen …"
     );
 
 
-    ziel.innerHTML =
-        "";
-
-
-    daten.ziele.forEach(
-
-        function (zielName) {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                zielName;
-
-
-            option.textContent =
-                zielName;
-
-
-            ziel.appendChild(
-                option
-            );
-        }
-
+    empfehlungsSelectAktualisieren(
+        ziel,
+        daten.ziele,
+        "Zielvorschlag auswählen …"
     );
 
 
-    ausgabeformat.innerHTML =
-        "";
+    empfehlungsSelectAktualisieren(
+        ausgabeformat,
+        daten.ausgabeformate,
+        "Ausgabeformat auswählen …"
+    );
 
 
-    daten.ausgabeformate.forEach(
-
-        function (format) {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                format;
-
-
-            option.textContent =
-                format;
-
-
-            ausgabeformat.appendChild(
-                option
-            );
-        }
-
+    ausgabeAlsEmpfehlungenAktualisieren(
+        daten.ausgabeAls
     );
 
 
@@ -3014,11 +3286,30 @@ function unterkategorieAktualisieren(
     ) {
 
         aktiveAnforderungen =
-            empfohleneAnforderungenHolen();
+            [];
 
 
         aktiveRegelPakete =
-            empfohleneRegelPaketeHolen();
+            [];
+    } else {
+        aktiveAnforderungen =
+            aktiveAnforderungen.filter(
+                function (anforderung) {
+                    return daten.anforderungen.includes(
+                        anforderung
+                    );
+                }
+            );
+
+
+        aktiveRegelPakete =
+            aktiveRegelPakete.filter(
+                function (regel) {
+                    return daten.regeln.includes(
+                        regel
+                    );
+                }
+            );
     }
 
 
@@ -3214,8 +3505,13 @@ function promptQualitaetBewerten() {
     // maximal 15 Punkte
     // --------------------------------------------------
 
+    const anzahlAnforderungen =
+        ausgewaehlteAnforderungenHolen()
+            .length;
+
+
     if (
-        aktiveAnforderungen.length >=
+        anzahlAnforderungen >=
         3
     ) {
 
@@ -3223,7 +3519,7 @@ function promptQualitaetBewerten() {
             15;
 
     } else if (
-        aktiveAnforderungen.length ===
+        anzahlAnforderungen ===
         2
     ) {
 
@@ -3235,7 +3531,7 @@ function promptQualitaetBewerten() {
         );
 
     } else if (
-        aktiveAnforderungen.length ===
+        anzahlAnforderungen ===
         1
     ) {
 
@@ -3259,7 +3555,7 @@ function promptQualitaetBewerten() {
     // maximal 15 Punkte
     // --------------------------------------------------
 
-    const hatRegelPaket =
+    const hatRegelAuswahl =
         aktiveRegelPakete.length >
         0;
 
@@ -3269,7 +3565,7 @@ function promptQualitaetBewerten() {
 
 
     if (
-        hatRegelPaket &&
+        hatRegelAuswahl &&
         hatEigeneRegeln
     ) {
 
@@ -3277,7 +3573,7 @@ function promptQualitaetBewerten() {
             15;
 
     } else if (
-        hatRegelPaket
+        hatRegelAuswahl
     ) {
 
         punkte +=
@@ -3291,7 +3587,7 @@ function promptQualitaetBewerten() {
             8;
 
         hinweise.push(
-            "💡 Ein passendes Regel-Paket kann zusätzliche Sicherheit und Präzision bringen."
+            "💡 Eine passende Regel-Empfehlung kann zusätzliche Sicherheit und Präzision bringen."
         );
 
     } else {
@@ -3308,7 +3604,7 @@ function promptQualitaetBewerten() {
     // --------------------------------------------------
 
     if (
-        ausgabeformat.value.trim() !==
+        gewaehltesAusgabeformatHolen() !==
         ""
     ) {
 
@@ -3449,13 +3745,26 @@ function promptErstellen() {
         "Fachexperte";
 
 
-    const gewaehltesZiel =
+    const gewaehlteZiele =
 
-        eigenesZiel.value.trim() ||
+        [
+            ziel.value.trim(),
+            eigenesZiel.value.trim()
+        ]
 
-        ziel.value ||
+            .filter(
+                Boolean
+            );
 
-        "Thema bearbeiten";
+
+    if (
+        gewaehlteZiele.length ===
+        0
+    ) {
+        gewaehlteZiele.push(
+            "Thema bearbeiten"
+        );
+    }
 
 
     let prompt =
@@ -3474,17 +3783,29 @@ function promptErstellen() {
         "AUFGABE:\n";
 
 
-    const zielOhnePunkt =
-        gewaehltesZiel
-            .trim()
-            .replace(
-                /[.!?]+$/,
-                ""
+    prompt +=
+        gewaehlteZiele
+            .map(
+                function (zielText) {
+                    const zielOhnePunkt =
+                        zielText.replace(
+                            /[.!?]+$/,
+                            ""
+                        );
+
+
+                    return (
+                        `${zielOhnePunkt}.`
+                    );
+                }
+            )
+            .join(
+                "\n"
             );
 
 
     prompt +=
-        `${zielOhnePunkt}.\n\n`;
+        "\n\n";
 
 
     if (
@@ -3501,16 +3822,17 @@ function promptErstellen() {
     }
 
 
-    if (
-        aktiveAnforderungen.length >
-        0
-    ) {
+    const alleAnforderungen =
+        ausgewaehlteAnforderungenHolen();
+
+
+    if (alleAnforderungen.length > 0) {
 
         prompt +=
             "ANFORDERUNGEN:\n";
 
 
-        aktiveAnforderungen.forEach(
+        alleAnforderungen.forEach(
 
             function (anforderung) {
 
@@ -3526,48 +3848,13 @@ function promptErstellen() {
     }
 
 
-    let alleRegeln =
-        [];
-
-
-    aktiveRegelPakete.forEach(
-
-        function (key) {
-
-            if (
-                regelPakete[
-                    key
-                ]
-            ) {
-
-                alleRegeln =
-                    alleRegeln.concat(
-
-                        regelPakete[
-                            key
-                        ].regeln
-
-                    );
-            }
-        }
-
-    );
-
-
-    alleRegeln =
-        [
-            ...new Set(
-                alleRegeln
-            )
-        ];
+    const alleRegeln =
+        ausgewaehlteRegelnHolen();
 
 
     if (
         alleRegeln.length >
-            0 ||
-
-        eigeneRegeln.value.trim() !==
-            ""
+            0
     ) {
 
         prompt +=
@@ -3585,16 +3872,6 @@ function promptErstellen() {
         );
 
 
-        if (
-            eigeneRegeln.value.trim() !==
-            ""
-        ) {
-
-            prompt +=
-                `- ${eigeneRegeln.value.trim()}\n`;
-        }
-
-
         prompt +=
             "\n";
     }
@@ -3604,8 +3881,12 @@ function promptErstellen() {
         "AUSGABEFORMAT:\n";
 
 
+    const gewaehltesAusgabeformat =
+        gewaehltesAusgabeformatHolen();
+
+
     prompt +=
-        `Erstelle die Antwort als ${ausgabeformat.value || "strukturierte Antwort"}.`;
+        `Erstelle die Antwort als ${gewaehltesAusgabeformat || "strukturierte Antwort"}.`;
 
 
     if (
@@ -3640,13 +3921,22 @@ function builderZuruecksetzen() {
     eigeneRolle.value =
         "";
 
+    ziel.value =
+        "";
+
     eigenesZiel.value =
         "";
 
     kontext.value =
         "";
 
+    eigeneAnforderungen.value =
+        "";
+
     eigeneRegeln.value =
+        "";
+
+    eigenesAusgabeformat.value =
         "";
 
     ausgabeAls.value =
@@ -4442,6 +4732,9 @@ function builderDatenHolen() {
                 ...aktiveAnforderungen
             ],
 
+        eigeneAnforderungen:
+            eigeneAnforderungen.value,
+
         regelPakete:
             [
                 ...aktiveRegelPakete
@@ -4452,6 +4745,9 @@ function builderDatenHolen() {
 
         ausgabeformat:
             ausgabeformat.value,
+
+        eigenesAusgabeformat:
+            eigenesAusgabeformat.value,
 
         ausgabeAls:
             ausgabeAls.value,
@@ -4714,7 +5010,7 @@ function promptBearbeiten(
     );
 
 
-    if (
+    const rolleIstVerfuegbar =
         [
             ...rolle.options
         ].some(
@@ -4727,8 +5023,10 @@ function promptBearbeiten(
                 );
             }
 
-        )
-    ) {
+        );
+
+
+    if (rolleIstVerfuegbar) {
 
         rolle.value =
             eintrag.rolle;
@@ -4737,10 +5035,17 @@ function promptBearbeiten(
 
     eigeneRolle.value =
         eintrag.eigeneRolle ||
-        "";
+        (
+            !rolleIstVerfuegbar &&
+            eintrag.rolle
+
+                ? eintrag.rolle
+
+                : ""
+        );
 
 
-    if (
+    const zielIstVerfuegbar =
         [
             ...ziel.options
         ].some(
@@ -4753,8 +5058,10 @@ function promptBearbeiten(
                 );
             }
 
-        )
-    ) {
+        );
+
+
+    if (zielIstVerfuegbar) {
 
         ziel.value =
             eintrag.ziel;
@@ -4763,7 +5070,14 @@ function promptBearbeiten(
 
     eigenesZiel.value =
         eintrag.eigenesZiel ||
-        "";
+        (
+            !zielIstVerfuegbar &&
+            eintrag.ziel
+
+                ? eintrag.ziel
+
+                : ""
+        );
 
 
     kontext.value =
@@ -4771,30 +5085,114 @@ function promptBearbeiten(
         "";
 
 
-    eigeneRegeln.value =
-        eintrag.eigeneRegeln ||
-        "";
+    const aktuelleEmpfehlungen =
+        unterkategorieDatenHolen();
+
+    const gespeicherteAnforderungen =
+        Array.isArray(eintrag.anforderungen)
+
+            ? eintrag.anforderungen
+
+            : [];
 
 
     aktiveAnforderungen =
+        gespeicherteAnforderungen.filter(
+            function (anforderung) {
+                return aktuelleEmpfehlungen
+                    .anforderungen
+                    .includes(
+                        anforderung
+                    );
+            }
+        );
+
+
+    eigeneAnforderungen.value =
         [
-            ...(
-                eintrag.anforderungen ||
-                []
-            )
-        ];
+            ...new Set([
+                ...mehrzeiligeEingabeTeilen(
+                    eintrag.eigeneAnforderungen
+                ),
+                ...gespeicherteAnforderungen.filter(
+                    function (anforderung) {
+                        return !aktuelleEmpfehlungen
+                            .anforderungen
+                            .includes(
+                                anforderung
+                            );
+                    }
+                )
+            ])
+        ].join("\n");
+
+
+    const gespeicherteRegeln =
+        Array.isArray(eintrag.regelPakete)
+
+            ? eintrag.regelPakete
+
+            : [];
+
+    const eigeneRegelTexte =
+        mehrzeiligeEingabeTeilen(
+            eintrag.eigeneRegeln
+        );
 
 
     aktiveRegelPakete =
+        [];
+
+
+    gespeicherteRegeln.forEach(
+        function (regelAuswahl) {
+
+            if (
+                aktuelleEmpfehlungen.regeln.includes(
+                    regelAuswahl
+                )
+            ) {
+                aktiveRegelPakete.push(
+                    regelAuswahl
+                );
+
+                return;
+            }
+
+
+            if (
+                typeof regelPakete !== "undefined" &&
+                regelPakete[regelAuswahl]
+            ) {
+                eigeneRegelTexte.push(
+                    ...regelPakete[regelAuswahl].regeln
+                );
+
+                return;
+            }
+
+
+            if (
+                typeof regelAuswahl === "string" &&
+                regelAuswahl.trim() !== ""
+            ) {
+                eigeneRegelTexte.push(
+                    regelAuswahl.trim()
+                );
+            }
+        }
+    );
+
+
+    eigeneRegeln.value =
         [
-            ...(
-                eintrag.regelPakete ||
-                []
+            ...new Set(
+                eigeneRegelTexte
             )
-        ];
+        ].join("\n");
 
 
-    if (
+    const ausgabeformatIstVerfuegbar =
         [
             ...ausgabeformat.options
         ].some(
@@ -4807,12 +5205,26 @@ function promptBearbeiten(
                 );
             }
 
-        )
-    ) {
+        );
+
+
+    if (ausgabeformatIstVerfuegbar) {
 
         ausgabeformat.value =
             eintrag.ausgabeformat;
     }
+
+
+    eigenesAusgabeformat.value =
+        eintrag.eigenesAusgabeformat ||
+        (
+            !ausgabeformatIstVerfuegbar &&
+            eintrag.ausgabeformat
+
+                ? eintrag.ausgabeformat
+
+                : ""
+        );
 
 
     ausgabeAls.value =
@@ -6246,6 +6658,12 @@ kontext.addEventListener(
 );
 
 
+eigeneAnforderungen.addEventListener(
+    "input",
+    promptErstellen
+);
+
+
 eigeneRegeln.addEventListener(
     "input",
     promptErstellen
@@ -6254,6 +6672,12 @@ eigeneRegeln.addEventListener(
 
 ausgabeformat.addEventListener(
     "change",
+    promptErstellen
+);
+
+
+eigenesAusgabeformat.addEventListener(
+    "input",
     promptErstellen
 );
 

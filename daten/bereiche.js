@@ -78,6 +78,8 @@
         rollen: [
             "Strukturierter Assistent"
         ],
+        ziele: [],
+        kontextHinweise: [],
         anforderungen: [
             "Ziel und Rahmenbedingungen klar berücksichtigen."
         ],

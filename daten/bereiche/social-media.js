@@ -10,7 +10,10 @@
             name: name,
             empfehlungen: {
                 rollen: [],
+                ziele: [],
+                kontextHinweise: [],
                 anforderungen: [],
+                besondersEmpfohleneAnforderungen: [],
                 regeln: [],
                 ausgabeformate: [],
                 ausgabeAls: []
@@ -29,7 +32,10 @@
             name: name,
             grundlagen: {
                 rollen: [],
+                ziele: [],
+                kontextHinweise: [],
                 anforderungen: [],
+                besondersEmpfohleneAnforderungen: [],
                 regeln: [],
                 ausgabeformate: [],
                 ausgabeAls: []
@@ -55,6 +61,8 @@
             rollen: [
                 "Social-Media-Stratege"
             ],
+            ziele: [],
+            kontextHinweise: [],
             anforderungen: [
                 "Zielgruppe, Plattform und Kommunikationsziel berücksichtigen.",
                 "Inhalte für das gewählte Veröffentlichungsformat optimieren."
@@ -116,6 +124,8 @@
                     rollen: [
                         "Kurzvideo-Redakteur"
                     ],
+                    ziele: [],
+                    kontextHinweise: [],
                     anforderungen: [
                         "Mit einem klaren Einstieg beginnen.",
                         "Szenen und Aussagen zeitlich nachvollziehbar gliedern."
@@ -148,17 +158,35 @@
                             rollen: [
                                 "Autor für vertikale Kurzvideos"
                             ],
+                            ziele: [
+                                "Ein kompaktes Kurzvideo-Skript erstellen.",
+                                "Einen klar strukturierten Szenenablauf entwickeln."
+                            ],
+                            kontextHinweise: [
+                                "Plattform",
+                                "Zielgruppe",
+                                "gewünschte Videolänge",
+                                "Thema oder Produkt",
+                                "gewünschter Call-to-Action"
+                            ],
                             anforderungen: [
                                 "Hook, Hauptteil und Handlungsaufforderung klar trennen.",
                                 "Pro Szene Bildidee, Sprechertext und ungefähre Dauer angeben.",
                                 "Sprache und Länge an die gewählte Plattform anpassen."
+                            ],
+                            besondersEmpfohleneAnforderungen: [
+                                "Zielgruppe, Plattform und Kommunikationsziel berücksichtigen.",
+                                "Mit einem klaren Einstieg beginnen.",
+                                "Pro Szene Bildidee, Sprechertext und ungefähre Dauer angeben."
                             ],
                             regeln: [
                                 "Keine nicht belegten Fakten in den Sprechertext aufnehmen.",
                                 "Musik-, Bild- und Markenrechte nicht als automatisch geklärt darstellen."
                             ],
                             ausgabeformate: [
-                                "Tabelle mit Szene, Bild, Sprechertext und Dauer"
+                                "Tabelle mit Szene, Bild, Sprechertext und Dauer",
+                                "Szenenplan",
+                                "Strukturiertes Videoskript"
                             ],
                             ausgabeAls: [
                                 "Markdown (.md)",

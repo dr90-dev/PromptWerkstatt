@@ -10,7 +10,10 @@
             name: name,
             empfehlungen: {
                 rollen: [],
+                ziele: [],
+                kontextHinweise: [],
                 anforderungen: [],
+                besondersEmpfohleneAnforderungen: [],
                 regeln: [],
                 ausgabeformate: [],
                 ausgabeAls: []
@@ -29,7 +32,10 @@
             name: name,
             grundlagen: {
                 rollen: [],
+                ziele: [],
+                kontextHinweise: [],
                 anforderungen: [],
+                besondersEmpfohleneAnforderungen: [],
                 regeln: [],
                 ausgabeformate: [],
                 ausgabeAls: []
@@ -55,6 +61,8 @@
             rollen: [
                 "Technischer Fachexperte"
             ],
+            ziele: [],
+            kontextHinweise: [],
             anforderungen: [
                 "Technische Zusammenhänge nachvollziehbar und prüfbar darstellen."
             ],
@@ -173,6 +181,8 @@
                     rollen: [
                         "Qualitäts- und Risikoingenieur"
                     ],
+                    ziele: [],
+                    kontextHinweise: [],
                     anforderungen: [
                         "Bewertungskriterien und Datengrundlagen transparent benennen."
                     ],
@@ -195,7 +205,26 @@
                             rollen: [
                                 "Design-FMEA-Moderator"
                             ],
+                            ziele: [
+                                "Eine strukturierte Design-FMEA erstellen.",
+                                "Potenzielle Produktfehler systematisch analysieren."
+                            ],
+                            kontextHinweise: [
+                                "Produkt oder Baugruppe",
+                                "Produktfunktionen",
+                                "Einsatzbedingungen",
+                                "Belastungen",
+                                "bekannte Fehler",
+                                "vorhandene Vermeidungsmaßnahmen",
+                                "vorhandene Entdeckungsmaßnahmen",
+                                "verwendete Bewertungsmatrix"
+                            ],
                             anforderungen: [
+                                "Funktionen systematisch betrachten.",
+                                "Fehlerfolge, Fehlerart und Fehlerursache getrennt behandeln.",
+                                "Vorhandene Vermeidungs- und Entdeckungsmaßnahmen berücksichtigen."
+                            ],
+                            besondersEmpfohleneAnforderungen: [
                                 "Funktionen systematisch betrachten.",
                                 "Fehlerfolge, Fehlerart und Fehlerursache getrennt behandeln.",
                                 "Vorhandene Vermeidungs- und Entdeckungsmaßnahmen berücksichtigen."
@@ -205,7 +234,9 @@
                                 "Unbekannte Bewertungen und Nachweise als offen markieren."
                             ],
                             ausgabeformate: [
-                                "FMEA-Tabelle mit Funktionen, Fehlern, Ursachen und Maßnahmen"
+                                "FMEA-Tabelle mit Funktionen, Fehlern, Ursachen und Maßnahmen",
+                                "FMEA-Tabelle",
+                                "Risikotabelle"
                             ],
                             ausgabeAls: [
                                 "Excel (.xlsx)",

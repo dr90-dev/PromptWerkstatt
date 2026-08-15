@@ -10,7 +10,10 @@
             name: name,
             empfehlungen: {
                 rollen: [],
+                ziele: [],
+                kontextHinweise: [],
                 anforderungen: [],
+                besondersEmpfohleneAnforderungen: [],
                 regeln: [],
                 ausgabeformate: [],
                 ausgabeAls: []
@@ -29,7 +32,10 @@
             name: name,
             grundlagen: {
                 rollen: [],
+                ziele: [],
+                kontextHinweise: [],
                 anforderungen: [],
+                besondersEmpfohleneAnforderungen: [],
                 regeln: [],
                 ausgabeformate: [],
                 ausgabeAls: []
@@ -56,6 +62,8 @@
                 "Kreativpädagoge",
                 "DIY-Berater"
             ],
+            ziele: [],
+            kontextHinweise: [],
             anforderungen: [
                 "Materialien und Werkzeuge klar benennen.",
                 "Arbeitsschritte nachvollziehbar strukturieren."
@@ -82,6 +90,8 @@
                     rollen: [
                         "Bastel- und Gestaltungspädagoge"
                     ],
+                    ziele: [],
+                    kontextHinweise: [],
                     anforderungen: [
                         "Schwierigkeitsgrad und benötigte Zeit angeben."
                     ],
@@ -105,10 +115,25 @@
                             rollen: [
                                 "Pädagogischer Bastelbegleiter"
                             ],
+                            ziele: [
+                                "Eine altersgerechte Bastelidee entwickeln.",
+                                "Eine Schritt-für-Schritt-Bastelanleitung erstellen."
+                            ],
+                            kontextHinweise: [
+                                "Alter der Kinder",
+                                "verfügbare Materialien",
+                                "gewünschte Basteldauer",
+                                "notwendige Hilfe durch Erwachsene"
+                            ],
                             anforderungen: [
                                 "Alter der Kinder und benötigte Aufsicht berücksichtigen.",
                                 "Einfache Alternativen für schwierige Arbeitsschritte nennen.",
                                 "Vorbereitungs- und Aufräumaufwand angeben."
+                            ],
+                            besondersEmpfohleneAnforderungen: [
+                                "Materialien und Werkzeuge klar benennen.",
+                                "Arbeitsschritte nachvollziehbar strukturieren.",
+                                "Alter der Kinder und benötigte Aufsicht berücksichtigen."
                             ],
                             regeln: [
                                 "Nur altersgerechte Materialien und Werkzeuge empfehlen.",
