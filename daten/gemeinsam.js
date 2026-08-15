@@ -218,6 +218,55 @@
     }
 
 
+    function profilQuellenHinzufuegen(
+        registry,
+        quellen,
+        profilIds,
+        verwendeteProfilIds
+    ) {
+        if (!Array.isArray(profilIds)) {
+            return;
+        }
+
+
+        profilIds.forEach(
+            function (profilId) {
+                if (
+                    typeof profilId !== "string" ||
+                    profilId === "" ||
+                    verwendeteProfilIds.has(profilId)
+                ) {
+                    return;
+                }
+
+
+                const profil =
+                    registry.profilHolen(
+                        profilId
+                    );
+
+
+                if (!profil) {
+                    return;
+                }
+
+
+                verwendeteProfilIds.add(
+                    profilId
+                );
+
+
+                quellen.push({
+                    ebene: "profil",
+                    id: profil.id,
+                    pfad: `profil/${profil.id}`,
+                    daten: profil.empfehlungen
+                });
+            }
+        );
+    }
+
+
     const registry = {
         version: 2,
         listenTypen:
@@ -231,6 +280,7 @@
         bereichsDefinitionen:
             Object.freeze([]),
         bereiche: {},
+        profile: {},
         querschnitt: {},
 
 
@@ -283,6 +333,49 @@
 
             this.bereiche[bereich.id] =
                 tiefEinfrieren(bereich);
+        },
+
+
+        profilRegistrieren(profil) {
+
+            if (
+                !istObjekt(profil) ||
+                typeof profil.id !== "string" ||
+                profil.id === ""
+            ) {
+                throw new Error(
+                    "Ein Profil benötigt eine stabile ID."
+                );
+            }
+
+
+            if (this.profile[profil.id]) {
+                throw new Error(
+                    `Profil doppelt registriert: ${profil.id}`
+                );
+            }
+
+
+            this.profile[profil.id] =
+                tiefEinfrieren({
+                    ...profil,
+                    empfehlungen: {
+                        ...leereListen(),
+                        ...(
+                            istObjekt(profil.empfehlungen)
+                                ? profil.empfehlungen
+                                : {}
+                        )
+                    }
+                });
+        },
+
+
+        profilHolen(profilId) {
+            return (
+                typeof profilId === "string" &&
+                this.profile[profilId]
+            ) || null;
         },
 
 
@@ -520,8 +613,19 @@
                 }
             ];
 
+            const verwendeteProfilIds =
+                new Set();
+
 
             if (pfad.bereich) {
+                profilQuellenHinzufuegen(
+                    this,
+                    quellen,
+                    pfad.bereich.profilIds,
+                    verwendeteProfilIds
+                );
+
+
                 quellen.push({
                     ebene: "bereich",
                     id: pfad.bereich.id,
@@ -533,6 +637,14 @@
 
 
             if (pfad.hauptkategorie) {
+                profilQuellenHinzufuegen(
+                    this,
+                    quellen,
+                    pfad.hauptkategorie.profilIds,
+                    verwendeteProfilIds
+                );
+
+
                 quellen.push({
                     ebene: "hauptkategorie",
                     id: pfad.hauptkategorie.id,
@@ -545,6 +657,14 @@
 
 
             if (pfad.unterkategorie) {
+                profilQuellenHinzufuegen(
+                    this,
+                    quellen,
+                    pfad.unterkategorie.profilIds,
+                    verwendeteProfilIds
+                );
+
+
                 quellen.push({
                     ebene: "unterkategorie",
                     id: pfad.unterkategorie.id,

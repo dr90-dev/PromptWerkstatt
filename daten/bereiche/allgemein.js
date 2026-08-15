@@ -4,11 +4,15 @@
     function hauptkategorie(
         id,
         name,
-        eintraege
+        eintraege,
+        profilIds = []
     ) {
         return {
             id: id,
             name: name,
+            profilIds: [
+                ...profilIds
+            ],
             grundlagen: {
                 rollen: [],
                 anforderungen: [],
@@ -71,6 +75,9 @@
                     ["besuch-gaeste-vorbereiten", "Besuch & Gäste vorbereiten"],
                     ["alltagsprojekt-planen", "Alltagsprojekt planen"],
                     ["schritt-fuer-schritt-plan", "Schritt-für-Schritt-Plan"]
+                ],
+                [
+                    "planen-organisieren"
                 ]
             ),
             hauptkategorie(
@@ -83,6 +90,9 @@
                     ["entscheidungsmatrix", "Entscheidungsmatrix"],
                     ["kaufentscheidung", "Kaufentscheidung"],
                     ["alternativen-bewerten", "Alternativen bewerten"]
+                ],
+                [
+                    "vergleichen-entscheiden"
                 ]
             ),
             hauptkategorie(
@@ -95,6 +105,9 @@
                     ["produktrecherche", "Produktrecherche"],
                     ["anbieter-recherchieren", "Anbieter recherchieren"],
                     ["informationen-strukturieren", "Informationen strukturieren"]
+                ],
+                [
+                    "recherchieren-quellen"
                 ]
             ),
             hauptkategorie(
