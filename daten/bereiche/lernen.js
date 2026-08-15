@@ -1,6 +1,18 @@
 (function (global) {
     "use strict";
 
+    const HAUPTKATEGORIE_PROFILE = {
+        "erklaeren-verstehen": ["lernen-erklaeren"],
+        "lernen-lernplaene": ["planen-organisieren"],
+        "pruefungsvorbereitung": ["ueben-pruefungsvorbereiten"],
+        "uebungen-quiz": ["ueben-pruefungsvorbereiten"],
+        "sprachen-lernen": ["ueben-pruefungsvorbereiten"],
+        "schule-studium": ["lernen-erklaeren"],
+        "wissenschaftliches-arbeiten": ["wissenschaftlich-arbeiten"],
+        "mathematik-statistik": ["berechnen-auswerten"],
+        "recherche-quellen": ["recherchieren-quellen"]
+    };
+
     function hauptkategorie(
         id,
         name,
@@ -9,6 +21,7 @@
         return {
             id: id,
             name: name,
+            profilIds: HAUPTKATEGORIE_PROFILE[id],
             grundlagen: {
                 rollen: [],
                 anforderungen: [],
@@ -41,11 +54,21 @@
         icon: "🎓",
         standardAktiv: true,
         grundlagen: {
-            rollen: [],
-            anforderungen: [],
-            regeln: [],
+            rollen: [
+                "Geduldiger Lern- und Wissensbegleiter"
+            ],
+            anforderungen: [
+                "Niveau, Lernziel und vorhandenes Wissen berücksichtigen."
+            ],
+            regeln: [
+                "Keine Quellen, Zitate, Daten oder Forschungsergebnisse erfinden.",
+                "Unsichere oder umstrittene Aussagen klar kennzeichnen."
+            ],
             ausgabeformate: [],
-            ausgabeAls: []
+            ausgabeAls: [
+                "Text",
+                "Word (.docx)"
+            ]
         },
         parameter: [],
         hauptkategorien: [

@@ -1,6 +1,16 @@
 (function (global) {
     "use strict";
 
+    const HAUPTKATEGORIE_PROFILE = {
+        "rezepte-kochen": ["rezept-zubereiten"],
+        "schnelle-gerichte": ["rezept-zubereiten"],
+        "backen": ["rezept-zubereiten"],
+        "essensplanung": ["ernaehrung-alltag-planen"],
+        "einkauf-vorraete": ["strukturieren-checklisten"],
+        "resteverwertung": ["rezept-zubereiten"],
+        "ernaehrung-ernaehrungsplanung": ["ernaehrung-alltag-planen"]
+    };
+
     function hauptkategorie(
         id,
         name,
@@ -9,6 +19,7 @@
         return {
             id: id,
             name: name,
+            profilIds: HAUPTKATEGORIE_PROFILE[id],
             grundlagen: {
                 rollen: [],
                 anforderungen: [],
@@ -41,11 +52,21 @@
         icon: "🍳",
         standardAktiv: true,
         grundlagen: {
-            rollen: [],
-            anforderungen: [],
-            regeln: [],
+            rollen: [
+                "Alltagsnaher Koch- und Ernährungsplaner"
+            ],
+            anforderungen: [
+                "Vorhandene Zutaten, Zeit und Küchenausstattung berücksichtigen."
+            ],
+            regeln: [
+                "Allergien, Unverträglichkeiten und sichere Lebensmittelhygiene beachten.",
+                "Keine medizinische Ernährungsberatung oder Heilwirkung versprechen."
+            ],
             ausgabeformate: [],
-            ausgabeAls: []
+            ausgabeAls: [
+                "Text",
+                "Word (.docx)"
+            ]
         },
         parameter: [
             {

@@ -1,6 +1,16 @@
 (function (global) {
     "use strict";
 
+    const HAUPTKATEGORIE_PROFILE = {
+        "reiseplanung": ["reise-freizeit-planen"],
+        "reiseziele-sehenswuerdigkeiten": ["reise-freizeit-planen"],
+        "restaurants-food-spots": ["reise-freizeit-planen"],
+        "ausfluege-aktivitaeten": ["reise-freizeit-planen"],
+        "veranstaltungen-freizeit": ["reise-freizeit-planen"],
+        "fotografie": ["ideen-kreativ-entwickeln"],
+        "hobbys-persoenliche-projekte": ["ideen-kreativ-entwickeln"]
+    };
+
     function hauptkategorie(
         id,
         name,
@@ -9,6 +19,7 @@
         return {
             id: id,
             name: name,
+            profilIds: HAUPTKATEGORIE_PROFILE[id],
             grundlagen: {
                 rollen: [],
                 anforderungen: [],
@@ -41,11 +52,21 @@
         icon: "✈️",
         standardAktiv: true,
         grundlagen: {
-            rollen: [],
-            anforderungen: [],
-            regeln: [],
+            rollen: [
+                "Freizeit- und Reiseplaner"
+            ],
+            anforderungen: [
+                "Interessen, Zeitraum, Ort und Budget angemessen berücksichtigen."
+            ],
+            regeln: [
+                "Öffnungszeiten, Preise, Verfügbarkeit und Reisehinweise nicht erfinden.",
+                "Zeitabhängige Angaben vor der Nutzung über aktuelle Quellen prüfen lassen."
+            ],
             ausgabeformate: [],
-            ausgabeAls: []
+            ausgabeAls: [
+                "Text",
+                "Word (.docx)"
+            ]
         },
         parameter: [],
         hauptkategorien: [

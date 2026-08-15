@@ -3,7 +3,7 @@
 // ======================================================
 
 const CACHE_NAME =
-    "promptwerkstatt-v22";
+    "promptwerkstatt-v23";
 
 
 const APP_DATEIEN = [
@@ -17,6 +17,7 @@ const APP_DATEIEN = [
     "./daten/gemeinsam.js",
     "./daten/bereiche.js",
     "./daten/profile.js",
+    "./daten/profile-phase4d.js",
     "./daten/bereiche/allgemein.js",
     "./daten/bereiche/schreiben.js",
     "./daten/bereiche/familie.js",

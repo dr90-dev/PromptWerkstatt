@@ -1,13 +1,54 @@
 (function (global) {
     "use strict";
 
+    const HAUPTKATEGORIE_PROFILE = {
+        "konstruktion-produktentwicklung": ["technische-entwicklung"],
+        "mechanik-maschinenbau": ["technische-entwicklung"],
+        "elektrotechnik-elektronik": ["technische-entwicklung"],
+        "fertigung-produktion": ["technische-entwicklung"],
+        "werkstoffe-materialien": ["technische-entwicklung"],
+        "berechnung-simulation": ["berechnen-auswerten"],
+        "qualitaet-risiko": ["sicherheit-risiko-pruefen"],
+        "fehlersuche-ursachenanalyse": ["fehleranalyse-ursachen"],
+        "technische-dokumentation": ["technische-dokumentation"],
+        "normgerechte-entwicklung": ["normen-compliance-pruefen"]
+    };
+
+    const HAUPTKATEGORIE_GRUNDLAGEN = {
+        "berechnung-simulation": {
+            kontextHinweise: [
+                "Welche Geometrie, Lasten, Werkstoffwerte und Randbedingungen gelten?",
+                "Welche Einheiten, Sicherheitsfaktoren und zulässigen Werte sind vorgegeben?"
+            ],
+            anforderungen: [
+                "Eingabedaten, Einheiten, Formeln und Sicherheitsfaktoren vollständig dokumentieren."
+            ],
+            regeln: [
+                "Sicherheitsrelevante Berechnungen durch qualifizierte Fachleute prüfen lassen."
+            ]
+        },
+        "normgerechte-entwicklung": {
+            kontextHinweise: [
+                "Welche genaue Norm, Ausgabe, Sprache und welcher Stichtag gelten?"
+            ],
+            anforderungen: [
+                "Normanforderungen mit genauer Fundstelle und gültiger Ausgabe belegen."
+            ],
+            regeln: [
+                "Normeninhalte und Gültigkeit nur anhand der aktuellen Originalquelle angeben."
+            ]
+        }
+    };
+
     function unterkategorie(
         id,
-        name
+        name,
+        profilIds
     ) {
         return {
             id: id,
             name: name,
+            profilIds: profilIds,
             empfehlungen: {
                 rollen: [],
                 ziele: [],
@@ -31,7 +72,8 @@
         return {
             id: id,
             name: name,
-            grundlagen: {
+            profilIds: HAUPTKATEGORIE_PROFILE[id],
+            grundlagen: Object.assign({
                 rollen: [],
                 ziele: [],
                 kontextHinweise: [],
@@ -41,7 +83,7 @@
                 besondersEmpfohleneRegeln: [],
                 ausgabeformate: [],
                 ausgabeAls: []
-            },
+            }, HAUPTKATEGORIE_GRUNDLAGEN[id]),
             unterkategorien:
                 eintraege.map(
                     function ([unterId, unterName]) {
@@ -256,23 +298,28 @@
                     },
                     unterkategorie(
                         "prozess-fmea",
-                        "Prozess-FMEA"
+                        "Prozess-FMEA",
+                        HAUPTKATEGORIE_PROFILE["qualitaet-risiko"]
                     ),
                     unterkategorie(
                         "risikoanalyse",
-                        "Risikoanalyse"
+                        "Risikoanalyse",
+                        HAUPTKATEGORIE_PROFILE["qualitaet-risiko"]
                     ),
                     unterkategorie(
                         "fehlerbaumanalyse",
-                        "Fehlerbaumanalyse"
+                        "Fehlerbaumanalyse",
+                        HAUPTKATEGORIE_PROFILE["qualitaet-risiko"]
                     ),
                     unterkategorie(
                         "pruefplanung",
-                        "Prüfplanung"
+                        "Prüfplanung",
+                        HAUPTKATEGORIE_PROFILE["qualitaet-risiko"]
                     ),
                     unterkategorie(
                         "qualitaetspruefung",
-                        "Qualitätsprüfung"
+                        "Qualitätsprüfung",
+                        HAUPTKATEGORIE_PROFILE["qualitaet-risiko"]
                     )
                 ]
             },

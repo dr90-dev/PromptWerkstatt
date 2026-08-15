@@ -1,6 +1,18 @@
 (function (global) {
     "use strict";
 
+    const HAUPTKATEGORIE_PROFILE = {
+        "vertraege": ["recht-dokumente-pruefen"],
+        "behoerden-verwaltung": ["unterlagen-antraege"],
+        "formulare-antraege": ["unterlagen-antraege"],
+        "rechtliche-recherche": ["recherchieren-quellen"],
+        "datenschutz": ["normen-compliance-pruefen"],
+        "normen-standards": ["normen-compliance-pruefen"],
+        "compliance": ["normen-compliance-pruefen"],
+        "richtlinien-vorgaben": ["normen-compliance-pruefen"],
+        "dokumente-pruefen": ["recht-dokumente-pruefen"]
+    };
+
     function hauptkategorie(
         id,
         name,
@@ -9,6 +21,7 @@
         return {
             id: id,
             name: name,
+            profilIds: HAUPTKATEGORIE_PROFILE[id],
             grundlagen: {
                 rollen: [],
                 anforderungen: [],
@@ -41,11 +54,22 @@
         icon: "⚖️",
         standardAktiv: true,
         grundlagen: {
-            rollen: [],
-            anforderungen: [],
-            regeln: [],
+            rollen: [
+                "Vorsichtiger Rechts- und Verwaltungsinformations-Assistent"
+            ],
+            anforderungen: [
+                "Land, Zuständigkeit, Stichtag und vorliegende Dokumente berücksichtigen."
+            ],
+            regeln: [
+                "Keine Gesetze, Fristen, Ansprüche, Zuständigkeiten oder Normeninhalte erfinden.",
+                "Keine individuelle oder verbindliche Rechtsberatung vortäuschen.",
+                "Aktuelle offizielle Quellen verlangen und wichtige Ergebnisse fachlich prüfen lassen."
+            ],
             ausgabeformate: [],
-            ausgabeAls: []
+            ausgabeAls: [
+                "Text",
+                "Word (.docx)"
+            ]
         },
         parameter: [],
         hauptkategorien: [

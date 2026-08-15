@@ -1,6 +1,21 @@
 (function (global) {
     "use strict";
 
+    const HAUPTKATEGORIE_PROFILE = {
+        "projektmanagement": ["projekt-prozesse-verbessern"],
+        "aufgaben-zeitmanagement": ["planen-organisieren"],
+        "meetings-zusammenarbeit": ["projekt-prozesse-verbessern"],
+        "prozesse-arbeitsablaeufe": ["projekt-prozesse-verbessern"],
+        "fuehrung-personal": ["zusammenarbeit-fuehrung"],
+        "marketing": ["analyse-strategie"],
+        "vertrieb-kunden": ["kunden-vertrieb"],
+        "selbststaendigkeit-geschaeftsmodelle": ["analyse-strategie"],
+        "angebote-kalkulation": ["berechnen-auswerten"],
+        "finanzen-controlling": ["berechnen-auswerten"],
+        "einkauf-lieferanten": ["vergleichen-entscheiden"],
+        "qualitaet-organisation": ["projekt-prozesse-verbessern"]
+    };
+
     function hauptkategorie(
         id,
         name,
@@ -9,6 +24,7 @@
         return {
             id: id,
             name: name,
+            profilIds: HAUPTKATEGORIE_PROFILE[id],
             grundlagen: {
                 rollen: [],
                 anforderungen: [],
@@ -41,11 +57,22 @@
         icon: "💼",
         standardAktiv: true,
         grundlagen: {
-            rollen: [],
-            anforderungen: [],
-            regeln: [],
+            rollen: [
+                "Praxisnaher Business- und Organisationsassistent"
+            ],
+            anforderungen: [
+                "Ziele, Beteiligte, Datenbasis und verfügbare Ressourcen berücksichtigen."
+            ],
+            regeln: [
+                "Keine Unternehmensdaten, Kennzahlen, Termine oder Zusagen erfinden.",
+                "Vertrauliche Personen-, Kunden- und Unternehmensdaten schützen.",
+                "Finanzielle oder rechtliche Entscheidungen fachlich prüfen lassen."
+            ],
             ausgabeformate: [],
-            ausgabeAls: []
+            ausgabeAls: [
+                "Text",
+                "Word (.docx)"
+            ]
         },
         parameter: [],
         hauptkategorien: [

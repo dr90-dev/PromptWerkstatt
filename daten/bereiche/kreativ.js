@@ -1,13 +1,25 @@
 (function (global) {
     "use strict";
 
+    const HAUPTKATEGORIE_PROFILE = {
+        "basteln-gestalten": ["anleitung-sicher-umsetzen"],
+        "dekoration": ["ideen-kreativ-entwickeln"],
+        "geschenkideen": ["ideen-kreativ-entwickeln"],
+        "handarbeit": ["anleitung-sicher-umsetzen"],
+        "heimwerken-reparieren": ["anleitung-sicher-umsetzen"],
+        "upcycling": ["anleitung-sicher-umsetzen"],
+        "kreative-projekte-ideen": ["ideen-kreativ-entwickeln"]
+    };
+
     function unterkategorie(
         id,
-        name
+        name,
+        profilIds
     ) {
         return {
             id: id,
             name: name,
+            profilIds: profilIds,
             empfehlungen: {
                 rollen: [],
                 ziele: [],
@@ -31,6 +43,7 @@
         return {
             id: id,
             name: name,
+            profilIds: HAUPTKATEGORIE_PROFILE[id],
             grundlagen: {
                 rollen: [],
                 ziele: [],
@@ -67,8 +80,7 @@
             ziele: [],
             kontextHinweise: [],
             anforderungen: [
-                "Materialien und Werkzeuge klar benennen.",
-                "Die Arbeitsschritte in einer verständlichen Reihenfolge erklären."
+                "Materialien und Werkzeuge klar benennen."
             ],
             regeln: [
                 "Sicherheits- und Altershinweise beachten.",
@@ -80,7 +92,7 @@
             ],
             ausgabeAls: [
                 "Text",
-                "Markdown (.md)"
+                "Word (.docx)"
             ]
         },
         parameter: [],
@@ -108,7 +120,8 @@
                 unterkategorien: [
                     unterkategorie(
                         "basteln-mit-papier",
-                        "Basteln mit Papier"
+                        "Basteln mit Papier",
+                        HAUPTKATEGORIE_PROFILE["basteln-gestalten"]
                     ),
                     {
                         id: "basteln-mit-kindern",
@@ -151,26 +164,29 @@
                                 "Altersgerechte Anleitung mit Materialliste und Sicherheitshinweisen"
                             ],
                             ausgabeAls: [
-                                "PDF (.pdf)",
-                                "Markdown (.md)"
+                                "PDF (.pdf)"
                             ]
                         }
                     },
                     unterkategorie(
                         "saisonales-basteln",
-                        "Saisonales Basteln"
+                        "Saisonales Basteln",
+                        HAUPTKATEGORIE_PROFILE["basteln-gestalten"]
                     ),
                     unterkategorie(
                         "karten-einladungen",
-                        "Karten & Einladungen"
+                        "Karten & Einladungen",
+                        HAUPTKATEGORIE_PROFILE["basteln-gestalten"]
                     ),
                     unterkategorie(
                         "einfache-bastelprojekte",
-                        "Einfache Bastelprojekte"
+                        "Einfache Bastelprojekte",
+                        HAUPTKATEGORIE_PROFILE["basteln-gestalten"]
                     ),
                     unterkategorie(
                         "basteln-mit-naturmaterialien",
-                        "Basteln mit Naturmaterialien"
+                        "Basteln mit Naturmaterialien",
+                        HAUPTKATEGORIE_PROFILE["basteln-gestalten"]
                     )
                 ]
             },

@@ -1,13 +1,26 @@
 (function (global) {
     "use strict";
 
+    const HAUPTKATEGORIE_PROFILE = {
+        "content-ideen": ["ideen-kreativ-entwickeln"],
+        "posts-captions": ["content-erstellen"],
+        "kurzvideos-reels": ["content-erstellen"],
+        "content-planung": ["planen-organisieren"],
+        "community-interaktion": ["content-erstellen"],
+        "kooperationen-sponsoring": ["schreiben-kommunizieren"],
+        "personal-branding": ["analyse-strategie"],
+        "wachstum-strategie": ["analyse-strategie"]
+    };
+
     function unterkategorie(
         id,
-        name
+        name,
+        profilIds
     ) {
         return {
             id: id,
             name: name,
+            profilIds: profilIds,
             empfehlungen: {
                 rollen: [],
                 ziele: [],
@@ -31,6 +44,7 @@
         return {
             id: id,
             name: name,
+            profilIds: HAUPTKATEGORIE_PROFILE[id],
             grundlagen: {
                 rollen: [],
                 ziele: [],
@@ -66,8 +80,7 @@
             ziele: [],
             kontextHinweise: [],
             anforderungen: [
-                "Zielgruppe, Plattform und gewünschte Wirkung berücksichtigen.",
-                "Die Inhalte an das gewählte Veröffentlichungsformat anpassen."
+                "Zielgruppe, Plattform und gewünschte Wirkung berücksichtigen."
             ],
             regeln: [
                 "Keine unbelegten Leistungs- oder Erfolgsversprechen machen.",
@@ -78,7 +91,7 @@
             ],
             ausgabeAls: [
                 "Text",
-                "Markdown (.md)"
+                "Word (.docx)"
             ]
         },
         parameter: [
@@ -143,15 +156,18 @@
                 unterkategorien: [
                     unterkategorie(
                         "reel-idee",
-                        "Reel-Idee"
+                        "Reel-Idee",
+                        HAUPTKATEGORIE_PROFILE["kurzvideos-reels"]
                     ),
                     unterkategorie(
                         "tiktok-idee",
-                        "TikTok-Idee"
+                        "TikTok-Idee",
+                        HAUPTKATEGORIE_PROFILE["kurzvideos-reels"]
                     ),
                     unterkategorie(
                         "youtube-short",
-                        "YouTube Short"
+                        "YouTube Short",
+                        HAUPTKATEGORIE_PROFILE["kurzvideos-reels"]
                     ),
                     {
                         id: "videoskript",
@@ -197,18 +213,19 @@
                                 "Strukturiertes Videoskript"
                             ],
                             ausgabeAls: [
-                                "Markdown (.md)",
                                 "CSV (.csv)"
                             ]
                         }
                     },
                     unterkategorie(
                         "szenenplan",
-                        "Szenenplan"
+                        "Szenenplan",
+                        HAUPTKATEGORIE_PROFILE["kurzvideos-reels"]
                     ),
                     unterkategorie(
                         "video-hook",
-                        "Video-Hook"
+                        "Video-Hook",
+                        HAUPTKATEGORIE_PROFILE["kurzvideos-reels"]
                     )
                 ]
             },

@@ -1,6 +1,34 @@
 (function (global) {
     "use strict";
 
+    const HAUPTKATEGORIE_PROFILE = {
+        "programmierung": ["code-erstellen"],
+        "webentwicklung": ["code-erstellen"],
+        "apps-software": ["code-erstellen"],
+        "debugging-fehlersuche": ["debugging-fehlersuche"],
+        "code-review-verbesserung": ["code-review"],
+        "ki-prompt-engineering": ["ki-prompt-workflow"],
+        "automatisierung": ["automatisierung-planen"],
+        "datenanalyse": ["daten-analysieren"],
+        "excel-tabellen": ["daten-analysieren"],
+        "datenbanken": ["datenbanken-entwerfen"],
+        "apis-schnittstellen": ["api-schnittstellen"],
+        "it-sicherheit": ["sicherheit-risiko-pruefen"]
+    };
+
+    const HAUPTKATEGORIE_GRUNDLAGEN = {
+        "it-sicherheit": {
+            anforderungen: [
+                "Berechtigten Prüfbereich, Testumgebung und erlaubte Methoden eindeutig festlegen.",
+                "Schutzmaßnahmen, Sicherungen und einen Abbruchweg vor jeder Prüfung vorsehen."
+            ],
+            regeln: [
+                "Keine Systeme, Konten oder Daten ohne ausdrückliche Berechtigung prüfen oder verändern.",
+                "Keine schädlichen, heimlichen oder destruktiven Schritte anleiten."
+            ]
+        }
+    };
+
     function hauptkategorie(
         id,
         name,
@@ -9,13 +37,14 @@
         return {
             id: id,
             name: name,
-            grundlagen: {
+            profilIds: HAUPTKATEGORIE_PROFILE[id],
+            grundlagen: Object.assign({
                 rollen: [],
                 anforderungen: [],
                 regeln: [],
                 ausgabeformate: [],
                 ausgabeAls: []
-            },
+            }, HAUPTKATEGORIE_GRUNDLAGEN[id]),
             unterkategorien:
                 eintraege.map(
                     function ([unterId, unterName]) {
@@ -41,11 +70,22 @@
         icon: "💻",
         standardAktiv: true,
         grundlagen: {
-            rollen: [],
-            anforderungen: [],
-            regeln: [],
+            rollen: [
+                "Sorgfältiger IT- und Datenassistent"
+            ],
+            anforderungen: [
+                "Technologie, Version, Umgebung und vorhandene Schnittstellen berücksichtigen."
+            ],
+            regeln: [
+                "Keine Secrets, Tokens, Zugangsdaten oder personenbezogenen Daten offenlegen.",
+                "Keine produktiven oder destruktiven Aktionen ohne ausdrückliche Freigabe ausführen.",
+                "Versionsabhängige Aussagen anhand aktueller Dokumentation prüfen."
+            ],
             ausgabeformate: [],
-            ausgabeAls: []
+            ausgabeAls: [
+                "Text",
+                "Markdown (.md)"
+            ]
         },
         parameter: [
             {

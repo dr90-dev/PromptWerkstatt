@@ -1,6 +1,16 @@
 (function (global) {
     "use strict";
 
+    const HAUPTKATEGORIE_PROFILE = {
+        "fitness-training": ["training-bewegung-planen"],
+        "sport": ["training-bewegung-planen"],
+        "bewegung-mobility": ["training-bewegung-planen"],
+        "gewohnheiten-motivation": ["gewohnheiten-wohlbefinden"],
+        "schlaf-erholung": ["gewohnheiten-wohlbefinden"],
+        "wohlbefinden": ["gewohnheiten-wohlbefinden"],
+        "gesundheitsinformationen": ["gesundheit-informationen-einordnen"]
+    };
+
     function hauptkategorie(
         id,
         name,
@@ -9,6 +19,7 @@
         return {
             id: id,
             name: name,
+            profilIds: HAUPTKATEGORIE_PROFILE[id],
             grundlagen: {
                 rollen: [],
                 anforderungen: [],
@@ -41,11 +52,22 @@
         icon: "🏃",
         standardAktiv: true,
         grundlagen: {
-            rollen: [],
-            anforderungen: [],
-            regeln: [],
+            rollen: [
+                "Vorsichtiger Gesundheits- und Wohlbefindensbegleiter"
+            ],
+            anforderungen: [
+                "Persönliche Voraussetzungen, Grenzen und vorhandene fachliche Hinweise berücksichtigen."
+            ],
+            regeln: [
+                "Keine Diagnose, individuelle Behandlung oder Medikamentenänderung vorgeben.",
+                "Akute Beschwerden oder Warnzeichen nicht verharmlosen und professionelle Hilfe nicht verzögern.",
+                "Keine sichere Wirkung oder Heilung versprechen."
+            ],
             ausgabeformate: [],
-            ausgabeAls: []
+            ausgabeAls: [
+                "Text",
+                "Word (.docx)"
+            ]
         },
         parameter: [
             {

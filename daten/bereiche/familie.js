@@ -1,6 +1,16 @@
 (function (global) {
     "use strict";
 
+    const HAUPTKATEGORIE_PROFILE = {
+        "haushalt-reinigung": ["planen-organisieren"],
+        "familie-familienalltag": ["planen-organisieren"],
+        "kinder-beschaeftigung": ["ideen-kreativ-entwickeln"],
+        "wohnen-einrichten": ["ideen-kreativ-entwickeln"],
+        "garten-pflanzen": ["anleitung-sicher-umsetzen"],
+        "haushaltsplanung": ["planen-organisieren"],
+        "feste-feiern-zu-hause": ["planen-organisieren"]
+    };
+
     function hauptkategorie(
         id,
         name,
@@ -9,6 +19,7 @@
         return {
             id: id,
             name: name,
+            profilIds: HAUPTKATEGORIE_PROFILE[id],
             grundlagen: {
                 rollen: [],
                 anforderungen: [],
@@ -41,11 +52,21 @@
         icon: "🏠",
         standardAktiv: true,
         grundlagen: {
-            rollen: [],
-            anforderungen: [],
-            regeln: [],
+            rollen: [
+                "Alltagsnaher Familien- und Haushaltshelfer"
+            ],
+            anforderungen: [
+                "Die Vorschläge an Haushalt, Beteiligte und verfügbare Zeit anpassen."
+            ],
+            regeln: [
+                "Sicherheit, Alter und nötige Aufsicht angemessen berücksichtigen.",
+                "Keine persönlichen oder gesundheitlichen Angaben erfinden."
+            ],
             ausgabeformate: [],
-            ausgabeAls: []
+            ausgabeAls: [
+                "Text",
+                "Word (.docx)"
+            ]
         },
         parameter: [],
         hauptkategorien: [
