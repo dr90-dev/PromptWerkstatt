@@ -76,18 +76,18 @@
 
     registry.globaleGrundlagenSetzen({
         rollen: [
-            "Strukturierter Assistent"
+            "Allgemeiner Assistent"
         ],
         ziele: [],
         kontextHinweise: [],
         anforderungen: [
-            "Ziel und Rahmenbedingungen klar berücksichtigen."
+            "Das Ziel und alle wichtigen Vorgaben berücksichtigen."
         ],
         regeln: [
             "Fehlende Informationen nicht als Fakten darstellen."
         ],
         ausgabeformate: [
-            "Strukturierte Antwort"
+            "Übersichtliche Antwort"
         ],
         ausgabeAls: []
     });

@@ -64,15 +64,15 @@
             ziele: [],
             kontextHinweise: [],
             anforderungen: [
-                "Zielgruppe, Plattform und Kommunikationsziel berücksichtigen.",
-                "Inhalte für das gewählte Veröffentlichungsformat optimieren."
+                "Zielgruppe, Plattform und gewünschte Wirkung berücksichtigen.",
+                "Die Inhalte an das gewählte Veröffentlichungsformat anpassen."
             ],
             regeln: [
-                "Keine unbelegten Leistungs- oder Erfolgsversprechen formulieren.",
-                "Werbliche Aussagen und erforderliche Kennzeichnungen berücksichtigen."
+                "Keine unbelegten Leistungs- oder Erfolgsversprechen machen.",
+                "Werbliche Aussagen und nötige Kennzeichnungen beachten."
             ],
             ausgabeformate: [
-                "Veröffentlichungsfertiger Content-Entwurf"
+                "Veröffentlichungsfertiger Entwurf"
             ],
             ausgabeAls: [
                 "Text",
@@ -128,10 +128,10 @@
                     kontextHinweise: [],
                     anforderungen: [
                         "Mit einem klaren Einstieg beginnen.",
-                        "Szenen und Aussagen zeitlich nachvollziehbar gliedern."
+                        "Szenen und Aussagen in einer klaren zeitlichen Reihenfolge anordnen."
                     ],
                     regeln: [
-                        "Die Aufmerksamkeit nicht mit irreführenden Behauptungen erzeugen."
+                        "Keine Aufmerksamkeit mit irreführenden Behauptungen erzeugen."
                     ],
                     ausgabeformate: [
                         "Szenenfolge mit Sprechertext"
@@ -160,28 +160,28 @@
                             ],
                             ziele: [
                                 "Ein kompaktes Kurzvideo-Skript erstellen.",
-                                "Einen klar strukturierten Szenenablauf entwickeln."
+                                "Einen klaren Ablauf für die Szenen erstellen."
                             ],
                             kontextHinweise: [
-                                "Plattform",
-                                "Zielgruppe",
-                                "gewünschte Videolänge",
-                                "Thema oder Produkt",
-                                "gewünschter Call-to-Action"
+                                "Für welche Plattform ist das Video?",
+                                "Wer ist die Zielgruppe?",
+                                "Wie lang soll das Video sein?",
+                                "Worum geht es?",
+                                "Welche Handlungsaufforderung (Call-to-Action) soll enthalten sein?"
                             ],
                             anforderungen: [
-                                "Hook, Hauptteil und Handlungsaufforderung klar trennen.",
-                                "Pro Szene Bildidee, Sprechertext und ungefähre Dauer angeben.",
-                                "Sprache und Länge an die gewählte Plattform anpassen."
+                                "Hook, Hauptteil und Handlungsaufforderung klar voneinander trennen.",
+                                "Für jede Szene Bildidee, Sprechertext und ungefähre Dauer angeben.",
+                                "Sprache und Länge an die Plattform anpassen."
                             ],
                             besondersEmpfohleneAnforderungen: [
-                                "Zielgruppe, Plattform und Kommunikationsziel berücksichtigen.",
+                                "Zielgruppe, Plattform und gewünschte Wirkung berücksichtigen.",
                                 "Mit einem klaren Einstieg beginnen.",
-                                "Pro Szene Bildidee, Sprechertext und ungefähre Dauer angeben."
+                                "Für jede Szene Bildidee, Sprechertext und ungefähre Dauer angeben."
                             ],
                             regeln: [
                                 "Keine nicht belegten Fakten in den Sprechertext aufnehmen.",
-                                "Musik-, Bild- und Markenrechte nicht als automatisch geklärt darstellen."
+                                "Nicht davon ausgehen, dass Musik-, Bild- und Markenrechte automatisch geklärt sind."
                             ],
                             ausgabeformate: [
                                 "Tabelle mit Szene, Bild, Sprechertext und Dauer",

@@ -1,11 +1,43 @@
 (function (global) {
     "use strict";
 
+    function empfehlungslisten(
+        werte = {}
+    ) {
+        return {
+            rollen: [
+                ...(werte.rollen || [])
+            ],
+            ziele: [
+                ...(werte.ziele || [])
+            ],
+            kontextHinweise: [
+                ...(werte.kontextHinweise || [])
+            ],
+            anforderungen: [
+                ...(werte.anforderungen || [])
+            ],
+            besondersEmpfohleneAnforderungen: [
+                ...(werte.besondersEmpfohleneAnforderungen || [])
+            ],
+            regeln: [
+                ...(werte.regeln || [])
+            ],
+            ausgabeformate: [
+                ...(werte.ausgabeformate || [])
+            ],
+            ausgabeAls: [
+                ...(werte.ausgabeAls || [])
+            ]
+        };
+    }
+
     function hauptkategorie(
         id,
         name,
         eintraege,
-        profilIds = []
+        profilIds = [],
+        grundlagen = {}
     ) {
         return {
             id: id,
@@ -13,26 +45,24 @@
             profilIds: [
                 ...profilIds
             ],
-            grundlagen: {
-                rollen: [],
-                anforderungen: [],
-                regeln: [],
-                ausgabeformate: [],
-                ausgabeAls: []
-            },
+            grundlagen:
+                empfehlungslisten(
+                    grundlagen
+                ),
             unterkategorien:
                 eintraege.map(
-                    function ([unterId, unterName]) {
+                    function ([
+                        unterId,
+                        unterName,
+                        empfehlungen = {}
+                    ]) {
                         return {
                             id: unterId,
                             name: unterName,
-                            empfehlungen: {
-                                rollen: [],
-                                anforderungen: [],
-                                regeln: [],
-                                ausgabeformate: [],
-                                ausgabeAls: []
-                            }
+                            empfehlungen:
+                                empfehlungslisten(
+                                    empfehlungen
+                                )
                         };
                     }
                 )
@@ -63,7 +93,18 @@
                     ["aufgaben-priorisieren", "Aufgaben priorisieren"],
                     ["routinen-erstellen", "Routinen erstellen"],
                     ["haushalt-privates-koordinieren", "Haushalt & Privates koordinieren"]
-                ]
+                ],
+                [
+                    "planen-organisieren"
+                ],
+                {
+                    kontextHinweise: [
+                        "Welche Termine und festen Verpflichtungen gibt es bereits?"
+                    ],
+                    anforderungen: [
+                        "Pufferzeiten einplanen und auf eine realistische tägliche Belastung achten."
+                    ]
+                }
             ),
             hauptkategorie(
                 "planen-vorbereiten",
@@ -120,6 +161,9 @@
                     ["problem-analysieren", "Problem analysieren"],
                     ["loesungsvorschlaege", "Lösungsvorschläge"],
                     ["verbesserungsmoeglichkeiten", "Verbesserungsmöglichkeiten"]
+                ],
+                [
+                    "ideen-problemloesung"
                 ]
             ),
             hauptkategorie(
@@ -130,19 +174,75 @@
                     ["packliste", "Packliste"],
                     ["einkaufsliste", "Einkaufsliste"],
                     ["to-do-liste", "To-do-Liste"],
-                    ["uebersicht-tabelle", "Übersicht & Tabelle"],
+                    [
+                        "uebersicht-tabelle",
+                        "Übersicht & Tabelle",
+                        {
+                            ausgabeAls: [
+                                "Excel (.xlsx)"
+                            ]
+                        }
+                    ],
                     ["ablaufplan", "Ablaufplan"]
+                ],
+                [
+                    "strukturieren-checklisten"
                 ]
             ),
             hauptkategorie(
                 "behoerden-alltagspapierkram",
                 "Behörden & Alltagspapierkram",
                 [
-                    ["formular-verstehen", "Formular verstehen"],
-                    ["schreiben-verstehen", "Schreiben verstehen"],
-                    ["antrag-vorbereiten", "Antrag vorbereiten"],
+                    [
+                        "formular-verstehen",
+                        "Formular verstehen",
+                        {
+                            ziele: [
+                                "Das Formular Schritt für Schritt verstehen und erkennen, welche Angaben ich machen muss."
+                            ],
+                            kontextHinweise: [
+                                "Welche Felder oder Abschnitte des Formulars sind unklar?"
+                            ],
+                            anforderungen: [
+                                "Unklare Begriffe und Felder in einfacher Sprache erklären."
+                            ],
+                            ausgabeformate: [
+                                "Erklärung Abschnitt für Abschnitt"
+                            ]
+                        }
+                    ],
+                    [
+                        "schreiben-verstehen",
+                        "Schreiben verstehen",
+                        {
+                            ziele: [
+                                "Ein Schreiben verständlich zusammenfassen und erkennen, was ich tun muss oder was noch unklar ist."
+                            ],
+                            kontextHinweise: [
+                                "Welcher Wortlaut oder welche Abschnitte des Schreibens sind wichtig?"
+                            ],
+                            anforderungen: [
+                                "Geforderte Schritte, mögliche Rückfragen und erkennbare Fristen getrennt darstellen."
+                            ],
+                            ausgabeformate: [
+                                "Verständliche Zusammenfassung mit nächsten Schritten"
+                            ]
+                        }
+                    ],
+                    [
+                        "antrag-vorbereiten",
+                        "Antrag vorbereiten",
+                        {
+                            ausgabeformate: [
+                                "Vorbereitungsentwurf für den Antrag"
+                            ]
+                        }
+                    ],
                     ["unterlagen-zusammenstellen", "Unterlagen zusammenstellen"],
                     ["behoerdengang-vorbereiten", "Behördengang vorbereiten"]
+                ],
+                [
+                    "unterlagen-antraege"
                 ]
             )
         ]

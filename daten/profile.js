@@ -10,41 +10,41 @@
         name: "Planen & Organisieren",
         empfehlungen: {
             rollen: [
-                "Planungs- und Organisationsassistent",
-                "Strukturierungsberater"
+                "Planungsassistent",
+                "Organisationshelfer"
             ],
             ziele: [
                 "Einen realistischen und umsetzbaren Plan erstellen.",
                 "Aufgaben, Prioritäten und Abhängigkeiten sinnvoll ordnen."
             ],
             kontextHinweise: [
-                "Ziel oder gewünschtes Ergebnis",
-                "Zeitraum oder fester Termin",
-                "verfügbare Zeit",
-                "verfügbare Ressourcen und beteiligte Personen",
-                "Prioritäten",
-                "Einschränkungen und feste Rahmenbedingungen"
+                "Was möchtest du erreichen?",
+                "Bis wann soll es erledigt sein?",
+                "Wie viel Zeit steht zur Verfügung?",
+                "Welche Mittel und Personen stehen zur Verfügung?",
+                "Was ist besonders wichtig?",
+                "Welche festen Vorgaben oder Grenzen gibt es?"
             ],
             anforderungen: [
-                "Konkrete und umsetzbare Schritte formulieren.",
-                "Arbeitsschritte in eine sinnvolle Reihenfolge bringen.",
-                "Zeitaufwand und Termine realistisch einplanen.",
-                "Prioritäten klar sichtbar machen.",
-                "Abhängigkeiten und notwendige Voraussetzungen berücksichtigen.",
-                "Den Plan übersichtlich und leicht erfassbar darstellen."
+                "Konkrete Schritte nennen, die sich wirklich umsetzen lassen.",
+                "Die Schritte in eine sinnvolle Reihenfolge bringen.",
+                "Zeitaufwand und Termine realistisch planen.",
+                "Die wichtigsten Aufgaben klar hervorheben.",
+                "Zeigen, welche Schritte voneinander abhängen und was vorher erledigt sein muss.",
+                "Den Plan übersichtlich und leicht verständlich darstellen."
             ],
             besondersEmpfohleneAnforderungen: [
-                "Konkrete und umsetzbare Schritte formulieren.",
-                "Zeitaufwand und Termine realistisch einplanen.",
-                "Abhängigkeiten und notwendige Voraussetzungen berücksichtigen."
+                "Konkrete Schritte nennen, die sich wirklich umsetzen lassen.",
+                "Zeitaufwand und Termine realistisch planen.",
+                "Zeigen, welche Schritte voneinander abhängen und was vorher erledigt sein muss."
             ],
             regeln: [
-                "Fehlende Zeit- oder Ressourcenangaben als offene Punkte kennzeichnen.",
-                "Schätzungen und Annahmen ausdrücklich kenntlich machen.",
-                "Keine nicht genannten fachlichen oder persönlichen Rahmenbedingungen voraussetzen."
+                "Fehlende Angaben zu Zeit oder verfügbaren Mitteln klar kennzeichnen.",
+                "Schätzungen und Annahmen klar kennzeichnen.",
+                "Keine fachlichen oder persönlichen Voraussetzungen annehmen, die nicht genannt wurden."
             ],
             ausgabeformate: [
-                "Priorisierter Maßnahmenplan",
+                "Plan mit klaren Prioritäten",
                 "Zeit- und Meilensteinplan",
                 "Checkliste mit Reihenfolge und Verantwortlichkeiten"
             ],
@@ -61,43 +61,43 @@
         name: "Vergleichen & Entscheiden",
         empfehlungen: {
             rollen: [
-                "Vergleichsanalyst",
-                "Entscheidungsassistent"
+                "Vergleichshelfer",
+                "Entscheidungshelfer"
             ],
             ziele: [
-                "Mehrere Optionen anhand transparenter Kriterien strukturiert vergleichen.",
-                "Eine nachvollziehbare Entscheidungsvorlage mit begründeter Empfehlung erstellen."
+                "Mehrere Möglichkeiten nach klaren Kriterien miteinander vergleichen.",
+                "Eine Entscheidungshilfe mit einer klar begründeten Empfehlung erstellen."
             ],
             kontextHinweise: [
-                "zu vergleichende Optionen",
-                "wichtigste Entscheidungskriterien",
-                "Gewichtung und Prioritäten",
-                "Budget oder andere feste Grenzen",
-                "Muss- und Kann-Anforderungen",
-                "Einsatzzweck"
+                "Welche Möglichkeiten möchtest du vergleichen?",
+                "Welche Kriterien sind dir besonders wichtig?",
+                "Welche Kriterien zählen mehr als andere?",
+                "Wie hoch ist dein Budget und welche festen Grenzen gibt es?",
+                "Was muss erfüllt sein und was wäre nur wünschenswert?",
+                "Wofür möchtest du die Möglichkeiten nutzen?"
             ],
             anforderungen: [
-                "Auf alle Optionen dieselben Vergleichskriterien anwenden.",
-                "Vor- und Nachteile jeder Option benennen.",
-                "Relevante Unterschiede klar und nachvollziehbar darstellen.",
-                "Muss- und Kann-Anforderungen getrennt berücksichtigen.",
-                "Eine Empfehlung anhand der genannten Kriterien begründen.",
-                "Fehlende Vergleichsinformationen sichtbar kennzeichnen."
+                "Alle Möglichkeiten nach denselben Kriterien vergleichen.",
+                "Die wichtigsten Vor- und Nachteile jeder Möglichkeit nennen.",
+                "Die wichtigsten Unterschiede klar erklären.",
+                "Zwischen notwendigen und zusätzlichen Anforderungen unterscheiden.",
+                "Die Empfehlung mit den genannten Kriterien begründen.",
+                "Fehlende Angaben für den Vergleich klar kennzeichnen."
             ],
             besondersEmpfohleneAnforderungen: [
-                "Auf alle Optionen dieselben Vergleichskriterien anwenden.",
-                "Relevante Unterschiede klar und nachvollziehbar darstellen.",
-                "Eine Empfehlung anhand der genannten Kriterien begründen."
+                "Alle Möglichkeiten nach denselben Kriterien vergleichen.",
+                "Die wichtigsten Unterschiede klar erklären.",
+                "Die Empfehlung mit den genannten Kriterien begründen."
             ],
             regeln: [
-                "Nicht belegte Eigenschaften oder Vergleichswerte nicht erfinden.",
-                "Fehlende Angaben nicht durch stillschweigende Annahmen ersetzen.",
-                "Subjektive Gewichtungen und Werturteile als solche kennzeichnen."
+                "Keine Eigenschaften oder Vergleichswerte erfinden.",
+                "Fehlende Angaben nicht einfach durch Annahmen ersetzen.",
+                "Persönliche Gewichtungen und Bewertungen klar als solche kennzeichnen."
             ],
             ausgabeformate: [
                 "Vergleichstabelle",
                 "Vor- und Nachteile-Liste",
-                "Gewichtete Bewertungsmatrix",
+                "Bewertungstabelle mit Gewichtung",
                 "Entscheidungsempfehlung mit Begründung"
             ],
             ausgabeAls: [
@@ -114,41 +114,197 @@
         empfehlungen: {
             rollen: [
                 "Rechercheassistent",
-                "Quellenanalyst"
+                "Quellenprüfer"
             ],
             ziele: [
-                "Informationen zu einer klaren Fragestellung systematisch recherchieren.",
-                "Quellen vergleichen und belastbare Erkenntnisse nachvollziehbar zusammenfassen."
+                "Gezielt nach Informationen zu einer klaren Frage suchen.",
+                "Quellen vergleichen und verlässliche Ergebnisse verständlich zusammenfassen."
             ],
             kontextHinweise: [
-                "genaue Fragestellung",
-                "gewünschte Aktualität oder Stichtag",
-                "geografischer oder sachlicher Geltungsbereich",
-                "gewünschte Quellenarten",
-                "benötigte Detailtiefe"
+                "Welche genaue Frage soll beantwortet werden?",
+                "Wie aktuell sollen die Informationen sein?",
+                "Für welchen Ort oder Themenbereich sollen die Informationen gelten?",
+                "Welche Arten von Quellen sollen genutzt werden?",
+                "Wie ausführlich soll die Recherche sein?"
             ],
             anforderungen: [
-                "Fakten, Bewertungen und Schlussfolgerungen klar trennen.",
-                "Verwendete Quellen nachvollziehbar benennen.",
-                "Aktualität und Geltungsbereich der Informationen berücksichtigen.",
-                "Unsicherheiten und fehlende Nachweise kennzeichnen.",
-                "Widersprüchliche Quellen und Aussagen sichtbar machen.",
-                "Die wichtigsten Erkenntnisse strukturiert zusammenfassen."
+                "Fakten, Einschätzungen und Schlussfolgerungen klar voneinander trennen.",
+                "Die verwendeten Quellen klar nennen.",
+                "Darauf achten, wie aktuell die Informationen sind und wofür sie gelten.",
+                "Unsicherheiten und fehlende Belege klar kennzeichnen.",
+                "Widersprüche zwischen Quellen klar zeigen.",
+                "Die wichtigsten Ergebnisse übersichtlich zusammenfassen."
             ],
             besondersEmpfohleneAnforderungen: [
-                "Fakten, Bewertungen und Schlussfolgerungen klar trennen.",
-                "Verwendete Quellen nachvollziehbar benennen.",
-                "Widersprüchliche Quellen und Aussagen sichtbar machen."
+                "Fakten, Einschätzungen und Schlussfolgerungen klar voneinander trennen.",
+                "Die verwendeten Quellen klar nennen.",
+                "Widersprüche zwischen Quellen klar zeigen."
             ],
             regeln: [
                 "Keine Quellen, Fundstellen oder Rechercheergebnisse erfinden.",
-                "Nicht überprüfbare Aussagen als offen markieren.",
-                "Aus dem Fehlen eines Nachweises keine Gewissheit ableiten."
+                "Nicht überprüfbare Aussagen klar als unsicher kennzeichnen.",
+                "Aus einem fehlenden Beleg keine sichere Aussage ableiten."
             ],
             ausgabeformate: [
-                "Strukturierte Recherche-Zusammenfassung",
+                "Übersichtliche Recherche-Zusammenfassung",
                 "Quellenvergleich mit Kernaussagen",
                 "Ergebnisübersicht mit Quellen und offenen Fragen"
+            ],
+            ausgabeAls: [
+                "Text",
+                "Word (.docx)"
+            ]
+        }
+    });
+
+
+    registry.profilRegistrieren({
+        id: "ideen-problemloesung",
+        name: "Ideen & Problemlösung",
+        empfehlungen: {
+            rollen: [
+                "Ideenfinder",
+                "Problemlösungshelfer"
+            ],
+            ziele: [
+                "Mehrere gute Ideen finden, die ich wirklich umsetzen kann.",
+                "Das Problem besser verstehen und passende Lösungen dafür finden."
+            ],
+            kontextHinweise: [
+                "Wie sieht die aktuelle Situation aus?",
+                "Was möchtest du erreichen?",
+                "Was hast du schon ausprobiert?",
+                "Welche festen Grenzen gibt es?",
+                "Welche Mittel stehen zur Verfügung?",
+                "Was ist besonders wichtig?"
+            ],
+            anforderungen: [
+                "Mehrere deutlich unterschiedliche Ideen vorschlagen.",
+                "Konkrete Vorschläge machen, die sich wirklich umsetzen lassen.",
+                "Die wichtigsten Vor- und Nachteile der besten Ideen nennen.",
+                "Verfügbare Mittel und feste Grenzen berücksichtigen.",
+                "Annahmen und offene Fragen klar kennzeichnen.",
+                "Begründen, welche Ideen am besten passen."
+            ],
+            besondersEmpfohleneAnforderungen: [
+                "Mehrere deutlich unterschiedliche Ideen vorschlagen.",
+                "Konkrete Vorschläge machen, die sich wirklich umsetzen lassen.",
+                "Begründen, welche Ideen am besten passen."
+            ],
+            regeln: [
+                "Fehlende Informationen nicht erfinden.",
+                "Annahmen klar kennzeichnen.",
+                "Genannte Grenzen und Ausschlüsse einhalten."
+            ],
+            ausgabeformate: [
+                "Ideenliste",
+                "Lösungsideen mit Vor- und Nachteilen",
+                "Vorschläge nach Wichtigkeit mit Begründung",
+                "Maßnahmenplan"
+            ],
+            ausgabeAls: [
+                "Text",
+                "Word (.docx)"
+            ]
+        }
+    });
+
+
+    registry.profilRegistrieren({
+        id: "strukturieren-checklisten",
+        name: "Strukturieren & Checklisten",
+        empfehlungen: {
+            rollen: [
+                "Übersichtshelfer",
+                "Checklistenhelfer"
+            ],
+            ziele: [
+                "Informationen übersichtlich ordnen, damit sie sich leicht nutzen lassen.",
+                "Eine vollständige Checkliste erstellen, die sich direkt nutzen lässt."
+            ],
+            kontextHinweise: [
+                "Wofür brauchst du die Liste oder Übersicht?",
+                "Wer wird sie verwenden?",
+                "Wie ausführlich soll sie sein?",
+                "Welche Reihenfolge ist sinnvoll?",
+                "Was ist besonders wichtig?",
+                "Für welchen Termin oder welche Situation ist sie gedacht?"
+            ],
+            anforderungen: [
+                "Die Einträge klar und eindeutig formulieren.",
+                "Zusammengehörige Inhalte sinnvoll gruppieren.",
+                "Die Punkte in eine sinnvolle Reihenfolge bringen.",
+                "Unnötige Dopplungen vermeiden.",
+                "Wichtige oder dringende Punkte klar hervorheben.",
+                "Die Liste so aufbauen, dass sie direkt genutzt werden kann."
+            ],
+            besondersEmpfohleneAnforderungen: [
+                "Die Einträge klar und eindeutig formulieren.",
+                "Zusammengehörige Inhalte sinnvoll gruppieren.",
+                "Die Liste so aufbauen, dass sie direkt genutzt werden kann."
+            ],
+            regeln: [
+                "Fehlende Punkte nicht ohne Grundlage als Pflicht darstellen.",
+                "Unklare oder vom Einzelfall abhängige Angaben klar kennzeichnen.",
+                "Widersprüchliche oder doppelte Einträge vermeiden."
+            ],
+            ausgabeformate: [
+                "Checkliste",
+                "Gegliederte Übersicht",
+                "To-do-Liste",
+                "Tabelle"
+            ],
+            ausgabeAls: [
+                "Text",
+                "Word (.docx)"
+            ]
+        }
+    });
+
+
+    registry.profilRegistrieren({
+        id: "unterlagen-antraege",
+        name: "Unterlagen & Anträge vorbereiten",
+        empfehlungen: {
+            rollen: [
+                "Helfer für Unterlagen und Anträge",
+                "Begleiter für Anträge und Behördengänge"
+            ],
+            ziele: [
+                "Herausfinden, welche Angaben und Unterlagen ich brauche und was noch fehlt.",
+                "Mich Schritt für Schritt auf einen Antrag oder Behördengang vorbereiten und wissen, was als Nächstes zu tun ist."
+            ],
+            kontextHinweise: [
+                "Welche Stelle oder Behörde ist zuständig?",
+                "Für welches Land, welche Region oder welchen Ort gilt das Anliegen?",
+                "Worum geht es genau?",
+                "Welche Unterlagen hast du bereits?",
+                "Welche Fristen sind dir bekannt?",
+                "Wie ist der aktuelle Stand?"
+            ],
+            anforderungen: [
+                "Die benötigten Angaben und Unterlagen übersichtlich auflisten.",
+                "Klar zeigen, welche Informationen und Unterlagen noch fehlen.",
+                "Die Vorbereitung Schritt für Schritt erklären.",
+                "Bekannte Fristen und zeitliche Abhängigkeiten klar nennen.",
+                "Keine offiziellen Anforderungen erfinden oder selbst ergänzen.",
+                "Fakten, Annahmen und offene Fragen klar trennen."
+            ],
+            besondersEmpfohleneAnforderungen: [
+                "Die benötigten Angaben und Unterlagen übersichtlich auflisten.",
+                "Klar zeigen, welche Informationen und Unterlagen noch fehlen.",
+                "Keine offiziellen Anforderungen erfinden oder selbst ergänzen."
+            ],
+            regeln: [
+                "Unbekannte Anforderungen, Fristen oder Zuständigkeiten nicht erfinden.",
+                "Bei Fristen oder behördenspezifischen Angaben auf aktuelle offizielle Informationen verweisen.",
+                "Unsicherheiten klar kennzeichnen.",
+                "Nicht den Eindruck einer verbindlichen Rechtsberatung erwecken."
+            ],
+            ausgabeformate: [
+                "Unterlagen-Checkliste",
+                "Schritt-für-Schritt-Vorgehen",
+                "Übersicht der fehlenden Angaben"
             ],
             ausgabeAls: [
                 "Text",

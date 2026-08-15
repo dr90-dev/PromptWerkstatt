@@ -70,7 +70,7 @@
                 "Keine technischen Werte oder Materialkennwerte erfinden.",
                 "Annahmen klar kennzeichnen.",
                 "Einheiten eindeutig angeben.",
-                "Bekannte Fakten, Annahmen und Schlussfolgerungen sauber trennen."
+                "Bekannte Fakten, Annahmen und Schlussfolgerungen klar trennen."
             ],
             ausgabeformate: [
                 "Technische Analyse mit Annahmen und offenen Punkten"
@@ -184,7 +184,7 @@
                     ziele: [],
                     kontextHinweise: [],
                     anforderungen: [
-                        "Bewertungskriterien und Datengrundlagen transparent benennen."
+                        "Bewertungskriterien und Datengrundlagen klar benennen."
                     ],
                     regeln: [
                         "Annahmen klar kennzeichnen.",
@@ -206,8 +206,8 @@
                                 "Design-FMEA-Moderator"
                             ],
                             ziele: [
-                                "Eine strukturierte Design-FMEA erstellen.",
-                                "Potenzielle Produktfehler systematisch analysieren."
+                                "Eine klar gegliederte Design-FMEA erstellen.",
+                                "Mögliche Produktfehler systematisch untersuchen."
                             ],
                             kontextHinweise: [
                                 "Produkt oder Baugruppe",
@@ -230,8 +230,8 @@
                                 "Vorhandene Vermeidungs- und Entdeckungsmaßnahmen berücksichtigen."
                             ],
                             regeln: [
-                                "Keine Risikobewertung ohne definierte Bewertungsgrundlage erfinden.",
-                                "Unbekannte Bewertungen und Nachweise als offen markieren."
+                                "Keine Risikobewertung ohne festgelegte Bewertungsgrundlage vornehmen.",
+                                "Nicht bekannte Bewertungen und Nachweise als offen kennzeichnen."
                             ],
                             ausgabeformate: [
                                 "FMEA-Tabelle mit Funktionen, Fehlern, Ursachen und Maßnahmen",

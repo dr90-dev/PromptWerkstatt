@@ -59,18 +59,18 @@
         standardAktiv: true,
         grundlagen: {
             rollen: [
-                "Kreativpädagoge",
-                "DIY-Berater"
+                "Kreativbegleiter",
+                "DIY-Helfer"
             ],
             ziele: [],
             kontextHinweise: [],
             anforderungen: [
                 "Materialien und Werkzeuge klar benennen.",
-                "Arbeitsschritte nachvollziehbar strukturieren."
+                "Die Arbeitsschritte in einer verständlichen Reihenfolge erklären."
             ],
             regeln: [
-                "Sicherheits- und Altershinweise berücksichtigen.",
-                "Keine ungeprüften Materialeigenschaften behaupten."
+                "Sicherheits- und Altershinweise beachten.",
+                "Keine Materialeigenschaften behaupten, die nicht geprüft sind."
             ],
             ausgabeformate: [
                 "Schritt-für-Schritt-Anleitung",
@@ -88,7 +88,7 @@
                 name: "Basteln & Gestalten",
                 grundlagen: {
                     rollen: [
-                        "Bastel- und Gestaltungspädagoge"
+                        "Bastel- und Gestaltungsexperte"
                     ],
                     ziele: [],
                     kontextHinweise: [],
@@ -113,27 +113,27 @@
                         name: "Basteln mit Kindern",
                         empfehlungen: {
                             rollen: [
-                                "Pädagogischer Bastelbegleiter"
+                                "Bastelbegleiter für Kinder"
                             ],
                             ziele: [
-                                "Eine altersgerechte Bastelidee entwickeln.",
+                                "Eine altersgerechte Bastelidee finden.",
                                 "Eine Schritt-für-Schritt-Bastelanleitung erstellen."
                             ],
                             kontextHinweise: [
-                                "Alter der Kinder",
-                                "verfügbare Materialien",
-                                "gewünschte Basteldauer",
-                                "notwendige Hilfe durch Erwachsene"
+                                "Wie alt sind die Kinder?",
+                                "Welche Materialien sind verfügbar?",
+                                "Wie lange soll das Basteln dauern?",
+                                "Wobei können Erwachsene helfen?"
                             ],
                             anforderungen: [
-                                "Alter der Kinder und benötigte Aufsicht berücksichtigen.",
+                                "Alter der Kinder und nötige Aufsicht berücksichtigen.",
                                 "Einfache Alternativen für schwierige Arbeitsschritte nennen.",
-                                "Vorbereitungs- und Aufräumaufwand angeben."
+                                "Zeit für Vorbereitung und Aufräumen angeben."
                             ],
                             besondersEmpfohleneAnforderungen: [
                                 "Materialien und Werkzeuge klar benennen.",
-                                "Arbeitsschritte nachvollziehbar strukturieren.",
-                                "Alter der Kinder und benötigte Aufsicht berücksichtigen."
+                                "Die Arbeitsschritte in einer verständlichen Reihenfolge erklären.",
+                                "Alter der Kinder und nötige Aufsicht berücksichtigen."
                             ],
                             regeln: [
                                 "Nur altersgerechte Materialien und Werkzeuge empfehlen.",

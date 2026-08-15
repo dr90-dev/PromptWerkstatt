@@ -267,6 +267,65 @@
     }
 
 
+    function globalenRollenFallbackBegrenzen(
+        ergebnis
+    ) {
+        const rollenHerkunft =
+            ergebnis.herkunft.rollen;
+
+
+        const spezifischeRollen =
+            new Set(
+                rollenHerkunft
+                    .filter(
+                        function (herkunft) {
+                            return herkunft.quellen
+                                .some(
+                                    function (quelle) {
+                                        return (
+                                            quelle.ebene !==
+                                            "global"
+                                        );
+                                    }
+                                );
+                        }
+                    )
+                    .map(
+                        function (herkunft) {
+                            return herkunft.wert;
+                        }
+                    )
+            );
+
+
+        if (spezifischeRollen.size === 0) {
+            return;
+        }
+
+
+        ergebnis.rollen =
+            ergebnis.rollen.filter(
+                function (rolle) {
+                    return spezifischeRollen
+                        .has(
+                            rolle
+                        );
+                }
+            );
+
+
+        ergebnis.herkunft.rollen =
+            rollenHerkunft.filter(
+                function (herkunft) {
+                    return spezifischeRollen
+                        .has(
+                            herkunft.wert
+                        );
+                }
+            );
+    }
+
+
     const registry = {
         version: 2,
         listenTypen:
@@ -685,7 +744,12 @@
 
             const ergebnis =
                 empfehlungenZusammenfuehren(
-                quellen
+                    quellen
+                );
+
+
+            globalenRollenFallbackBegrenzen(
+                ergebnis
             );
 
 
